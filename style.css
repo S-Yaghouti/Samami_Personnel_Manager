@@ -1,0 +1,390 @@
+/* ================================================================ >> Imports << */
+@import url('https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* ================================================================ >> Imports << */
+
+/* ================================================================== >> Basic << */
+
+/* ------------------------------------------------------- >> * << */
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    user-select: none;
+    text-decoration: none;
+}
+
+/* ------------------------------------------------------- >> * << */
+
+/* -------------------------------------------- >> scroll style << */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0);
+}
+
+/* -------------------------------------------- >> scroll style << */
+
+/* ---------------------------------------------------- >> root << */
+:root {
+    --light-blue: #0077E9;
+    --deep-blue: #000B98;
+    --deep-blue25: #000a984c;
+    --gold: #E6A600;
+    --white: #E6E6FA;
+    --black: #282828;
+    --shadow: rgba(0, 0, 0, 0.15)
+}
+
+/* ---------------------------------------------------- >> root << */
+
+/* ---------------------------------------------- >> All Father << */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    font-family: 'Roboto', serif;
+    overflow: hidden;
+}
+
+/* ---------------------------------------------- >> All Father << */
+
+/* --------------------------------------------------- >> Feild << */
+.FeildContainer {
+    width: 100%;
+    display: flex;
+    gap: clamp(0.5rem, 1vw, 2rem);
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s;
+}
+
+.FeildContainer.change {
+    opacity: 0;
+    scale: 0.7;
+    transition: all 0.5;
+}
+
+.FeildLabel {
+    font-size: clamp(0.85rem, 1.2vw, 3rem);
+}
+
+.Feild {
+    width: 100%;
+    height: clamp(3rem, 4vw, 8rem);
+    position: relative;
+    background-color: var(--deep-blue);
+    border-radius: clamp(10px, 0.5vw, 20px);
+    transition: all 0.5s;
+    pointer-events: auto;
+}
+
+.Feild.error {
+    transition: all 0.5s;
+    background-color: red;
+    pointer-events: none;
+}
+
+.FeildInput {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: 'Roboto', serif;
+    text-align: center;
+    transition: all 0.5s;
+    z-index: 1;
+    font-size: clamp(0.85rem, 1.2vw, 3rem);
+}
+
+.FeildInput::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: clamp(0.7rem, 0.85vw, 2rem);
+}
+
+.FeildIcon {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translate(-5%, -50%);
+    font-size: clamp(1rem, 1.5vw, 7rem);
+    color: white;
+}
+
+/* --------------------------------------------------- >> Feild << */
+
+/* ================================================================== >> Basic << */
+
+/* ================================================================ >> Layer 1 << */
+.Layer1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    z-index: 0;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_1 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: var(--deep-blue);
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ------------------------------------- >> Hexagon Wallpaper << */
+.HexagonWallpaper {
+    width: 75%;
+    height: 100%;
+    transform: translateX(150%);
+    -webkit-mask-image: linear-gradient(to left, var(--deep-blue25), rgba(0, 0, 0, 0));
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: linear-gradient(to left, var(--deep-blue25), rgba(0, 0, 0, 0));
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    transition: all 0.5s;
+}
+
+#BG_1.show .HexagonWallpaper {
+    transform: translateX(50%);
+}
+
+/* ------------------------------------- >> Hexagon Wallpaper << */
+
+/* ================================================================ >> Layer 1 << */
+
+/* ================================================================ >> Layer 2 << */
+.Layer2 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    z-index: 1;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* --------------------------------------------- >> Live Hand << */
+.LiveHandContainer {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    transform: translateX(-100%);
+    transition: all 0.5s;
+}
+
+#BG_2.show .LiveHandContainer {
+    transform: translateX(0%);
+    transition: all 0.5s;
+}
+
+.Circle {
+    transform: translateX(-35%);
+    width: 100%;
+    height: 100%;
+    scale: 1.5;
+    border-radius: 100%;
+    background: var(--gold);
+    box-shadow: inset -4px 0px 10px var(--shadow), 4px 0px 10px var(--shadow);
+}
+
+.LiveHand {
+    position: absolute;
+    top: 50%;
+    left: -5%;
+    transform: translate(-5%, -50%);
+    z-index: 1;
+    width: 100%;
+    animation: LiveHand 3s infinite linear;
+}
+
+@keyframes LiveHand {
+    0% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.01;
+    }
+
+    100% {
+        scale: 1;
+    }
+
+}
+
+/* --------------------------------------------- >> Live Hand << */
+
+/* ---------------------------------------- >> Authentication << */
+.Authentication {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(0.7rem, 1.2vw, 2rem) 0px;
+    transition: all 0.5s;
+    transform: translateX(100%);
+}
+
+#BG_2.show .Authentication {
+    transform: translateX(0%);
+}
+
+/* --------------------------- > Title < */
+.AuthenticationTitle {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.AuthenticationHeading {
+    font-size: clamp(4rem, 5vw, 8rem);
+    color: var(--gold);
+    font-family: "Passion One", serif;
+}
+
+.AuthenticationSubHeading {
+    font-size: clamp(1.5rem, 2.5vw, 3.5rem);
+    color: var(--white);
+    font-family: "Passion One", serif;
+}
+
+/* --------------------------- > Title < */
+
+/* ---------------------------------------- >> Authentication << */
+
+/* ================================================================ >> Layer 2 << */
+
+/* ============================================================ >> Media Query << */
+
+/* ------------------------------------------------ >> 4K << */
+@media screen and (min-width: 1800px) {}
+
+/* ------------------------------------------------ >> 4K << */
+
+/* ------------------------------------------ >> L Laptop << */
+@media screen and (max-width: 1440px) {}
+
+/* ------------------------------------------ >> L Laptop << */
+
+/* ------------------------------------------ >> S Laptop << */
+@media screen and (max-width: 1024px) {}
+
+/* ------------------------------------------ >> S Laptop << */
+
+/* -------------------------------------------- >> tablet << */
+@media screen and (max-width: 768px) {}
+
+/* -------------------------------------------- >> tablet << */
+
+/* ------------------------------------------ >> L mobile << */
+@media screen and (max-width: 425px) {
+
+    /* ------------- > Hexagon Wallpaper < */
+    .HexagonWallpaper {
+        width: 100%;
+        height: 50%;
+        transform: translateX(0%) translateY(-80%);
+        -webkit-mask-image: linear-gradient(to bottom, var(--deep-blue25), rgba(0, 0, 0, 0));
+        mask-image: linear-gradient(to bottom, var(--deep-blue25), rgba(0, 0, 0, 0));
+    }
+
+    #BG_1.show .HexagonWallpaper {
+        transform: translateX(0%) translateY(0%);
+    }
+
+    /* ------------- > Hexagon Wallpaper < */
+
+    /* -------------------------- > BG_2 < */
+    #BG_2 {
+        flex-direction: column-reverse;
+    }
+
+    /* -------------------------- > BG_2 < */
+
+    /* ----------------------> Live Hand < */
+    .LiveHandContainer {
+        width: 100%;
+        height: 25%;
+        transform: translateX(0%) translateY(200%);
+    }
+
+    #BG_2.show .LiveHandContainer {
+        transform: translateX(0%) translateY(0%);
+        transition: all 0.5s;
+    }
+
+    .Circle {
+        transform: translateX(0%) translateY(10%);
+        height: 200%;
+        scale: 1.2;
+    }
+
+    .LiveHand {
+        top: -15%;
+        left: 50%;
+        transform: translate(-50%, -15%) rotateY(180deg);
+        width: 50%;
+    }
+
+    @keyframes LiveHand {
+        0% {
+            scale: 1;
+        }
+
+        50% {
+            scale: 1.02;
+        }
+
+        100% {
+            scale: 1;
+        }
+
+    }
+
+    /* ----------------------> Live Hand < */
+
+    /* ---------------- > Authentication < */
+    .Authentication {
+        width: 100%;
+        transform: translateX(0%) translateY(-100%);
+    }
+
+    #BG_2.show .Authentication {
+        transform: translateX(0%) translateY(0%);
+    }
+
+    /* ---------------- > Authentication < */
+
+}
+
+/* ------------------------------------------ >> L mobile << */
+
+/* ------------------------------------------ >> S mobile << */
+@media screen and (max-width: 320px) {}
+
+/* ------------------------------------------ >> S mobile << */
+
+/* ============================================================ >> Media Query << */

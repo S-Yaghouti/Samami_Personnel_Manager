@@ -153,19 +153,28 @@ function StepOne() {
   //
   // ----------------------------------- > div <
   //
+  // -------------------------------- > Circle <
+  const ShadowCircle = document.createElement("div");
+  ShadowCircle.classList.add("ShadowCircle");
+  //
+  // ------------------------- Append >>
+  Authentication.appendChild(ShadowCircle);
+  // ------------------------- Append <<
+  // -------------------------------- > Circle <
+  //
   // --------------------------------- > Feild <
   //
   // ---------------------- Varibels >
-  const FeildID = "";
+  const FeildID = "PhoneNumberFeild";
   const Icon = "";
-  const Placeholder = "enter phone number";
+  const Placeholder = "0900 000 0000";
   // ---------------------- Varibels <
   //
   // ---------------------- CallBack >
   const PhoneFeild = Field(
-    "",
-    false,
-    "",
+    "PhoneNumber",
+    true,
+    "Phone Number",
     false,
     FeildID,
     Icon,

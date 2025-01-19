@@ -38,7 +38,10 @@
     --deep-blue25: #000a984c;
     --gold: #E6A600;
     --white: #E6E6FA;
+    --white50: #e6e6fa7f;
+    --white25: #e6e6fa4f;
     --black: #282828;
+    --black75: #282828be;
     --shadow: rgba(0, 0, 0, 0.15)
 }
 
@@ -50,77 +53,22 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
-    font-family: 'Roboto', serif;
+    font-family: 'Passion One', serif;
     overflow: hidden;
 }
 
 /* ---------------------------------------------- >> All Father << */
 
-/* --------------------------------------------------- >> Feild << */
-.FeildContainer {
-    width: 100%;
+/* -------------------------------------------------- >> Column << */
+.Column {
     display: flex;
-    gap: clamp(0.5rem, 1vw, 2rem);
     flex-direction: column;
     align-items: center;
-    transition: all 0.5s;
+    gap: 2rem;
 }
 
-.FeildContainer.change {
-    opacity: 0;
-    scale: 0.7;
-    transition: all 0.5;
-}
+/* -------------------------------------------------- >> Column << */
 
-.FeildLabel {
-    font-size: clamp(0.85rem, 1.2vw, 3rem);
-}
-
-.Feild {
-    width: 100%;
-    height: clamp(3rem, 4vw, 8rem);
-    position: relative;
-    background-color: var(--deep-blue);
-    border-radius: clamp(10px, 0.5vw, 20px);
-    transition: all 0.5s;
-    pointer-events: auto;
-}
-
-.Feild.error {
-    transition: all 0.5s;
-    background-color: red;
-    pointer-events: none;
-}
-
-.FeildInput {
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    font-family: 'Roboto', serif;
-    text-align: center;
-    transition: all 0.5s;
-    z-index: 1;
-    font-size: clamp(0.85rem, 1.2vw, 3rem);
-}
-
-.FeildInput::placeholder {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: clamp(0.7rem, 0.85vw, 2rem);
-}
-
-.FeildIcon {
-    position: absolute;
-    left: 5%;
-    top: 50%;
-    transform: translate(-5%, -50%);
-    font-size: clamp(1rem, 1.5vw, 7rem);
-    color: white;
-}
-
-/* --------------------------------------------------- >> Feild << */
 
 /* ================================================================== >> Basic << */
 
@@ -235,6 +183,75 @@ body {
 
 /* --------------------------------------------- >> Live Hand << */
 
+/* ------------------------------------------------- >> Feild << */
+.FieldContainer {
+    width: 100%;
+    display: flex;
+    gap: clamp(0.5rem, 1vw, 2rem);
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s;
+}
+
+.FieldContainer.change {
+    opacity: 0;
+    scale: 0.7;
+    transition: all 0.5;
+}
+
+.FieldLabel {
+    font-size: clamp(1.1rem, 1.5vw, 3rem);
+    color: var(--white);
+}
+
+.Field {
+    width: 80%;
+    height: clamp(3rem, 4vw, 8rem);
+    position: relative;
+    transition: all 0.5s;
+    pointer-events: auto;
+    border: 2px solid transparent;
+    border-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    border-image-slice: 1;
+    font-family: "Roboto", serif;
+}
+
+.Field.error {
+    transition: all 0.5s;
+    background-color: red;
+    pointer-events: none;
+}
+
+.FieldInput {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: 'Roboto', serif;
+    text-align: center;
+    transition: all 0.5s;
+    z-index: 1;
+    font-size: clamp(0.85rem, 1.2vw, 3rem);
+}
+
+.FieldInput::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: clamp(0.75rem, 1vw, 2rem);
+}
+
+.FieldIcon {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translate(-5%, -50%);
+    font-size: clamp(1rem, 1.5vw, 7rem);
+    color: white;
+}
+
+/* ------------------------------------------------- >> Feild << */
+
 /* ---------------------------------------- >> Authentication << */
 .Authentication {
     width: 50%;
@@ -273,6 +290,74 @@ body {
 
 /* --------------------------- > Title < */
 
+/* -------------------------- > Circle < */
+.ShadowCircle {
+    width: 50%;
+    height: 50%;
+    border-radius: 100%;
+    filter: blur(50px);
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    background: radial-gradient(circle, var(--white25), transparent);
+    z-index: -1;
+}
+
+/* -------------------------- > Circle < */
+
+/* ------------------------ > Step One < */
+#StepOne {
+    width: 100%;
+    margin: auto 0px;
+}
+
+/* ------------------------ > Step One < */
+
+/* ----------------------------- > BTN < */
+.BTN {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    gap: clamp(0.5rem, 1vw, 2rem);
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    border-radius: clamp(0.5rem, 0.65vw, 1.5rem);
+    padding: clamp(0.85rem, 1vw, 3rem) clamp(0.85rem, 1vw, 3rem);
+    color: var(--black75);
+    cursor: pointer;
+    transition: all 0.5s;
+    pointer-events: auto;
+    font-size: clamp(1rem, 1.3vw, 2.5rem);
+}
+
+.BTN.error {
+    pointer-events: none;
+    transition: all 0.5s;
+    color: white;
+    background-color: red;
+}
+
+.BTN:hover {
+    transition: all 0.5s;
+    color: var(--black);
+}
+
+.BTN:active {
+    transition: all 0.5s;
+    color: var(--black);
+}
+
+#OTP_Back {
+    margin: 0px auto 0px clamp(0.75rem, 1.5vw, 3rem);
+}
+
+#PhoneSubmit {}
+
+
+/* ----------------------------- > BTN < */
+
 /* ---------------------------------------- >> Authentication << */
 
 /* ================================================================ >> Layer 2 << */
@@ -305,7 +390,7 @@ body {
     /* ------------- > Hexagon Wallpaper < */
     .HexagonWallpaper {
         width: 100%;
-        height: 50%;
+        height: 40%;
         transform: translateX(0%) translateY(-80%);
         -webkit-mask-image: linear-gradient(to bottom, var(--deep-blue25), rgba(0, 0, 0, 0));
         mask-image: linear-gradient(to bottom, var(--deep-blue25), rgba(0, 0, 0, 0));
@@ -377,6 +462,14 @@ body {
     }
 
     /* ---------------- > Authentication < */
+
+    /* ------------------------ > Circle < */
+    .ShadowCircle {
+        width: 80%;
+        height: 80%;
+    }
+
+    /* ------------------------ > Circle < */
 
 }
 

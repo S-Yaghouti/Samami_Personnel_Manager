@@ -50,6 +50,7 @@ export function BTN(
   //
   // ------------------------------------------------ >> Text <<
   const BTNTEXT = document.createElement("span");
+  BTNTEXT.classList.add("BTNTEXT");
   //
   // -------------------------------- > TextContent <
   BTNTEXT.textContent = Text;
@@ -65,6 +66,7 @@ export function BTN(
   //
   // ------------------------------------------------ >> Icon <<
   const BTNICON = document.createElement("iconify-icon");
+  BTNICON.classList.add("BTNICON");
   //
   // --------------------------------- > Icon Value <
   BTNICON.setAttribute("icon", Icon);

@@ -109,6 +109,7 @@ export function Field(
     //
     FieldInput = document.createElement("input");
     FieldInput.classList.add("FieldInput");
+    FieldInput.autocomplete = "off";
     FieldInput.id = FieldID;
     //
     // ------------------- setAttribute >>

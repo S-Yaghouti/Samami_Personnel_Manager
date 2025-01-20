@@ -38,10 +38,13 @@
     --deep-blue25: #000a984c;
     --gold: #E6A600;
     --white: #E6E6FA;
+    --white75: #e6e6fabe;
     --white50: #e6e6fa7f;
     --white25: #e6e6fa4f;
     --black: #282828;
     --black75: #282828be;
+    --black50: #28282880;
+    --black25: #28282842;
     --shadow: rgba(0, 0, 0, 0.15)
 }
 
@@ -61,14 +64,32 @@ body {
 
 /* -------------------------------------------------- >> Column << */
 .Column {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    justify-content: center;
+    gap: 1rem;
+    /* margin: auto 0px; */
+    scale: 0;
+    transition: all 0.5s;
+}
+
+.Column.show {
+    scale: 1;
 }
 
 /* -------------------------------------------------- >> Column << */
 
+/* ----------------------------------------------------- >> Row << */
+.Row {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+}
+
+/* ----------------------------------------------------- >> Row << */
 
 /* ================================================================== >> Basic << */
 
@@ -193,20 +214,22 @@ body {
     transition: all 0.5s;
 }
 
-.FieldContainer.change {
-    opacity: 0;
-    scale: 0.7;
-    transition: all 0.5;
-}
-
 .FieldLabel {
-    font-size: clamp(1.1rem, 1.5vw, 3rem);
+    font-size: clamp(1.2rem, 1.5vw, 3rem);
     color: var(--white);
 }
 
+.FieldContainer.green .FieldLabel {
+    color: rgba(0, 255, 0, 0.6);
+}
+
+.FieldContainer.red .FieldLabel {
+    color: rgba(255, 0, 0, 1);
+}
+
 .Field {
-    width: 80%;
-    height: clamp(3rem, 4vw, 8rem);
+    width: 90%;
+    height: clamp(3.5rem, 4vw, 8rem);
     position: relative;
     transition: all 0.5s;
     pointer-events: auto;
@@ -216,10 +239,14 @@ body {
     font-family: "Roboto", serif;
 }
 
-.Field.error {
-    transition: all 0.5s;
-    background-color: red;
-    pointer-events: none;
+.FieldContainer.green .Field {
+    border-image: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.5), transparent);
+    border-image-slice: 1;
+}
+
+.FieldContainer.red .Field {
+    border-image: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.5), transparent);
+    border-image-slice: 1;
 }
 
 .FieldInput {
@@ -233,21 +260,22 @@ body {
     text-align: center;
     transition: all 0.5s;
     z-index: 1;
-    font-size: clamp(0.85rem, 1.2vw, 3rem);
+    font-size: clamp(0.95rem, 1.2vw, 3rem);
+}
+
+.FieldContainer.green .FieldInput {
+    color: rgba(0, 255, 0, 1);
+    pointer-events: none;
+}
+
+.FieldContainer.red .FieldInput {
+    color: rgba(255, 0, 0, 1);
+    pointer-events: none;
 }
 
 .FieldInput::placeholder {
     color: rgba(255, 255, 255, 0.5);
-    font-size: clamp(0.75rem, 1vw, 2rem);
-}
-
-.FieldIcon {
-    position: absolute;
-    left: 5%;
-    top: 50%;
-    transform: translate(-5%, -50%);
-    font-size: clamp(1rem, 1.5vw, 7rem);
-    color: white;
+    font-size: clamp(0.85rem, 1vw, 2rem);
 }
 
 /* ------------------------------------------------- >> Feild << */
@@ -302,17 +330,20 @@ body {
     transform: translate(-50%, -60%);
     background: radial-gradient(circle, var(--white25), transparent);
     z-index: -1;
+    transition: all 0.5s;
+}
+
+.ShadowCircle.green {
+    transition: all 0.5s;
+    background: radial-gradient(circle, rgba(0, 255, 0, 0.6), transparent);
+}
+
+.ShadowCircle.red {
+    transition: all 0.5s;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.4), transparent);
 }
 
 /* -------------------------- > Circle < */
-
-/* ------------------------ > Step One < */
-#StepOne {
-    width: 100%;
-    margin: auto 0px;
-}
-
-/* ------------------------ > Step One < */
 
 /* ----------------------------- > BTN < */
 .BTN {
@@ -322,39 +353,49 @@ body {
     gap: clamp(0.5rem, 1vw, 2rem);
     align-items: center;
     justify-content: center;
-    background-color: var(--white);
     border-radius: clamp(0.5rem, 0.65vw, 1.5rem);
     padding: clamp(0.85rem, 1vw, 3rem) clamp(0.85rem, 1vw, 3rem);
-    color: var(--black75);
     cursor: pointer;
     transition: all 0.5s;
     pointer-events: auto;
     font-size: clamp(1rem, 1.3vw, 2.5rem);
 }
 
-.BTN.error {
+.BTN.green {
     pointer-events: none;
-    transition: all 0.5s;
-    color: white;
-    background-color: red;
+    background-color: rgba(0, 255, 0, 0.6) !important;
 }
 
-.BTN:hover {
+.BTN.red {
+    pointer-events: none;
     transition: all 0.5s;
-    color: var(--black);
+    color: var(--white) !important;
+    background-color: #FF0000 !important;
 }
 
 .BTN:active {
     transition: all 0.5s;
+    scale: 0.9;
+}
+
+#BackBTN {
+    flex-direction: row-reverse;
+    background-color: transparent;
+    color: var(--white75);
+}
+
+#BackBTN:Hover {
+    color: var(--white);
+}
+
+#SubmitBTN {
+    background-color: var(--white);
+    color: var(--black75);
+}
+
+#SubmitBTN:hover {
     color: var(--black);
 }
-
-#OTP_Back {
-    margin: 0px auto 0px clamp(0.75rem, 1.5vw, 3rem);
-}
-
-#PhoneSubmit {}
-
 
 /* ----------------------------- > BTN < */
 
@@ -412,7 +453,7 @@ body {
     /* ----------------------> Live Hand < */
     .LiveHandContainer {
         width: 100%;
-        height: 25%;
+        height: 35%;
         transform: translateX(0%) translateY(200%);
     }
 
@@ -430,8 +471,8 @@ body {
     .LiveHand {
         top: -15%;
         left: 50%;
-        transform: translate(-50%, -15%) rotateY(180deg);
-        width: 50%;
+        transform: translate(-50%, -30%) rotateY(180deg);
+        width: 80%;
     }
 
     @keyframes LiveHand {
@@ -460,6 +501,11 @@ body {
     #BG_2.show .Authentication {
         transform: translateX(0%) translateY(0%);
     }
+
+    .Field {
+        width: 100%;
+    }
+
 
     /* ---------------- > Authentication < */
 

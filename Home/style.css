@@ -1,0 +1,271 @@
+/* ================================================================ >> Imports << */
+@import url('https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* ================================================================ >> Imports << */
+
+/* ================================================================== >> Basic << */
+
+/* ------------------------------------------------------- >> * << */
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    user-select: none;
+    text-decoration: none;
+}
+
+/* ------------------------------------------------------- >> * << */
+
+/* -------------------------------------------- >> scroll style << */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0);
+}
+
+
+/* -------------------------------------------- >> scroll style << */
+
+/* ---------------------------------------------------- >> font << */
+@font-face {
+    font-family: vazir;
+    src: url("./../assets/font/Vazir-Regular-FD.ttf");
+}
+
+@font-face {
+    font-family: vazirB;
+    src: url("./../assets/font/Vazir-Bold-FD.ttf");
+}
+
+/* ---------------------------------------------------- >> font << */
+
+/* ---------------------------------------------------- >> root << */
+:root {
+    --light-blue: #0077E9;
+    --deep-blue: #000B98;
+    --deep-blue25: #000a984c;
+    --gold: #E6A600;
+    --white: #E6E6FA;
+    --white75: #e6e6fabe;
+    --white50: #e6e6fa7f;
+    --white25: #e6e6fa4f;
+    --black: #282828;
+    --black75: #282828be;
+    --black50: #28282880;
+    --black25: #28282842;
+    --shadow: rgba(0, 0, 0, 0.15)
+}
+
+/* ---------------------------------------------------- >> root << */
+
+/* ---------------------------------------------- >> All Father << */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    font-family: 'Comic Sans MS', vazir, serif;
+    overflow: hidden;
+}
+
+/* ---------------------------------------------- >> All Father << */
+
+/* ================================================================== >> Basic << */
+
+/* ================================================================ >> Layer 1 << */
+.Layer1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    z-index: 0;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_1 {
+    width: 100%;
+    height: 200%;
+    position: relative;
+    background-image: linear-gradient(45deg, #4D3FA6, var(--deep-blue), #4D3FA6);
+    animation: LiveBG 60s ease infinite;
+    background-size: 100% 400%;
+}
+
+@keyframes LiveBG {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 0% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ================================================================ >> Layer 1 << */
+
+/* ================================================================ >> Layer 2 << */
+.Layer2 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    z-index: 1;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_2 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ================================================================ >> Layer 2 << */
+
+/* ================================================================ >> Layer 3 << */
+.Layer3 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -100%;
+    z-index: 2;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_3 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ================================================================ >> Layer 3 << */
+
+/* ================================================================ >> Layer 4 << */
+.Layer4 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -100%;
+    z-index: 3;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_4 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ================================================================ >> Layer 4 << */
+
+/* ================================================================ >> Layer 5 << */
+.Layer5 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 100%;
+    z-index: 4;
+    transition: all 0.5s;
+}
+
+.Layer5.show {
+    top: 0%;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_5 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ----------------------------------------------- >> Loading << */
+.Loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+.LoadingText {
+    font-size: clamp(6rem, 10vw, 15rem);
+    color: var(--gold);
+    font-family: "Passion One", serif;
+    margin: auto 0px;
+}
+
+.LoadingIcon {
+    font-size: clamp(4rem, 6vw, 12rem);
+    color: var(--white);
+}
+
+/* ----------------------------------------------- >> Loading << */
+
+/* ------------------------------------------ >> Notification << */
+
+/* ------------------------------------------ >> Notification << */
+
+/* ================================================================ >> Layer 5 << */
+
+/* ============================================================ >> Media Query << */
+
+/* ------------------------------------------------ >> 4K << */
+@media screen and (min-width: 1800px) {}
+
+/* ------------------------------------------------ >> 4K << */
+
+/* ------------------------------------------ >> L Laptop << */
+@media screen and (max-width: 1440px) {}
+
+/* ------------------------------------------ >> L Laptop << */
+
+/* ------------------------------------------ >> S Laptop << */
+@media screen and (max-width: 1024px) {}
+
+/* ------------------------------------------ >> S Laptop << */
+
+/* -------------------------------------------- >> tablet << */
+@media screen and (max-width: 768px) {}
+
+/* -------------------------------------------- >> tablet << */
+
+/* ------------------------------------------ >> L mobile << */
+@media screen and (max-width: 425px) {}
+
+/* ------------------------------------------ >> L mobile << */
+
+/* ------------------------------------------ >> S mobile << */
+@media screen and (max-width: 320px) {}
+
+/* ------------------------------------------ >> S mobile << */
+
+/* ============================================================ >> Media Query << */

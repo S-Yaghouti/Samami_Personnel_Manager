@@ -1,57 +1,10 @@
 // ======================================================================= >> Imports <<
 //
-// ------------------------------------------------------- >> Convertor <<
-import { EnToFa } from "../Perisian_Convertor/perisan_convertor.js";
-// ------------------------------------------------------- >> Convertor <<
-//
 // ------------------------------------------------------------- >> BTN <<
-import { BTN } from "../BTN/BTN.js";
+import { BTN } from "../Widgets/BTN/BTN.js";
 // ------------------------------------------------------------- >> BTN <<
 //
 // ======================================================================= >> Imports <<
-//
-// ================================================================== >> Btn Function <<
-function Btn(ID, Text, Icon, Listener) {
-  //
-  // -------------------------------------------- >> Btn Container <<
-  const PaginationBtn = document.createElement("div");
-  PaginationBtn.classList.add("PaginationBtn");
-  PaginationBtn.id = ID;
-  // -------------------------------------------- >> Btn Container <<
-  //
-  // ------------------------------------------------------- >> EL <<
-  PaginationBtn.addEventListener("click", () => {
-    Listener();
-  });
-  // ------------------------------------------------------- >> EL <<
-  //
-  // ------------------------------------------------- >> Btn Text <<
-  const PaginationBtnText = document.createElement("span");
-  PaginationBtnText.classList.add("PaginationBtnText");
-  PaginationBtnText.textContent = Text;
-  // ------------------------------------------------- >> Btn Text <<
-  //
-  // ------------------------------------------------- >> Btn Icon <<
-  const PaginationBtnIcon = document.createElement("iconify-icon");
-  PaginationBtnIcon.classList.add("PaginationBtnIcon");
-  //
-  // ---------------------------------- > Icon Value <
-  PaginationBtnIcon.setAttribute("icon", `${Icon}`);
-  // ---------------------------------- > Icon Value <
-  //
-  // ------------------------------------------------- >> Btn Icon <<
-  //
-  // ------------------------------------------------------- >> AP <<
-  PaginationBtn.appendChild(PaginationBtnText);
-  //
-  PaginationBtn.appendChild(PaginationBtnIcon);
-  // ------------------------------------------------------- >> AP <<
-  //
-  // --------------------------------------------------- >> Return <<
-  return PaginationBtn;
-  // --------------------------------------------------- >> Return <<
-}
-// ================================================================== >> Btn Function <<
 //
 // ==================================================================== >> Pagination <<
 export function paginationModule(

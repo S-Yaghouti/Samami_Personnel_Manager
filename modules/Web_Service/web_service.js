@@ -1,43 +1,7 @@
-// ========================================= >> Delete <<
-async function DeleteData(url) {
-  try {
-    const response = await fetch(url, {
-      method: "DELETE",
-      // headers: {
-      //   token: getCookie("token") || "",
-      // },
-    });
-
-    // >> Check if the response status is OK (200) <<
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    // >> Check if the response status is OK (200) <<
-
-    // >> response data <<
-    const responseData = await response.json();
-    const result = {
-      status: response.status,
-      data: responseData,
-    };
-    return result;
-    // >> response data <<
-
-    // >> catch error <<
-  } catch (error) {
-    throw new Error(`Error fetching data: ${error.message}`);
-  }
-  // >> catch error <<
-}
-
-// >> export module <<
-export { DeleteData };
-// >> export module <<
-
-// ========================================= >> Delete <<
-
-// ===================================== >> fetch Data <<
-async function fetchData(url) {
+// ====================================================================== >> GET <<
+//
+// ---------------------------------------------------------- >> async <<
+async function GET(url) {
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -71,15 +35,18 @@ async function fetchData(url) {
   }
   // >> catch error <<
 }
-
-// >> export module <<
-export { fetchData };
-// >> export module <<
-
-// ===================================== >> fetch Data <<
-
-// ===================================== >> post Data <<
-async function postData(url, data) {
+// ---------------------------------------------------------- >> async <<
+//
+// --------------------------------------------------------- >> export <<
+export { GET };
+// --------------------------------------------------------- >> export <<
+//
+// ====================================================================== >> GET <<
+//
+// ===================================================================== >> POST <<
+//
+// --------------------------------------------------------- >> async <<
+async function POST(url, data) {
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -104,15 +71,53 @@ async function postData(url, data) {
     // >> handle faild response <<
   }
 }
+// --------------------------------------------------------- >> async <<
+//
+// -------------------------------------------------------- >> export <<
+export { POST };
+// -------------------------------------------------------- >> export <<
+//
+// ===================================================================== >> POST <<
+//
+// =============================================================== >> POST Image <<
+//
+// --------------------------------------------------- >> async <<
+async function PostImage(url, data) {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      // headers: {
+      //   token: getCookie("token") || "",
+      // },
+      body: data,
+    });
 
-// >> export module <<
-export { postData };
-// >> export module <<
-
-// ===================================== >> post Data <<
-
-// ===================================== >> PUT Data <<
-async function PutData(url, data) {
+    // >> handle successs response <<
+    const responseData = await response.json();
+    const result = {
+      status: response.status,
+      data: responseData,
+    };
+    return result;
+    // >> handle successs response <<
+  } catch (error) {
+    // >> handle faild response <<
+    console.log(error);
+    // >> handle faild response <<
+  }
+}
+// --------------------------------------------------- >> async <<
+//
+// -------------------------------------------------- >> export <<
+export { PostImage };
+// -------------------------------------------------- >> export <<
+//
+// =============================================================== >> POST Image <<
+//
+// ====================================================================== >> PUT <<
+//
+// ---------------------------------------------------------- >> async <<
+async function PUT(url, data) {
   try {
     const response = await fetch(url, {
       method: "PUT",
@@ -137,38 +142,51 @@ async function PutData(url, data) {
     // >> handle faild response <<
   }
 }
-
-// >> export module <<
-export { PutData };
-// >> export module <<
-
-// ===================================== >> PUT Data <<
-
-// ===================================== >> post Image <<
-async function postImage(url, data) {
+// ---------------------------------------------------------- >> async <<
+//
+// --------------------------------------------------------- >> export <<
+export { PUT };
+// --------------------------------------------------------- >> export <<
+//
+// ====================================================================== >> PUT <<
+//
+// =================================================================== >> Delete <<
+//
+// ------------------------------------------------------- >> async <<
+async function DELETE(url) {
   try {
     const response = await fetch(url, {
-      method: "POST",
+      method: "DELETE",
       // headers: {
       //   token: getCookie("token") || "",
       // },
-      body: data,
     });
 
-    // >> handle successs response <<
+    // >> Check if the response status is OK (200) <<
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    // >> Check if the response status is OK (200) <<
+
+    // >> response data <<
     const responseData = await response.json();
     const result = {
       status: response.status,
       data: responseData,
     };
     return result;
-    // >> handle successs response <<
-  } catch (error) {
-    // >> handle faild response <<
-    console.log(error);
-    // >> handle faild response <<
-  }
-}
+    // >> response data <<
 
-export { postImage };
-// ===================================== >> post Image <<
+    // >> catch error <<
+  } catch (error) {
+    throw new Error(`Error fetching data: ${error.message}`);
+  }
+  // >> catch error <<
+}
+// ------------------------------------------------------- >> async <<
+//
+// ------------------------------------------------------ >> export <<
+export { DELETE };
+// ------------------------------------------------------ >> export <<
+//
+// =================================================================== >> Delete <<

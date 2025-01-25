@@ -9,7 +9,7 @@ import { Field } from "./modules/Widgets/Field/Field.js";
 // ------------------------------------------------------- >> Field <<
 //
 // ------------------------------------------------------- >> Fetch <<
-import { postData } from "./modules/Web_Service/web_service.js";
+import { POST } from "./modules/Web_Service/web_service.js";
 // ------------------------------------------------------- >> Fetch <<
 //
 // =================================================================== >> improts <<
@@ -25,6 +25,16 @@ const BG_1 = document.querySelector("#BG_1");
 const Layer2 = document.querySelector(".Layer2");
 const BG_2 = document.querySelector("#BG_2");
 // ------------------------------------------------------ >> layer 2 <<
+//
+// ------------------------------------------------------ >> layer 3 <<
+const Layer3 = document.querySelector(".Layer3");
+const BG_3 = document.querySelector("#BG_3");
+// ------------------------------------------------------ >> layer 3 <<
+//
+// ------------------------------------------------------ >> layer 4 <<
+const Layer4 = document.querySelector(".Layer4");
+const BG_4 = document.querySelector("#BG_4");
+// ------------------------------------------------------ >> layer 4 <<
 //
 // ==================================================================== >> Layers <<
 //
@@ -47,36 +57,48 @@ BG_1.appendChild(HexagonWallpaper);
 // ================================================================ >> Background <<
 //
 // ================================================================= >> Live Hand <<
-const LiveHandContainer = document.createElement("div");
-LiveHandContainer.classList.add("LiveHandContainer");
 //
-// ---------------------------------------------------- >> Append <<
-BG_2.appendChild(LiveHandContainer);
-// ---------------------------------------------------- >> Append <<
+// ---------------------------------------------------- >> Widget <<
+function LiveHande() {
+  //
+  // ------------------------------------------ > div <
+  const LiveHandContainer = document.createElement("div");
+  LiveHandContainer.classList.add("LiveHandContainer");
+  // ------------------------------------------ > div <
+  //
+  // --------------------------------------- > Append <
+  BG_2.appendChild(LiveHandContainer);
+  // --------------------------------------- > Append <
+  //
+  // --------------------------------------- > Cricle <
+  const Circle = document.createElement("div");
+  Circle.classList.add("Circle");
+  //
+  // ----------------------------- Append >>
+  LiveHandContainer.appendChild(Circle);
+  // ----------------------------- Append <<
+  //
+  // --------------------------------------- > Cricle <
+  //
+  // ------------------------------------------ > Img <
+  const LiveHand = document.createElement("img");
+  LiveHand.classList.add("LiveHand");
+  //
+  // ----------------------------------- src >>
+  LiveHand.src = "./assets/img/auth.png";
+  // ----------------------------------- src <<
+  //
+  // -------------------------------- Append >>
+  LiveHandContainer.appendChild(LiveHand);
+  // -------------------------------- Append >>
+  //
+  // ------------------------------------------ > Img <
+}
+// ---------------------------------------------------- >> Widget <<
 //
-// ---------------------------------------------------- >> Cricle <<
-const Circle = document.createElement("div");
-Circle.classList.add("Circle");
-//
-// ----------------------------------------- > Append <
-LiveHandContainer.appendChild(Circle);
-// ----------------------------------------- > Append <
-//
-// ---------------------------------------------------- >> Cricle <<
-//
-// ------------------------------------------------------- >> Img <<
-const LiveHand = document.createElement("img");
-LiveHand.classList.add("LiveHand");
-//
-// ----------------------------------------------- > src <
-LiveHand.src = "./assets/img/auth.png";
-// ----------------------------------------------- > src <
-//
-// -------------------------------------------- > Append <
-LiveHandContainer.appendChild(LiveHand);
-// -------------------------------------------- > Append <
-//
-// ------------------------------------------------------- >> Img <<
+// -------------------------------------------------------- >> CB <<
+LiveHande();
+// -------------------------------------------------------- >> CB <<
 //
 // ================================================================= >> Live Hand <<
 //
@@ -189,7 +211,7 @@ function StepOne() {
       // --------- Validator <<
       //
       // ----- State Manager >>
-      StateManager(Validation, PhoneFeild.widget, Submit.widget, 1, Column);
+      // StateManager(Validation, PhoneFeild.widget, Submit.widget, 1, Column);
       // ----- State Manager <<
       //
       // ------- Web Service >>
@@ -225,12 +247,18 @@ function StepOne() {
     let Validation = Validator(PhoneFeild, 1);
     // --------- Validator <<
     //
-    // ----- State Manager >>
-    StateManager(Validation, PhoneFeild.widget, Submit.widget, 1, Column);
-    // ----- State Manager <<
+    // ----------- Loading >>
+    if (Validation == true) {
+      Loading(1);
+    }
+    // ----------- Loading <<
     //
     // ------- Web Service >>
-    //
+    if (Validation == true) {
+      WebSerive(1, PhoneFeild.Input);
+    } else {
+      StateManager(Validation, PhoneFeild.widget, Submit.widget, Column);
+    }
     // ------- Web Service <<
     //
   }
@@ -563,26 +591,29 @@ function StepThree() {
 }
 // ------------------------------------------- >> Step Three <<
 //
-// -------------------------------------------- >> Validator <<
+// ============================================================ >> Authentication <<
+//
+// ================================================================= >> Validator <<
 function Validator(Field, State) {
   //
-  // -------------------- Variable >>
+  // ------------------------------------------------ >> Variable <<
   let IsValid = false;
-  // -------------------- Variable <<
+  // ------------------------------------------------ >> Variable <<
   //
-  // ----------------------- Input >>
+  // --------------------------------------------------- >> Input <<
   const fieldinput = Field.Input.value.trim();
-  // ----------------------- Input <<
+  // --------------------------------------------------- >> Input <<
   //
-  // -------------------- Patterns >>
+  // ------------------------------------------------ >> Patterns <<
   const phoneRegex = /^[0-9]{11}$/;
   const numberRegex = /^[0-9]{4}$/;
   const englishWordsRegex = /^[A-Za-z]+$/;
-  // -------------------- Patterns <<
+  // ------------------------------------------------ >> Patterns <<
   //
+  // -------------------------------------------------- >> switch <<
   switch (State) {
     //
-    // --------------------- Phone >>
+    // -------------------------------------- > Phone <
     case 1:
       //
       // Validation >
@@ -594,9 +625,9 @@ function Validator(Field, State) {
       // fill a value <
       //
       break;
-    // --------------------- Phone <<
+    // -------------------------------------- > Phone <
     //
-    // ----------------------- OTP >>
+    // ---------------------------------------- > OTP <
     case 2:
       //
       // Validation >
@@ -604,9 +635,9 @@ function Validator(Field, State) {
       // Validation <
       //
       break;
-    // ----------------------- OTP <<
+    // ---------------------------------------- > OTP <
     //
-    // -------------------- Signup >>
+    // ------------------------------------- > Signup <
     case 3:
       //
       // Validation >
@@ -614,19 +645,230 @@ function Validator(Field, State) {
       // Validation <
       //
       break;
-    // -------------------- Signup <<
+    // ------------------------------------- > Signup <
     //
   }
+  // -------------------------------------------------- >> switch <<
   //
-  // ---------------------- Return >>
+  // -------------------------------------------------- >> Return <<
   return IsValid;
-  // ---------------------- Return <<
+  // -------------------------------------------------- >> Return <<
   //
 }
-// -------------------------------------------- >> Validator <<
+// ================================================================= >> Validator <<
 //
-// ---------------------------------------- >> State Manager <<
-function StateManager(IsValid, Field, BTN, Status, Column) {
+// =================================================================== >> Loading <<
+function Loading(Status) {
+  //
+  // ------------------------------------------------------ >> Icon <<
+  const LoadingIcon = document.createElement("iconify-icon");
+  LoadingIcon.classList.add("LoadingIcon");
+  //
+  // -------------------------------------------- > Value <
+  LoadingIcon.setAttribute("icon", "svg-spinners:ring-resize");
+  // -------------------------------------------- > Value <
+  //
+  // ------------------------------------------------------ >> Icon <<
+  //
+  // -------------------------------------------------------- >> SM <<
+  //
+  // ------------------------------------------------ > add <
+  if (Status == 1) {
+    //
+    // ---------------------------------------- AC >>
+    BG_3.appendChild(LoadingIcon);
+    // ---------------------------------------- AC <<
+    //
+    // --------------------------------- add class >>
+    setTimeout(() => {
+      Layer3.classList.add("show");
+    }, 1);
+    // --------------------------------- add class <<
+    //
+  }
+  // ------------------------------------------------ > add <
+  //
+  // --------------------------------------------- > remove <
+  else if (Status == 2) {
+    //
+    // --------------------------- remove class >>
+    Layer3.classList.remove("show");
+    // --------------------------- remove class <<
+    //
+    // ------------------------------------- RC >>
+    setTimeout(() => {
+      BG_3.removeChild(LoadingIcon);
+    }, 500);
+    // ------------------------------------- RC <<
+    //
+  }
+  // --------------------------------------------- > remove <
+  //
+  // -------------------------------------------------------- >> SM <<
+  //
+}
+// =================================================================== >> Loading <<
+//
+// =============================================================== >> Web Service <<
+function WebSerive(Status, Field) {
+  //
+  // ------------------------------------------------- >> Feild <<
+  let FeildValue = Field.value.trim();
+  // ------------------------------------------------- >> Feild <<
+  //
+  // --------------------------------------------------- >> URL <<
+  //
+  // ---------------------------------------- > create <
+  let URL = "";
+  // ---------------------------------------- > create <
+  //
+  // -------------------------------------- > Send OTP <
+  if (Status == 1) {
+    URL == "https://personel.samami.co/auth/send-otp";
+  }
+  // -------------------------------------- > Send OTP <
+  //
+  // ------------------------------------ > Verify OTP <
+  else if (Status == 2) {
+    URL == "https://personel.samami.co/auth/verify-otp";
+  }
+  // ------------------------------------ > Verify OTP <
+  //
+  // ---------------------------------------- > Signup <
+  else if (Status == 3) {
+    URL == "https://personel.samami.co/user/signup";
+  }
+  // ---------------------------------------- > Signup <
+  //
+  // --------------------------------------------------- >> URL <<
+  //
+  // -------------------------------------------------- >> Data <<
+  //
+  // --------------------------------------- > create <
+  let Data = [];
+  // --------------------------------------- > create <
+  //
+  // ------------------------------------- > Send OTP <
+  if (Status == 1) {
+    Data = {
+      phone_number: FeildValue,
+    };
+  }
+  // ------------------------------------- > Send OTP <
+  //
+  // ----------------------------------- > Verify OTP <
+  else if (Status == 2) {
+    Data = {
+      code: FeildValue,
+      phone_number: phonenumber,
+    };
+  }
+  // ----------------------------------- > Verify OTP <
+  //
+  // --------------------------------------- > Signup <
+  else if (Status == 3) {
+    Data = {
+      username: FeildValue,
+      phone_number: phonenumber,
+    };
+  }
+  // --------------------------------------- > Signup <
+  //
+  // -------------------------------------------------- >> Data <<
+  //
+  // -------------------------------------------------- >> POST <<
+  //
+  // ---------------------------------------- > Phone <
+  if (Status == 1) {
+    //
+    POST(URL, Data)
+      .then((response) => {
+        //
+        // status 200 >>
+        if (response.status == 200) {
+        }
+        // status 200 <<
+        //
+        // status 409 >>
+        else if (response.status == 409) {
+        }
+        // status 409 <<
+        //
+        // else >>
+        else {
+        }
+        // else <<
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //
+  }
+  // ---------------------------------------- > Phone <
+  //
+  // ------------------------------------------ > OTP <
+  else if (Status == 2) {
+    //
+    POST(URL, Data)
+      .then((response) => {
+        //
+        // status 200 >>
+        if (response.status == 200) {
+        }
+        // status 200 <<
+        //
+        // status 409 >>
+        else if (response.status == 409) {
+        }
+        // status 409 <<
+        //
+        // else >>
+        else {
+        }
+        // else <<
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //
+  }
+  // ------------------------------------------ > OTP <
+  //
+  // --------------------------------------- > Signup <
+  else if (Status == 3) {
+    //
+    POST(URL, Data)
+      .then((response) => {
+        //
+        // status 200 >>
+        if (response.status == 200) {
+        }
+        // status 200 <<
+        //
+        // status 409 >>
+        else if (response.status == 409) {
+        }
+        // status 409 <<
+        //
+        // else >>
+        else {
+        }
+        // else <<
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //
+  }
+  // --------------------------------------- > Signup <
+  //
+  // -------------------------------------------------- >> POST <<
+  //
+}
+// =============================================================== >> Web Service <<
+//
+// ============================================================= >> State Manager <<
+function StateManager(IsValid, Field, BTN, Column) {
   //
   // -------------------------- > Correct <
   if (IsValid == true) {
@@ -656,20 +898,6 @@ function StateManager(IsValid, Field, BTN, Status, Column) {
       ShadowCircle.classList.remove("green");
       // Remove Shadow Class
       //
-      // Manage Next Stage
-      if (Status == 1) {
-        StepTwo();
-      }
-      //
-      else if (Status == 2) {
-        StepThree();
-      }
-      //
-      else if (Status == 3) {
-        //
-      }
-      // Manage Next Stage
-      //
     }, 1100);
     // ----- Call Next Feild <<
     //
@@ -693,65 +921,7 @@ function StateManager(IsValid, Field, BTN, Status, Column) {
   // ---------------------------- > False <
   //
 }
-// ---------------------------------------- >> State Manager <<
-//
-// ------------------------------------------ >> Web Service <<
-function WebSerive(Status, Field) {
-  //
-  // -------------------------- > Variables <
-  let FeildValue = Field.value.trim();
-  const ApiAddress = "";
-  let Data = [];
-  // -------------------------- > Variables <
-  //
-  // -------------------------- > Fill Data <
-  //
-  // -------------  >>
-  if (Status == 1) {
-    Data = {
-      phone_number: FeildValue,
-    };
-  } else if (Status == 2) {
-    Data = {
-      phone_number: phonenumber,
-      code: FeildValue,
-    };
-  } else if (Status == 3) {
-    Data = {
-      phone_number: phonenumber,
-      user_name: FeildValue,
-    };
-  }
-  // -------------------------- > Fill Data <
-  //
-  // -------------------------- > Post Data <
-  // postData("", Data)
-  //   .then((response) => {
-  //     //
-  //     // status 200 >>
-  //     if (response.status == 200) {
-  //     }
-  //     // status 200 <<
-  //     //
-  //     // status 409 >>
-  //     else if (response.status == 409) {
-  //     }
-  //     // status 409 <<
-  //     //
-  //     // else >>
-  //     else {
-  //     }
-  //     // else <<
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // -------------------------- > Post Data <
-  //
-}
-// ------------------------------------------ >> Web Service <<
-//
-// ============================================================ >> Authentication <<
+// ============================================================= >> State Manager <<
 //
 // ======================================================================= >> DOM <<
 window.addEventListener("DOMContentLoaded", () => {

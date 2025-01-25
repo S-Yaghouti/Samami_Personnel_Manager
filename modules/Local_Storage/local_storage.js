@@ -1,59 +1,48 @@
-// ================================================================= >> Minute Cookie <<
-export function setMinuteCookie(name, value, expirationMinutes) {
-  // >> expiration
-  const expirationDate = new Date();
-  expirationDate.setTime(
-    expirationDate.getTime() + expirationMinutes * 60 * 1000
-  );
-  // >> expiration
-
-  // >> set cookie <<
-  const cookieValue =
-    value + "; expires=" + expirationDate.toUTCString() + "; path=/";
-
-  document.cookie = name + "=" + cookieValue;
-  // >> set cookie <<
-}
-// ================================================================= >> Minute Cookie <<
+// ==================================================================== >> Definiation <<
 //
-// ================================================================== >> Month Cookie <<
-export function setMonthCookie(name, value, expirationMonths) {
-  // ----------------------------------------------- >> expiration <<
-  const expirationDate = new Date();
-  expirationDate.setMonth(expirationDate.getMonth() + expirationMonths);
-  // ----------------------------------------------- >> expiration <<
-
-  // ----------------------------------------------- >> set cookie <<
-  const cookieValue =
-    value + "; expires=" + expirationDate.toUTCString() + "; path=/";
-  document.cookie = name + "=" + cookieValue;
-  // ----------------------------------------------- >> set cookie <<
-}
-// ================================================================== >> Month Cookie <<
+// LS = > { Local Storage }
 //
-// ================================================================= >> Simple Cookie <<
-export function setSimpleCookie(name, value) {
-  document.cookie = `${name}=${value};path=/`;
-}
-// ================================================================= >> Simple Cookie <<
+// ==================================================================== >> Definiation <<
 //
-// ==================================================================== >> Get Cookie <<
-export function getCookie(name) {
-  const cookies = document.cookie.split("; ");
-  for (const cookie of cookies) {
-    const [cookieName, cookieValue] = cookie.split("=");
-    if (cookieName === name) {
-      return cookieValue;
-    }
-  }
-  // > in case cookie not find <
-  return null;
-  // > in case cookie not find <
+// ========================================================================= >> Set LS <<
+export function setLocalStorage(key, value) {
+  //
+  localStorage.setItem(key, value);
+  //
 }
-// ==================================================================== >> Get Cookie <<
+// ========================================================================= >> Set LS <<
 //
-// ================================================================= >> Remove Cookie <<
-export function deleteCookie(name) {
-  document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+// ==================================================================== >> Retrieve LS <<
+export function RetrieveLocalStorage(key) {
+  //
+  // ----------------------------------------------------- >> Get LS <<
+  let Item = localStorage.getItem(key);
+  // ----------------------------------------------------- >> Get LS <<
+  //
+  // ----------------------------------------------------- >> return <<
+  return Item;
+  // ----------------------------------------------------- >> return <<
+  //
 }
-// ================================================================= >> Remove Cookie <<
+// ==================================================================== >> Retrieve LS <<
+//
+// ====================================================================== >> Remove LS <<
+export function RemoveLocalStorage(key) {
+  //
+  // ----------------------------------------------------- >> Operator <<
+  localStorage.removeItem(key);
+  // ----------------------------------------------------- >> Operator <<
+  //
+}
+// ====================================================================== >> Remove LS <<
+//
+// ======================================================================= >> Clear LS <<
+export function ClearLocalStorage() {
+  //
+  // ------------------------------------------------------ >> Operator <<
+  localStorage.clear();
+  // ------------------------------------------------------ >> Operator <<
+  //
+}
+// ======================================================================= >> Clear LS <<
+//

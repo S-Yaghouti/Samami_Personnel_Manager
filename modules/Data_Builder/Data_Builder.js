@@ -5,7 +5,7 @@ import { paginationModule } from "./pagination.js";
 // ---------------------------------------------------- >> pagination <<
 //
 // --------------------------------------------------------- >> fetch <<
-import { fetchData } from "../Fetch_Module/fetch_module.js";
+import { GET } from "./../Web_Service/web_service.js";
 // --------------------------------------------------------- >> fetch <<
 //
 // ===================================================================== >> imports <<
@@ -69,7 +69,7 @@ export function DataBuilder(
   // --------------------------------------------- > V <
   //
   // ------------------------------------------- > P B <
-  fetchData(`${InforamtionApi}?${Filter}`)
+  GET(`${InforamtionApi}?${Filter}`)
     .then((response) => {
       //
       // -------------- > Calculate Total Page <
@@ -144,7 +144,7 @@ export function DataBuilder(
     // ------------------------------------- V >>
     //
     // ------------------------------------- B >>
-    fetchData(api)
+    GET(api)
       // ---------------- Builder Response <
       .then((response) => {
         //

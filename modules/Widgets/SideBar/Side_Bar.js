@@ -1,187 +1,343 @@
-// ========================================================== >> Definitions <<
-
-// SBC = > ( Side Bar Container )
-
-// SB = > ( Side Bar )
-
-// OB = > ( Option Btn )
-
-// SBB = > ( Side Bar Btn )
-
-// AP = > ( Append Child )
-
-// EL = > ( Event Listener )
-
-// BG = > ( Background )
-
-// B = > ( Button )
-
-// I = > ( Icon )
-
-// T = > ( Text )
-
-// D = > ( Divider )
-
-// AB = > ( Addtional Btn )
-
+// ============================================================== >> Imports <<
+//
+// ---------------------------------------------------- >> BTN <<
+import { BTN } from "./../BTN/BTN.js";
+// ---------------------------------------------------- >> BTN <<
+//
+// ============================================================== >> Imports <<
+//
 // ========================================================== >> Definitions <<
 //
-// =============================================================== >> Module <<
-export function SideBar(
-  LogoAddress,
+// V => { Variables }
+//
+// CB => { CallBack }
+//
+// SM => { State Management }
+//
+// CB => { Call Back }
+//
+// L => { Lsitener }
+//
+// AC => { Append Child }
+//
+// RC => { Remove Child }
+//
+// ========================================================== >> Definitions <<
+//
+// ============================================================ >> Variables <<
+const Layer3 = document.querySelector(".Layer3");
+const BG_3 = document.querySelector("#BG_3");
+// ============================================================ >> Variables <<
+//
+// =============================================================== >> Widget <<
+export function Sidebar(
+  Logo,
+  OptionIcons,
+  OptionTexts,
+  OptionListeners,
   UserInfo,
-  OptionIconList,
-  OptionTextList,
-  OptionListener,
-  AdttionalIconList,
-  AddtionalTextList,
-  AddtionalBtnListener
+  ExitListener
 ) {
-  // ---------------------------------------------------- >> SB <<
+  //
+  // --------------------------------------------------- >> div <<
   const Sidebar = document.createElement("div");
   Sidebar.classList.add("Sidebar");
+  // --------------------------------------------------- >> div <<
   //
-  // ------------------------------------------- > Logo <
-  const SideBarLogo = document.createElement("img");
-  SideBarLogo.classList.add("SideBarLogo");
-  SideBarLogo.src = LogoAddress;
+  // -------------------------------------------------- >> Logo <<
+  const SidebarLogo = document.createElement("div");
+  SidebarLogo.classList.add("SidebarLogo");
   //
-  Sidebar.appendChild(SideBarLogo);
-  // ------------------------------------------- > Logo <
+  // ------------------------------------------- > AC <
+  Sidebar.appendChild(SidebarLogo);
+  // ------------------------------------------- > AC <
   //
-  // ------------------------------------------- > Logo <
+  // ------------------------------------------ > img <
+  const SiderbarLogoImage = document.createElement("img");
+  SiderbarLogoImage.classList.add("SiderbarLogoImage");
   //
-  // ---------------------------------------------- > D <
-  const SiderBarDivider1 = document.createElement("div");
-  SiderBarDivider1.classList.add("SiderBarDivider");
+  // ----------------------------------- src >>
+  SiderbarLogoImage.src = Logo;
+  // ----------------------------------- src <<
   //
-  // ----------------------------------------- AP >
+  // ------------------------------------ AC >>
+  SidebarLogo.appendChild(SiderbarLogoImage);
+  // ------------------------------------ AC <<
   //
-  // > AP <
-  Sidebar.appendChild(SiderBarDivider1);
-  // > AP <
+  // ------------------------------------------ > img <
   //
-  // ----------------------------------------- AP <
+  // -------------------------------------------------- >> Logo <<
   //
-  // ---------------------------------------------- > D <
+  // ----------------------------------------------- >> Divider <<
+  const SidebarDivider1 = document.createElement("div");
+  SidebarDivider1.classList.add("SidebarDivider");
   //
-  // --------------------------------------------- > OB <
+  // ---------------------------------------- > AC <
+  Sidebar.appendChild(SidebarDivider1);
+  // ---------------------------------------- > AC <
   //
-  // ---------------------------------- Builder >>
-  for (let index = 0; index < OptionIconList.length; index++) {
+  // ----------------------------------------------- >> Divider <<
+  //
+  // ----------------------------------------------- >> Options <<
+  for (let index = 0; index < OptionIcons.length; index++) {
     //
-    // -------------------- container >
-    const option = document.createElement("div");
-    option.classList.add("option");
-    // -------------------- container <
+    // -------------------------------------- > CB <
+    const SidebarOption = SidebarOptionWidget(
+      () => {
+        OptionListeners(index, SidebarOption);
+      },
+      OptionIcons[index],
+      OptionTexts[index]
+    );
+    // -------------------------------------- > CB <
     //
-    // --------------------------- EL >
-    option.addEventListener("click", () => {
-      OptionListener(index);
-    });
-    // --------------------------- EL <
+    // -------------------------------------- > AC <
+    Sidebar.appendChild(SidebarOption);
+    // -------------------------------------- > AC <
     //
-    // ---------------------------- T >
-    const optionT = document.createElement("span");
-    optionT.textContent = OptionTextList[index];
-    // ---------------------------- T <
-    //
-    // ---------------------------- I >
-    const optionI = document.createElement("iconify-icon");
-    optionI.setAttribute("icon", `${OptionIconList[index]}`);
-    // ---------------------------- I <
-    //
-    // ----------------------- Marker >
-    const marker = document.createElement("div");
-    marker.classList.add("activemarker");
-    // ----------------------- Marker <
-    //
-    // --------------------------- AP >
-    //
-    // > text <
-    option.appendChild(optionT);
-    // > text <
-    //
-    // > icon <
-    option.appendChild(optionI);
-    // > icon <
-    //
-    // > marker <
-    option.appendChild(marker);
-    // > marker <
-    //
-    Sidebar.appendChild(option);
-    //
-    // --------------------------- AP <
   }
-  // ---------------------------------- Builder <<
+  // ----------------------------------------------- >> Options <<
   //
-  // --------------------------------------------- > OB <
+  // ----------------------------------------------- >> Divider <<
+  const SidebarDivider2 = document.createElement("div");
+  SidebarDivider2.classList.add("SidebarDivider");
   //
-  // ---------------------------------------------- > D <
-  const SiderBarDivider2 = document.createElement("div");
-  SiderBarDivider2.classList.add("SiderBarDivider");
+  // ---------------------------------------- > AC <
+  Sidebar.appendChild(SidebarDivider2);
+  // ---------------------------------------- > AC <
   //
-  // ----------------------------------------- AP >
+  // ----------------------------------------------- >> Divider <<
   //
-  // > AP <
-  Sidebar.appendChild(SiderBarDivider2);
-  // > AP <
+  // -------------------------------------------------- >> User <<
+  const SidebarUserInfo = document.createElement("div");
+  SidebarUserInfo.classList.add("SidebarUserInfo");
   //
-  // ----------------------------------------- AP <
+  // ------------------------------------------- > AC <
+  Sidebar.appendChild(SidebarUserInfo);
+  // ------------------------------------------- > AC <
   //
-  // ---------------------------------------------- > D <
+  // --------------------------------------- > Avatar <
+  const SidebarUserAvatar = document.createElement("img");
+  SidebarUserAvatar.classList.add("SidebarUserAvatar");
   //
-  // --------------------------------------------- > AB <
+  // -------------------------------- src >>
+  SidebarUserAvatar.src = UserInfo.avatar;
+  // -------------------------------- src <<
   //
-  // ---------------------------------- Builder >>
-  for (let index = 0; index < AdttionalIconList.length; index++) {
-    //
-    // -------------------- container >
-    const option = document.createElement("div");
-    option.classList.add("option");
-    option.setAttribute("id", "addtional");
-
-    // -------------------- container <
-
-    // --------------------------- EL >
-    option.addEventListener("click", () => {
-      AddtionalBtnListener(index);
-    });
-    // --------------------------- EL <
-
-    // ---------------------------- T >
-    const optionT = document.createElement("span");
-    optionT.textContent = AddtionalTextList[index];
-    // ---------------------------- T <
-
-    // ---------------------------- I >
-    const optionI = document.createElement("iconify-icon");
-    optionI.setAttribute("icon", `${AdttionalIconList[index]}`);
-    // ---------------------------- I <
-
-    // --------------------------- AP >
-
-    // > text <
-    option.appendChild(optionT);
-    // > text <
-
-    // > icon <
-    option.appendChild(optionI);
-    // > icon <
-
-    Sidebar.appendChild(option);
-
-    // --------------------------- AP <
+  // --------------------------------- AC >>
+  SidebarUserInfo.appendChild(SidebarUserAvatar);
+  // --------------------------------- AC <<
+  //
+  // --------------------------------------- > Avatar <
+  //
+  // ----------------------------------------- > Name <
+  const SidebarUserName = document.createElement("span");
+  SidebarUserName.classList.add("SidebarUserName");
+  //
+  // -------------------------------- Value >>
+  SidebarUserName.textContent = UserInfo.name;
+  // -------------------------------- Value <<
+  //
+  // ----------------------------------- AC >>
+  SidebarUserInfo.appendChild(SidebarUserName);
+  // ----------------------------------- AC <<
+  //
+  // ----------------------------------------- > Name <
+  //
+  // -------------------------------------------------- >> User <<
+  //
+  // ----------------------------------------------- >> Divider <<
+  const SidebarDivider3 = document.createElement("div");
+  SidebarDivider3.classList.add("SidebarDivider");
+  //
+  // ---------------------------------------- > AC <
+  Sidebar.appendChild(SidebarDivider3);
+  // ---------------------------------------- > AC <
+  //
+  // ----------------------------------------------- >> Divider <<
+  //
+  // -------------------------------------------------- >> Exit <<
+  //
+  // -------------------------------------------- > V <
+  const ExitIcon = "ri:door-open-fill";
+  const ExitText = "Exit";
+  // -------------------------------------------- > V <
+  //
+  // ------------------------------------------- > CB <
+  const ExitBTN = SidebarOptionWidget(exitListener, ExitIcon, ExitText);
+  // ------------------------------------------- > CB <
+  //
+  // -------------------------------------------- > L <
+  function exitListener() {
+    ExitListener();
   }
-  // ---------------------------------- Builder <<
-
-  // --------------------------------------------- > AB <
-
-  // ---------------------------------------------------- >> SB <<
-
+  // -------------------------------------------- > L <
+  //
+  // ------------------------------------------- > AC <
+  Sidebar.appendChild(ExitBTN);
+  // ------------------------------------------- > AC <
+  //
+  // -------------------------------------------------- >> Exit <<
+  //
   // ------------------------------------------------ >> return <<
   return Sidebar;
   // ------------------------------------------------ >> return <<
+  //
 }
-// =============================================================== >> Module <<
+// =============================================================== >> Widget <<
+//
+// ====================================================== >> Siderbar Option <<
+function SidebarOptionWidget(Listener, Icon, Text) {
+  //
+  // ------------------------------------------ >> div <<
+  const SidebarOption = document.createElement("div");
+  SidebarOption.classList.add("SidebarOption");
+  // ------------------------------------------ >> div <<
+  //
+  // -------------------------------------------- >> L <<
+  SidebarOption.addEventListener("click", () => {
+    Listener();
+  });
+  // -------------------------------------------- >> L <<
+  //
+  // ----------------------------------------- >> Text <<
+  const SidebarOptionText = document.createElement("span");
+  //
+  // --------------------------------- > src <
+  SidebarOptionText.textContent = Text;
+  // --------------------------------- > src <
+  //
+  // ---------------------------------- > AC <
+  SidebarOption.appendChild(SidebarOptionText);
+  // ---------------------------------- > AC <
+  //
+  // ----------------------------------------- >> Text <<
+  //
+  // ----------------------------------------- >> Icon <<
+  const SidebarOptionIcon = document.createElement("iconify-icon");
+  //
+  // ------------------------------- > value <
+  SidebarOptionIcon.setAttribute("icon", Icon);
+  // ------------------------------- > value <
+  //
+  // ---------------------------------- > AC <
+  SidebarOption.appendChild(SidebarOptionIcon);
+  // ---------------------------------- > AC <
+  //
+  // ----------------------------------------- >> Icon <<
+  //
+  // --------------------------------------- >> Marker <<
+  const SiderbarOptionMarker = document.createElement("div");
+  SiderbarOptionMarker.classList.add("SiderbarOptionMarker");
+  //
+  // -------------------------------- > AC <
+  SidebarOption.appendChild(SiderbarOptionMarker);
+  // -------------------------------- > AC <
+  //
+  // --------------------------------------- >> Marker <<
+  //
+  // --------------------------------------- >> return <<
+  return SidebarOption;
+  // --------------------------------------- >> return <<
+  //
+}
+// ====================================================== >> Siderbar Option <<
+//
+// ============================================================= >> Operator <<
+export function Operator(listener) {
+  //
+  // ------------------------------------------------- >> div <<
+  const SidebarOperator = document.createElement("div");
+  SidebarOperator.classList.add("SidebarOperator");
+  // ------------------------------------------------- >> div <<
+  //
+  // --------------------------------------------------- >> L <<
+  SidebarOperator.addEventListener("click", () => {
+    //
+    // ------------------------------------------ > SM <
+    //
+    // ----------------------------------- div >>
+    SidebarOperator.classList.toggle("active");
+    // ----------------------------------- div <<
+    //
+    // ---------------------------------- Text >>
+    SidebarOperatorText.classList.toggle("show");
+    // ---------------------------------- Text <<
+    //
+    // ---------------------------------- Icon >>
+    SidebarOperatorIcon.classList.toggle("change");
+    SidebarOperatorIconLine1.classList.toggle("change");
+    SidebarOperatorIconLine2.classList.toggle("change");
+    SidebarOperatorIconLine3.classList.toggle("change");
+    // ---------------------------------- Icon <<
+    //
+    // ------------------------------------------ > SM <
+    //
+    // ------------------------------------------ > CB <
+    listener();
+    // ------------------------------------------ > CB <
+    //
+  });
+  // --------------------------------------------------- >> L <<
+  //
+  // ------------------------------------------------ >> Text <<
+  const SidebarOperatorText = document.createElement("span");
+  SidebarOperatorText.classList.add("SidebarOperatorText");
+  //
+  // -------------------------------------- > Value <
+  SidebarOperatorText.textContent = "Close";
+  // -------------------------------------- > Value <
+  //
+  // ----------------------------------------- > AC <
+  SidebarOperator.appendChild(SidebarOperatorText);
+  // ----------------------------------------- > AC <
+  //
+  // ------------------------------------------------ >> Text <<
+  //
+  // ------------------------------------------------ >> Icon <<
+  const SidebarOperatorIcon = document.createElement("div");
+  SidebarOperatorIcon.classList.add("SidebarOperatorIcon");
+  //
+  // ----------------------------------------- > AC <
+  SidebarOperator.appendChild(SidebarOperatorIcon);
+  // ----------------------------------------- > AC <
+  //
+  // ------------------------------------- > Line 1 <
+  const SidebarOperatorIconLine1 = document.createElement("div");
+  SidebarOperatorIconLine1.classList.add("SidebarOperatorIconLine1");
+  //
+  // ------------------------------- AC >>
+  SidebarOperatorIcon.appendChild(SidebarOperatorIconLine1);
+  // ------------------------------- AC <<
+  //
+  // ------------------------------------- > Line 1 <
+  //
+  // ------------------------------------- > Line 2 <
+  const SidebarOperatorIconLine2 = document.createElement("div");
+  SidebarOperatorIconLine2.classList.add("SidebarOperatorIconLine2");
+  //
+  // ------------------------------- AC >>
+  SidebarOperatorIcon.appendChild(SidebarOperatorIconLine2);
+  // ------------------------------- AC <<
+  //
+  // ------------------------------------- > Line 2 <
+  //
+  // ------------------------------------- > Line 3 <
+  const SidebarOperatorIconLine3 = document.createElement("div");
+  SidebarOperatorIconLine3.classList.add("SidebarOperatorIconLine3");
+  //
+  // ------------------------------- AC >>
+  SidebarOperatorIcon.appendChild(SidebarOperatorIconLine3);
+  // ------------------------------- AC <<
+  //
+  // ------------------------------------- > Line 3 <
+  //
+  // ------------------------------------------------ >> Icon <<
+  //
+  // ---------------------------------------------- >> return <<
+  return SidebarOperator;
+  // ---------------------------------------------- >> return <<
+  //
+}
+// ============================================================= >> Operator <<
+//

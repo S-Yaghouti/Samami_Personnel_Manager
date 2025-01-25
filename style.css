@@ -123,7 +123,7 @@ body {
     mask-image: linear-gradient(to left, var(--deep-blue25), rgba(0, 0, 0, 0));
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
-    transition: all 0.5s;
+    transition: all 1s;
 }
 
 #BG_1.show .HexagonWallpaper {
@@ -402,6 +402,56 @@ body {
 /* ---------------------------------------- >> Authentication << */
 
 /* ================================================================ >> Layer 2 << */
+
+/* ================================================================ >> Layer 3 << */
+.Layer3 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -100%;
+    z-index: 2;
+    transition: all 0.5s;
+}
+
+.Layer3.show {
+    bottom: 0%;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_3 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.5rem, 2.5vw, 3.5rem);
+    color: var(--white);
+    backdrop-filter: blur(5px);
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ================================================================ >> Layer 3 << */
+
+/* ================================================================ >> Layer 4 << */
+.Layer4 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -100%;
+    z-index: 3;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_4 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* -------------------------------------------------- >> Body << */
+/* ================================================================ >> Layer 4 << */
 
 /* ============================================================ >> Media Query << */
 

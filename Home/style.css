@@ -143,8 +143,16 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
-    top: -100%;
+    left: -100%;
+    scale: 0;
     z-index: 2;
+    backdrop-filter: blur(50px);
+    transition: all 0.5s;
+}
+
+.Layer3.show {
+    left: 0%;
+    scale: 1;
 }
 
 /* -------------------------------------------------- >> Body << */
@@ -152,18 +160,185 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
 }
 
 /* -------------------------------------------------- >> Body << */
+
+/* ----------------------------------------------- >> Sidebar << */
+.Sidebar {
+    width: 10%;
+    height: max-content;
+    padding: clamp(0.5rem, 1vw, 2rem);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: all 0.5s;
+}
+
+/* ------------------------------------ > logo < */
+.SidebarLogo {
+    width: 100%;
+    height: 70px;
+    padding: clamp(1rem, 2vw, 3rem);
+    background-color: var(--white25);
+    border: 2px solid var(--white);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0px 0px 0px var(--black25);
+    transition: all 0.5s;
+}
+
+.SidebarLogo:hover {
+    background-color: var(--white);
+    box-shadow: inset 0px 0px 10px var(--black25);
+}
+
+.SidebarLogo:active {
+    background-color: var(--white);
+    box-shadow: inset 0px 0px 10px var(--black25);
+}
+
+.SiderbarLogoImage {
+    max-width: 70%;
+    object-fit: fill;
+}
+
+/* ------------------------------------ > logo < */
+
+/* --------------------------------- > Divider < */
+.SidebarDivider {
+    width: 100%;
+    height: 2px;
+    background-color: var(--white25);
+    transition: all 0.5s;
+}
+
+/* --------------------------------- > Divider < */
+
+/* ------------------------- > Siderbar Option < */
+.SidebarOption {
+    width: 100%;
+    cursor: pointer;
+    background-color: var(--black);
+    border-radius: 5px;
+    border: 2px solid var(--white25);
+    color: var(--white75);
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: clamp(0.85rem, 1vw, 2rem);
+    padding: clamp(0.5rem, 1vw, 2rem);
+    transition: all 0.5s;
+    position: relative;
+}
+
+.SidebarOption:hover {
+    border: 2px solid var(--white);
+    color: var(--white);
+}
+
+.SidebarOption:active {
+    scale: 0.95;
+}
+
+.SidebarOption.active {
+    border: 2px solid var(--white);
+    color: var(--white);
+}
+
+.SiderbarOptionMarker {
+    background-color: var(--gold);
+    height: 0%;
+    width: 2px;
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translate(-5%, -50%);
+    transition: all 0.5s;
+}
+
+.SidebarOption.active .SiderbarOptionMarker {
+    height: 80%;
+}
+
+/* ------------------------- > Siderbar Option < */
+
+/* ------------------------------- > User Info < */
+.SidebarUserInfo {
+    cursor: pointer;
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--black);
+    border: 2px solid var(--white25);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 10px;
+    transition: all 0.5s;
+}
+
+.SidebarUserInfo:hover {
+    border: 2px solid var(--white);
+}
+
+.SidebarUserInfo:active {
+    scale: 0.95;
+}
+
+.SidebarUserAvatar {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    min-width: 60%;
+    max-width: 80%;
+    border: 2px solid var(--white25);
+    box-shadow: 0px 0px 0px var(--white25);
+    border-top: none;
+    object-fit: scale-down;
+    transition: all 0.5s;
+}
+
+.SidebarUserInfo:hover .SidebarUserAvatar {
+    border: 2px solid var(--white);
+    box-shadow: 0px 2px 5px var(--white25);
+    border-top: none;
+}
+
+.SidebarUserName {
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    color: var(--white);
+    font-size: clamp(0.85rem, 1vw, 2rem);
+}
+
+/* ------------------------------- > User Info < */
+
+
+/* ----------------------------------------------- >> Sidebar << */
 
 /* ================================================================ >> Layer 3 << */
 
 /* ================================================================ >> Layer 4 << */
 .Layer4 {
-    width: 100%;
-    height: 100%;
+    width: 0%;
+    height: 0%;
     position: absolute;
-    top: -100%;
+    bottom: 0%;
+    left: 0%;
     z-index: 3;
 }
 
@@ -176,6 +351,95 @@ body {
 
 /* -------------------------------------------------- >> Body << */
 
+/* ---------------------------------------------- >> operator << */
+.SidebarOperator {
+    transform: translate(15%, -120%);
+    cursor: pointer;
+    width: 70px;
+    height: 70px;
+    padding: 40px;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    padding: clamp(0.75rem, 1.5vw, 3rem);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    transition: all 0.5s;
+}
+
+.SidebarOperator.active {
+    width: 120px;
+}
+
+/* ---------------------------------- > Text < */
+.SidebarOperatorText {
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(0%, -50%);
+    opacity: 0;
+    color: var(--white);
+    font-size: 18px;
+    transition: all 0.5s;
+}
+
+.SidebarOperatorText.show {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-75%, -50%);
+    opacity: 1;
+}
+
+/* ---------------------------------- > Text < */
+
+/* ---------------------------------- > Icon < */
+.SidebarOperatorIcon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+.SidebarOperatorIcon.change {
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-20%, -50%);
+}
+
+.SidebarOperatorIconLine1,
+.SidebarOperatorIconLine2,
+.SidebarOperatorIconLine3 {
+    background-color: var(--white);
+    transition: all 0.5s;
+    width: 20px;
+    height: 3px;
+    border-radius: 10px;
+}
+
+.SidebarOperatorIconLine1.change {
+    transform: rotate(-35deg) translate(-20%, 80%);
+    width: 12px;
+}
+
+.SidebarOperatorIconLine3.change {
+    transform: rotate(35deg) translate(-20%, -80%);
+    width: 10px;
+}
+
+/* ---------------------------------- > Icon < */
+
+/* ---------------------------------------------- >> operator << */
+
 /* ================================================================ >> Layer 4 << */
 
 /* ================================================================ >> Layer 5 << */
@@ -183,13 +447,13 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 100%;
+    bottom: -100%;
     z-index: 4;
     transition: all 0.5s;
 }
 
 .Layer5.show {
-    top: 0%;
+    bottom: 0%;
 }
 
 /* -------------------------------------------------- >> Body << */
@@ -236,10 +500,48 @@ body {
 
 /* ================================================================ >> Layer 5 << */
 
+/* ================================================================ >> Layer 6 << */
+.Layer6 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -100%;
+    z-index: 5;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_6 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ================================================================ >> Layer 6 << */
+
 /* ============================================================ >> Media Query << */
 
 /* ------------------------------------------------ >> 4K << */
-@media screen and (min-width: 1800px) {}
+@media screen and (min-width: 1800px) {
+
+    /* ----------------------------- > Layer 3 < */
+    .SidebarLogo {
+        height: 150px;
+    }
+
+    /* ----------------------------- > Layer 3 < */
+
+
+    /* ----------------------------- > Layer 4 < */
+    .SidebarOperator {
+        scale: 1.8;
+        transform: translate(40%, -100%);
+    }
+
+    /* ----------------------------- > Layer 4 < */
+
+}
 
 /* ------------------------------------------------ >> 4K << */
 
@@ -249,22 +551,76 @@ body {
 /* ------------------------------------------ >> L Laptop << */
 
 /* ------------------------------------------ >> S Laptop << */
-@media screen and (max-width: 1024px) {}
+@media screen and (max-width: 1024px) {
+
+    /* ----------------------------- > Layer 3 < */
+    .Sidebar {
+        width: 15%;
+    }
+
+    /* ----------------------------- > Layer 3 < */
+
+}
 
 /* ------------------------------------------ >> S Laptop << */
 
 /* -------------------------------------------- >> tablet << */
-@media screen and (max-width: 768px) {}
+@media screen and (max-width: 768px) {
+
+    /* ----------------------------- > Layer 3 < */
+    .Sidebar {
+        width: 18%;
+    }
+
+    /* ----------------------------- > Layer 3 < */
+}
 
 /* -------------------------------------------- >> tablet << */
 
 /* ------------------------------------------ >> L mobile << */
-@media screen and (max-width: 425px) {}
+@media screen and (max-width: 425px) {
+
+    /* ----------------------------- > Layer 3 < */
+    .Sidebar {
+        width: 30%;
+    }
+
+    /* ----------------------------- > Layer 3 < */
+
+    /* ----------------------------- > Layer 4 < */
+    .SidebarOperator {
+        scale: 0.9;
+        transform: translate(10%, -120%);
+    }
+
+    /* ----------------------------- > Layer 4 < */
+}
 
 /* ------------------------------------------ >> L mobile << */
 
+/* ------------------------------------------ >> M mobile << */
+@media screen and (max-width: 375px) {
+
+    /* ----------------------------- > Layer 3 < */
+    .Sidebar {
+        width: 35%;
+    }
+
+    /* ----------------------------- > Layer 3 < */
+}
+
+/* ------------------------------------------ >> M mobile << */
+
 /* ------------------------------------------ >> S mobile << */
-@media screen and (max-width: 320px) {}
+@media screen and (max-width: 320px) {
+
+    /* ----------------------------- > Layer 3 < */
+    .Sidebar {
+        width: 40%;
+    }
+
+    /* ----------------------------- > Layer 3 < */
+}
 
 /* ------------------------------------------ >> S mobile << */
 

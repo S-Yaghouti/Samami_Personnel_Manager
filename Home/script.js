@@ -8,6 +8,13 @@ import { LoadingcallBack } from "../modules/Widgets/Loading/loading.js";
 import { Sidebar, Operator } from "./../modules/Widgets/SideBar/Side_Bar.js";
 // ----------------------------------------------------- >> SideBar <<
 //
+// ----------------------------------------------- >> Local Storage <<
+import {
+  setLocalStorage,
+  RetrieveLocalStorage,
+} from "./../modules/Local_Storage/local_storage.js";
+// ----------------------------------------------- >> Local Storage <<
+//
 // =================================================================== >> improts <<
 //
 // =============================================================== >> Definitions <<
@@ -190,5 +197,7 @@ BG_4.appendChild(SidebarOperator);
 // =================================================================== >> Layer 6 <<
 //
 // ======================================================================= >> DOM <<
-window.addEventListener("DOMContentLoaded", () => {});
+window.addEventListener("DOMContentLoaded", () => {
+  console.log(RetrieveLocalStorage("token"));
+});
 // ======================================================================= >> DOM <<

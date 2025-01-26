@@ -12,6 +12,13 @@ import { Field } from "./modules/Widgets/Field/Field.js";
 import { POST } from "./modules/Web_Service/web_service.js";
 // ------------------------------------------------------- >> Fetch <<
 //
+// ----------------------------------------------- >> Local Storage <<
+import {
+  setLocalStorage,
+  RetrieveLocalStorage,
+} from "./modules/Local_Storage/local_storage.js";
+// ----------------------------------------------- >> Local Storage <<
+//
 // =================================================================== >> improts <<
 //
 // ==================================================================== >> Layers <<
@@ -206,17 +213,29 @@ function StepOne() {
   PhoneFeild.Input.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       //
-      // --------- Validator >>
+      // ----- Validator >>
       let Validation = Validator(PhoneFeild, 1);
-      // --------- Validator <<
+      // ----- Validator <<
       //
-      // ----- State Manager >>
-      // StateManager(Validation, PhoneFeild.widget, Submit.widget, 1, Column);
-      // ----- State Manager <<
+      // ------- Loading >>
+      if (Validation == true) {
+        Loading(1);
+      }
+      // ------- Loading <<
       //
-      // ------- Web Service >>
-      //
-      // ------- Web Service <<
+      // --- Web Service >>
+      if (Validation == true) {
+        WebSerive(
+          1,
+          PhoneFeild.Input,
+          PhoneFeild.widget,
+          Submit.widget,
+          Column
+        );
+      } else {
+        StateManager(Validation, PhoneFeild.widget, Submit.widget, Column);
+      }
+      // --- Web Service <<
       //
     }
   });
@@ -255,7 +274,7 @@ function StepOne() {
     //
     // ------- Web Service >>
     if (Validation == true) {
-      WebSerive(1, PhoneFeild.Input);
+      WebSerive(1, PhoneFeild.Input, PhoneFeild.widget, Submit.widget, Column);
     } else {
       StateManager(Validation, PhoneFeild.widget, Submit.widget, Column);
     }
@@ -301,7 +320,7 @@ function StepTwo() {
   // ---------------------- Varibels <
   //
   // ---------------------- CallBack >
-  const PhoneField = Field(
+  const OTPField = Field(
     "OTP",
     true,
     "OTP Verifaction",
@@ -314,27 +333,33 @@ function StepTwo() {
   // ---------------------- CallBack <
   //
   // ---------------------- Listener <
-  PhoneField.Input.addEventListener("keyup", function (event) {
+  OTPField.Input.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       //
-      // Validator
-      let Validation = Validator(PhoneField, 2);
-      // Validator
+      // ----- Validator >>
+      let Validation = Validator(OTPField, 2);
+      // ----- Validator <<
       //
-      // State Manager
-      StateManager(Validation, PhoneField.widget, Verify.widget, 2, Column);
-      // State Manager
+      // ------- Loading >>
+      if (Validation == true) {
+        Loading(1);
+      }
+      // ------- Loading <<
       //
-      // Web Service
-      //
-      // Web Service
+      // --- Web Service >>
+      if (Validation == true) {
+        WebSerive(2, OTPField.Input, OTPField.widget, Verify.widget, Column);
+      } else {
+        StateManager(Validation, OTPField.widget, Verify.widget, Column);
+      }
+      // --- Web Service <<
       //
     }
   });
   // ---------------------- Listener <
   //
   // ---------------------------- AP >
-  Column.appendChild(PhoneField.widget);
+  Column.appendChild(OTPField.widget);
   // ---------------------------- AP <
   //
   // --------------------------------- > Field <
@@ -406,17 +431,23 @@ function StepTwo() {
   // -------------- Listener >
   function VerifyListener() {
     //
-    // Validator
-    let Validation = Validator(PhoneField, 2);
-    // Validator
+    // --------- Validator >>
+    let Validation = Validator(OTPField, 2);
+    // --------- Validator <<
     //
-    // State Manager
-    StateManager(Validation, PhoneField.widget, Verify.widget, 2, Column);
-    // State Manager
+    // ----------- Loading >>
+    if (Validation == true) {
+      Loading(1);
+    }
+    // ----------- Loading <<
     //
-    // Web Service
-    //
-    // Web Service
+    // ------- Web Service >>
+    if (Validation == true) {
+      WebSerive(2, OTPField.Input, OTPField.widget, Verify.widget, Column);
+    } else {
+      StateManager(Validation, OTPField.widget, Verify.widget, Column);
+    }
+    // ------- Web Service <<
     //
   }
   // -------------- Listener <
@@ -476,17 +507,29 @@ function StepThree() {
   UserNameFeild.Input.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       //
-      // Validator
+      // --------- Validator >>
       let Validation = Validator(UserNameFeild, 3);
-      // Validator
+      // --------- Validator <<
       //
-      // State Manager
-      StateManager(Validation, UserNameFeild.widget, Verify.widget, 3, Column);
-      // State Manager
+      // ----------- Loading >>
+      if (Validation == true) {
+        Loading(1);
+      }
+      // ----------- Loading <<
       //
-      // Web Service
-      //
-      // Web Service
+      // ------- Web Service >>
+      if (Validation == true) {
+        WebSerive(
+          3,
+          UserNameFeild.Input,
+          UserNameFeild.widget,
+          Verify.widget,
+          Column
+        );
+      } else {
+        StateManager(Validation, UserNameFeild.widget, Verify.widget, Column);
+      }
+      // ------- Web Service <<
       //
     }
   });
@@ -565,17 +608,29 @@ function StepThree() {
   // -------------- Listener >
   function VerifyListener() {
     //
-    // Validator
+    // --------- Validator >>
     let Validation = Validator(UserNameFeild, 3);
-    // Validator
+    // --------- Validator <<
     //
-    // State Manager
-    StateManager(Validation, UserNameFeild.widget, Verify.widget, 3, Column);
-    // State Manager
+    // ----------- Loading >>
+    if (Validation == true) {
+      Loading(1);
+    }
+    // ----------- Loading <<
     //
-    // Web Service
-    //
-    // Web Service
+    // ------- Web Service >>
+    if (Validation == true) {
+      WebSerive(
+        3,
+        UserNameFeild.Input,
+        UserNameFeild.widget,
+        Verify.widget,
+        Column
+      );
+    } else {
+      StateManager(Validation, UserNameFeild.widget, Verify.widget, Column);
+    }
+    // ------- Web Service <<
     //
   }
   // -------------- Listener <
@@ -658,62 +713,48 @@ function Validator(Field, State) {
 // ================================================================= >> Validator <<
 //
 // =================================================================== >> Loading <<
+//
+// -------------------------------------------------------- >> Icon <<
+const LoadingIcon = document.createElement("iconify-icon");
+LoadingIcon.classList.add("LoadingIcon");
+//
+// ---------------------------------------------- > Value <
+LoadingIcon.setAttribute("icon", "svg-spinners:ring-resize");
+// ---------------------------------------------- > Value <
+//
+// ------------------------------------------------- > AC <
+BG_3.appendChild(LoadingIcon);
+// ------------------------------------------------- > AC <
+//
+// -------------------------------------------------------- >> Icon <<
+//
+// ---------------------------------------------------------- >> SM <<
 function Loading(Status) {
-  //
-  // ------------------------------------------------------ >> Icon <<
-  const LoadingIcon = document.createElement("iconify-icon");
-  LoadingIcon.classList.add("LoadingIcon");
-  //
-  // -------------------------------------------- > Value <
-  LoadingIcon.setAttribute("icon", "svg-spinners:ring-resize");
-  // -------------------------------------------- > Value <
-  //
-  // ------------------------------------------------------ >> Icon <<
-  //
-  // -------------------------------------------------------- >> SM <<
   //
   // ------------------------------------------------ > add <
   if (Status == 1) {
-    //
-    // ---------------------------------------- AC >>
-    BG_3.appendChild(LoadingIcon);
-    // ---------------------------------------- AC <<
-    //
-    // --------------------------------- add class >>
     setTimeout(() => {
       Layer3.classList.add("show");
     }, 1);
-    // --------------------------------- add class <<
-    //
   }
   // ------------------------------------------------ > add <
   //
   // --------------------------------------------- > remove <
   else if (Status == 2) {
-    //
-    // --------------------------- remove class >>
     Layer3.classList.remove("show");
-    // --------------------------- remove class <<
-    //
-    // ------------------------------------- RC >>
-    setTimeout(() => {
-      BG_3.removeChild(LoadingIcon);
-    }, 500);
-    // ------------------------------------- RC <<
-    //
   }
   // --------------------------------------------- > remove <
   //
-  // -------------------------------------------------------- >> SM <<
-  //
 }
+// ---------------------------------------------------------- >> SM <<
+//
 // =================================================================== >> Loading <<
 //
 // =============================================================== >> Web Service <<
-function WebSerive(Status, Field) {
+function WebSerive(Status, Input, Field, BTN, Column) {
   //
   // ------------------------------------------------- >> Feild <<
-  let FeildValue = Field.value.trim();
+  let FeildValue = Input.value.trim();
   // ------------------------------------------------- >> Feild <<
   //
   // --------------------------------------------------- >> URL <<
@@ -724,19 +765,19 @@ function WebSerive(Status, Field) {
   //
   // -------------------------------------- > Send OTP <
   if (Status == 1) {
-    URL == "https://personel.samami.co/auth/send-otp";
+    URL = "https://personel.samami.co/auth/send-otp";
   }
   // -------------------------------------- > Send OTP <
   //
   // ------------------------------------ > Verify OTP <
   else if (Status == 2) {
-    URL == "https://personel.samami.co/auth/verify-otp";
+    URL = "https://personel.samami.co/auth/verify-otp";
   }
   // ------------------------------------ > Verify OTP <
   //
   // ---------------------------------------- > Signup <
   else if (Status == 3) {
-    URL == "https://personel.samami.co/user/signup";
+    URL = "https://personel.samami.co/user/signup";
   }
   // ---------------------------------------- > Signup <
   //
@@ -745,7 +786,7 @@ function WebSerive(Status, Field) {
   // -------------------------------------------------- >> Data <<
   //
   // --------------------------------------- > create <
-  let Data = [];
+  let Data = {};
   // --------------------------------------- > create <
   //
   // ------------------------------------- > Send OTP <
@@ -784,23 +825,43 @@ function WebSerive(Status, Field) {
     POST(URL, Data)
       .then((response) => {
         //
-        // status 200 >>
+        // ----------------------- correct >>
         if (response.status == 200) {
+          //
+          Loading(2);
+          //
+          setTimeout(() => {
+            StateManager(true, Field, BTN, Column);
+          }, 500);
+          //
+          setTimeout(() => {
+            StepTwo();
+          }, 1500);
+          //
         }
-        // status 200 <<
+        // ----------------------- correct <<
         //
-        // status 409 >>
-        else if (response.status == 409) {
-        }
-        // status 409 <<
-        //
-        // else >>
+        // ------------------------- error >>
         else {
+          //
+          Loading(2);
+          //
+          setTimeout(() => {
+            StateManager(false, Field, BTN, Column);
+          }, 500);
+          //
         }
-        // else <<
+        // ------------------------- error <<
       })
       .catch((error) => {
         console.log(error);
+        //
+        Loading(2);
+        //
+        setTimeout(() => {
+          StateManager(false, Field, BTN, Column);
+        }, 500);
+        //
       });
     //
   }
@@ -811,24 +872,70 @@ function WebSerive(Status, Field) {
     //
     POST(URL, Data)
       .then((response) => {
+        console.log(response);
         //
-        // status 200 >>
+        //
+        // ----------------------------- 200 >>
         if (response.status == 200) {
+          //
+          Loading(2);
+          //
+          setTimeout(() => {
+            StateManager(true, Field, BTN, Column);
+          }, 500);
+          //
+          setTimeout(() => {
+            StepThree();
+          }, 1500);
+          //
         }
-        // status 200 <<
+        // ----------------------------- 200 <<
         //
-        // status 409 >>
-        else if (response.status == 409) {
+        // ----------------------------- 201 >>
+        else if (response.status == 201) {
+          //
+          Loading(2);
+          //
+          setTimeout(() => {
+            StateManager(true, Field, BTN, Column);
+          }, 500);
+          //
+          const Token = response.data.token;
+          setLocalStorage("token", Token);
+          //
+          setTimeout(() => {
+            BG_1.classList.remove("show");
+            BG_2.classList.remove("show");
+          }, 1000);
+          //
+          setTimeout(() => {
+            window.location.assign("./Home/index.html");
+          }, 1500);
         }
-        // status 409 <<
+        // ----------------------------- 201 <<
         //
-        // else >>
+        // --------------------------- error >>
         else {
+          //
+          Loading(2);
+          //
+          setTimeout(() => {
+            StateManager(false, Field, BTN, Column);
+          }, 500);
+          //
         }
-        // else <<
+        // --------------------------- error <<
+        //
       })
       .catch((error) => {
         console.log(error);
+        //
+        Loading(2);
+        //
+        setTimeout(() => {
+          StateManager(false, Field, BTN, Column);
+        }, 500);
+        //
       });
     //
   }
@@ -840,23 +947,50 @@ function WebSerive(Status, Field) {
     POST(URL, Data)
       .then((response) => {
         //
-        // status 200 >>
+        // ---------------------- correct >>
         if (response.status == 200) {
+          //
+          Loading(2);
+          //
+          setTimeout(() => {
+            StateManager(true, Field, BTN, Column);
+          }, 500);
+          //
+          const Token = response.data.token;
+          setLocalStorage("token", Token);
+          //
+          setTimeout(() => {
+            BG_1.classList.remove("show");
+            BG_2.classList.remove("show");
+          }, 1000);
+          //
+          setTimeout(() => {
+            window.location.assign("./Home/index.html");
+          }, 1500);
         }
-        // status 200 <<
+        // ---------------------- correct <<
         //
-        // status 409 >>
-        else if (response.status == 409) {
-        }
-        // status 409 <<
-        //
-        // else >>
+        // ------------------------ error >>
         else {
+          //
+          Loading(2);
+          //
+          setTimeout(() => {
+            StateManager(false, Field, BTN, Column);
+          }, 500);
+          //
         }
-        // else <<
+        // ------------------------ error <<
       })
       .catch((error) => {
         console.log(error);
+        //
+        Loading(2);
+        //
+        setTimeout(() => {
+          StateManager(false, Field, BTN, Column);
+        }, 500);
+        //
       });
     //
   }

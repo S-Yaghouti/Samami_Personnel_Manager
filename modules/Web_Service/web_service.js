@@ -5,10 +5,10 @@ async function GET(url) {
   try {
     const response = await fetch(url, {
       method: "GET",
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   token: getCookie("token") || "_",
-      // },
+      headers: {
+        "Content-Type": "application/json",
+        // token: getCookie("token") || "_",
+      },
     });
 
     // >> Check if the response status is Not OK <<
@@ -50,10 +50,10 @@ async function POST(url, data) {
   try {
     const response = await fetch(url, {
       method: "POST",
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   token: getCookie("token") || "",
-      // },
+      headers: {
+        "Content-Type": "application/json",
+        // token: getCookie("token") || "",
+      },
       body: JSON.stringify(data),
     });
 

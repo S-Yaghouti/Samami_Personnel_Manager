@@ -24,11 +24,6 @@ import { BTN } from "./../BTN/BTN.js";
 //
 // ========================================================== >> Definitions <<
 //
-// ============================================================ >> Variables <<
-const Layer3 = document.querySelector(".Layer3");
-const BG_3 = document.querySelector("#BG_3");
-// ============================================================ >> Variables <<
-//
 // =============================================================== >> Widget <<
 export function Sidebar(
   Logo,
@@ -125,10 +120,28 @@ export function Sidebar(
   // -------------------------------- src <<
   //
   // --------------------------------- AC >>
-  SidebarUserInfo.appendChild(SidebarUserAvatar);
+  if (UserInfo.avatar !== "") {
+    SidebarUserInfo.appendChild(SidebarUserAvatar);
+  }
   // --------------------------------- AC <<
   //
   // --------------------------------------- > Avatar <
+  //
+  // ----------------------------------------- > Icon <
+  const SidebarUserAvatarIcon = document.createElement("iconify-icon");
+  SidebarUserAvatarIcon.classList.add("SidebarUserAvatarIcon");
+  //
+  // -------------------------------- value >>
+  SidebarUserAvatarIcon.setAttribute("icon", "fluent-color:person-28");
+  // -------------------------------- value <<
+  //
+  // ----------------------------------- AC >>
+  if (UserInfo.avatar == "") {
+    SidebarUserInfo.appendChild(SidebarUserAvatarIcon);
+  }
+  // ----------------------------------- AC <<
+  //
+  // ----------------------------------------- > Icon <
   //
   // ----------------------------------------- > Name <
   const SidebarUserName = document.createElement("span");

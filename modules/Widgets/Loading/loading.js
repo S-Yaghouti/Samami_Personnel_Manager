@@ -46,18 +46,71 @@ function Loading() {
   // -------------------------------------------------- >> Text <<
   //
   // -------------------------------------------------- >> Icon <<
-  const LoadingIcon = document.createElement("iconify-icon");
-  LoadingIcon.classList.add("LoadingIcon");
+  const LoadingIconContainer = document.createElement("div");
+  LoadingIconContainer.classList.add("LoadingIconContainer");
   //
-  // ----------------------------------------- > Value <
-  LoadingIcon.setAttribute("icon", "eos-icons:three-dots-loading");
-  // ----------------------------------------- > Value <
+  // -------------------------------------- > Builder <
+  //
+  // --------------------------------- V >>
+  const icons = [];
+  // --------------------------------- V <<
+  //
+  // ------------------------------- for >>
+  for (let index = 0; index < 6; index++) {
+    //
+    // ----------------------- div >
+    const LoadingIcon = document.createElement("div");
+    LoadingIcon.classList.add("LoadingIcon");
+    // ----------------------- div <
+    //
+    // ------------------------ AC >
+    LoadingIconContainer.appendChild(LoadingIcon);
+    // ------------------------ AC <
+    //
+    // ---------------------- push >
+    icons.push(LoadingIcon);
+    // ---------------------- push <
+    //
+  }
+  // ------------------------------- for <<
+  //
+  // -------------------------------------- > Builder <
   //
   // ------------------------------------------- > AC <
-  Loading.appendChild(LoadingIcon);
+  Loading.appendChild(LoadingIconContainer);
   // ------------------------------------------- > AC <
   //
   // -------------------------------------------------- >> Icon <<
+  //
+  // --------------------------------------------- >> Animation <<
+  //
+  // --------------------------------------- > V <
+  let currentIndex = 0;
+  // --------------------------------------- > V <
+  //
+  // ---------------------------------- > Craete <
+  function animateIcons() {
+    //
+    // Clear all classes
+    icons.forEach((icon) => icon.classList.remove("animation"));
+
+    // Add class
+    icons[currentIndex].classList.add("animation");
+
+    // index manager
+    currentIndex = (currentIndex + 1) % icons.length;
+
+    // Repeat animation
+    setTimeout(animateIcons, 500);
+    //
+  }
+  // ---------------------------------- > Craete <
+  //
+  // -------------------------------------- > CB <
+  animateIcons();
+  // -------------------------------------- > CB <
+  //
+  // --------------------------------------------- >> Animation <<
   //
   // ------------------------------------------------ >> return <<
   return Loading;
@@ -67,7 +120,7 @@ function Loading() {
 // =============================================================== >> Widget <<
 //
 // =================================================================== >> CB <<
-export function LoadingcallBack(Status) {
+export function LoadingcallBack(Father, Status, layer) {
   //
   // --------------------------------------------------- >> Loading <<
   //
@@ -83,12 +136,13 @@ export function LoadingcallBack(Status) {
   if (Status == 1) {
     //
     // --------------------------------------- AC >>
-    BG_5.appendChild(Widget);
+    Father.appendChild(Widget);
     // --------------------------------------- AC <<
     //
     // --------------------------------------- SM >>
     setTimeout(() => {
-      Layer5.classList.add("show");
+      Widget.classList.add("show");
+      layer.classList.add("show");
     }, 1);
     // --------------------------------------- SM <<
     //
@@ -99,12 +153,13 @@ export function LoadingcallBack(Status) {
   else if (Status == 2) {
     //
     // --------------------------------------- SM >>
-    Layer5.classList.remove("show");
+    layer.classList.remove("show");
+    Widget.classList.remove("show");
     // --------------------------------------- SM <<
     //
     // --------------------------------------- AC >>
     setTimeout(() => {
-      BG_5.removeChild(Widget);
+      Father.removeChild(Widget);
     }, 500);
     // --------------------------------------- AC <<
     //

@@ -21,6 +21,7 @@ function Notification(Text, Icon) {
   //
   // ------------------------------------------------ >> Text <<
   const NotificationText = document.createElement("span");
+  NotificationText.classList.add("NotificationText");
   //
   // Fill The Span >>
   NotificationText.textContent = Text;
@@ -39,30 +40,31 @@ function Notification(Text, Icon) {
 // =============================================================== >> Widget <<
 //
 // ============================================================= >> CallBack <<
-export function NotificationCallBack(Father, ClassName, Text, Icon) {
+export function NotificationCallBack(Text, Icon, classname, Father, layer) {
   //
-  // Class Management >>
-  Father.classList.add("show");
-  // Class Management <<
-  //
-  // Callback >>
+  // ---------------------------------------- >> Notification <<
   const Notif = Notification(Text, Icon);
-  Notif.classList.add(ClassName);
-  // Callback <<
+  Notif.classList.add(classname);
+  // ---------------------------------------- >> Notification <<
   //
-  // Ap >>
+  // -------------------------------------------------- >> AC <<
   Father.appendChild(Notif);
-  // Ap <<
+  // -------------------------------------------------- >> AC <<
   //
-  // Remove Child >>
+  // -------------------------------------------------- >> SM <<
+  //
+  layer.classList.add("show");
+  //
   setTimeout(() => {
-    Father.classList.remove("show");
+    layer.classList.remove("show");
   }, 2000);
   //
   setTimeout(() => {
     Father.removeChild(Notif);
-    Notif.classList.remove(ClassName);
-  }, 2100);
-  // Remove Child <<
+  }, 2500);
+  //
+  // -------------------------------------------------- >> SM <<
+  //
+  //
 }
 // ============================================================= >> CallBack <<

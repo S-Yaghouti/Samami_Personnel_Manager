@@ -1,3 +1,7 @@
+// ============================================================ >> Local Storage <<
+import { RetrieveLocalStorage } from "./../Local_Storage/local_storage.js";
+// ============================================================ >> Local Storage <<
+//
 // ====================================================================== >> GET <<
 //
 // ---------------------------------------------------------- >> async <<
@@ -7,7 +11,7 @@ async function GET(url) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        // token: getCookie("token") || "_",
+        token: RetrieveLocalStorage("token") || "",
       },
     });
 

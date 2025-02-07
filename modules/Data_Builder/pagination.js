@@ -21,11 +21,19 @@ export function paginationModule(
   PaginationContiner.classList.add("PaginationContiner");
   // --------------------------------------------------------- >> PC << ( Pagination Container )
   //
+  // ------------------------------------------------------- >> Flex <<
+  const FirstPaginationFlex = document.createElement("div");
+  FirstPaginationFlex.classList.add("PaginationFlex");
+  //
+  PaginationContiner.appendChild(FirstPaginationFlex);
+  //
+  // ------------------------------------------------------- >> Flex <<
+  //
   // ------------------------------------------------------ >> F P B << ( First Page Btn )
   //
   // ------------------------------------------------ > V <
   const FirstPageBTNId = "PaginationBtn";
-  const FirstPageBtnText = "اولین";
+  const FirstPageBtnText = "First";
   const FirstPageBtnIcon = "icon-park-outline:double-left";
   // ------------------------------------------------ > V <
   //
@@ -39,10 +47,11 @@ export function paginationModule(
     true,
     FirstPageListener
   );
+  FirstPageBTN.widget.style.flexDirection = "row-reverse";
   // ----------------------------------------------- > CB <
   //
   // ----------------------------------------------- > AP <
-  PaginationContiner.appendChild(FirstPageBTN.widget);
+  FirstPaginationFlex.appendChild(FirstPageBTN.widget);
   // ----------------------------------------------- > AP <
   //
   // ------------------------------------------------------ >> F P B << ( First Page Btn )
@@ -51,7 +60,7 @@ export function paginationModule(
   //
   // -------------------------------------------------- > V <
   const PreviousPageBTNId = "PaginationBtn";
-  const PreviousPageBtnText = "قبلی";
+  const PreviousPageBtnText = "Prev";
   const PreviousPageBtnIcon = "icon-park-outline:left";
   // -------------------------------------------------- > V <
   //
@@ -65,10 +74,11 @@ export function paginationModule(
     true,
     PreviousPageListner
   );
+  PreviousPageBTN.widget.style.flexDirection = "row-reverse";
   // ------------------------------------------------- > CB <
   //
   // ------------------------------------------------- > AP <
-  PaginationContiner.appendChild(PreviousPageBTN.widget);
+  FirstPaginationFlex.appendChild(PreviousPageBTN.widget);
   // ------------------------------------------------- > AP <
   //
   // -------------------------------------------------------- >> P B << ( Previous Page )
@@ -93,7 +103,7 @@ export function paginationModule(
     PageNumberText.classList.add("PageNumberText");
     //
     // -- Fill With Value >
-    PageNumberText.textContent = EnToFa(`${pageNum}`);
+    PageNumberText.textContent = pageNum;
     // -- Fill With Value <
     //
     // -------------------- Page Number Text <<
@@ -117,11 +127,19 @@ export function paginationModule(
   //
   // ------------------------------------------------------ >> P N C << ( Pages Number Container )
   //
+  // ------------------------------------------------------- >> Flex <<
+  const SecondPaginationFlex = document.createElement("div");
+  SecondPaginationFlex.classList.add("PaginationFlex");
+  //
+  PaginationContiner.appendChild(SecondPaginationFlex);
+  //
+  // ------------------------------------------------------- >> Flex <<
+  //
   // -------------------------------------------------------- >> N P << ( Next Page )
   //
   // -------------------------------------------------- > V <
   const NextPageBTNId = "PaginationBtn";
-  const NextPageBtnText = "بعدی";
+  const NextPageBtnText = "Next";
   const NextPageBtnIcon = "icon-park-outline:right";
   // -------------------------------------------------- > V <
   //
@@ -135,11 +153,10 @@ export function paginationModule(
     true,
     NextPageListner
   );
-  NextPageBTN.widget.style.flexDirection = "row-reverse";
   // ------------------------------------------------- > CB <
   //
   // ------------------------------------------------- > AP <
-  PaginationContiner.appendChild(NextPageBTN.widget);
+  SecondPaginationFlex.appendChild(NextPageBTN.widget);
   // ------------------------------------------------- > AP <
   //
   // -------------------------------------------------------- >> N P << ( Next Page )
@@ -148,7 +165,7 @@ export function paginationModule(
   //
   // -------------------------------------------------- > V <
   const LastPageBTNId = "PaginationBtn";
-  const LastPageBtnText = "آخرین";
+  const LastPageBtnText = "Last";
   const LastPageBtnIcon = "icon-park-outline:double-right";
   // -------------------------------------------------- > V <
   //
@@ -162,11 +179,10 @@ export function paginationModule(
     true,
     LastPageListner
   );
-  LastPageBTN.widget.style.flexDirection = "row-reverse";
   // ------------------------------------------------- > CB <
   //
   // ------------------------------------------------- > AP <
-  PaginationContiner.appendChild(LastPageBTN.widget);
+  SecondPaginationFlex.appendChild(LastPageBTN.widget);
   // ------------------------------------------------- > AP <
   //
   // -------------------------------------------------------- >> L P << ( Last Page )

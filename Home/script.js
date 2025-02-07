@@ -19,9 +19,25 @@ import {
 import { GET } from "../modules/Web_Service/web_service.js";
 // ------------------------------------------------- >> Web Service <<
 //
-// ------------------------------------------------- >> Web Service <<
+// ------------------------------------------------ >> Notification <<
 import { NotificationCallBack } from "./../modules/Widgets/Notification/notification_box.js";
-// ------------------------------------------------- >> Web Service <<
+// ------------------------------------------------ >> Notification <<
+//
+// ------------------------------------------------------- >> Users <<
+import { UsersSection } from "./Sections/Users.js";
+// ------------------------------------------------------- >> Users <<
+//
+// ----------------------------------------------------- >> Storage <<
+import { StorageSection } from "./Sections/Storage.js";
+// ----------------------------------------------------- >> Storage <<
+//
+// ------------------------------------------------------- >> Tasks <<
+import { TasksSection } from "./Sections/Tasks.js";
+// ------------------------------------------------------- >> Tasks <<
+//
+// ------------------------------------------------------- >> Notes <<
+import { NotesSections } from "./Sections/Notes.js";
+// ------------------------------------------------------- >> Notes <<
 //
 // =================================================================== >> improts <<
 //
@@ -79,7 +95,7 @@ const BG_6 = document.querySelector("#BG_6");
 window.addEventListener("DOMContentLoaded", () => {
   //
   // ---------------------------------------------------- >> Loading CB <<
-  LoadingcallBack(BG_3, 1, Layer3);
+  LoadingcallBack(BG_5, 1, Layer5);
   // ---------------------------------------------------- >> Loading CB <<
   //
   // --------------------------------------------------- >> Check Token <<
@@ -109,42 +125,74 @@ function Auth() {
   else {
     //
     // ------------------------------ API >>
-    let Api = "https://personel.samami.co/useruser-data";
+    let Api = "https://personnel.samami.co/user/data";
     // ------------------------------ API <<
     //
     // ------------------------------ GET >>
     GET(Api)
       .then((response) => {
-        console.log(response);
         //
-        // -------------------- 200 >
+        // ------------- Authorized >
         if (response.status == 200) {
           //
-          // ------------------------ >> Loading CB
-          LoadingcallBack(BG_3, 2, Layer3);
-          // ------------------------ << Loading CB
+          // ------------------------ >> Page Name
+          document.title = `Welcome ${response.data.username}`;
+          // ------------------------ << Page Name
           //
-          // ------------------------ >> Sidebar CB
+          // ------------------------ >> Loading
+          LoadingcallBack(BG_5, 2, Layer5);
+          // ------------------------ << Loading
+          //
+          // ------------------------ >> Sidebar
           FillSidebar(response.data);
           AC_Sidebar();
-          // ------------------------ << Sidebar CB
+          // ------------------------ << Sidebar
           //
           // ------------------------ >> SM
-          Layer5.classList.add("show");
+          Layer4.classList.add("show");
           // ------------------------ << SM
           //
+          // ------------------------ >> Content Manager
+          setTimeout(() => {
+            const SidebarOptions = document.querySelectorAll(".SidebarOption");
+            SidebarOptions[0].classList.add("active");
+            ContentManager(SidebarOptions[0].children[0].textContent);
+          }, 500);
+          // ------------------------ << Content Manager
+          //
         }
-        // -------------------- 200 <
+        // ------------- Authorized <
         //
-        // ------------------ error >
+        // ----------- Unauthorized >
         else {
+          //
+          // ------------------------ >> Loading
+          LoadingcallBack(BG_6, 2, Layer6);
+          // ------------------------ << Loading
+          //
+          // ------------------------ >> Move To Auth
+          setTimeout(() => {
+            window.location.replace("./../index.html");
+          }, 500);
+          // ------------------------ << Move To Auth
+          //
         }
-        // ------------------ error <
+        // ----------- Unauthorized <
         //
       })
       .catch((error) => {
-        console.log(error);
+        //
+        // ------------------------ > Loading
+        LoadingcallBack(BG_5, 2, Layer5);
+        // ------------------------ < Loading
+        //
+        // ------------------------ > Reload
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+        // ------------------------ < Reload
       });
+    //
     // ------------------------------ GET <<
 
     //
@@ -156,32 +204,68 @@ function Auth() {
 }
 // ======================================================================= >> Auth <<
 //
-// =================================================================== >> Layer 1 <<
-//
-// ----------------------------------------------------- >> Loading <<
-// LoadingcallBack(1);
-
-// setTimeout(() => {
-//   LoadingcallBack(2);
-// }, 2000);
-// ----------------------------------------------------- >> Loading <<
-//
-// ------------------------------------------------- >> Check Token <<
-function CheckToken() {}
-// ------------------------------------------------- >> Check Token <<
-//
-// =================================================================== >> Layer 1 <<
-//
 // =================================================================== >> Layer 2 <<
 //
-function ContentManager(value) {
-  console.log(value);
+// ----------------------------------------------- >> Create Slider <<
+const SliderContainer = document.createElement("div");
+SliderContainer.classList.add("SliderContainer");
+//
+BG_2.appendChild(SliderContainer);
+// ----------------------------------------------- >> Create Slider <<
+//
+// ----------------------------------------------- >> SliderManager <<
+function ContentManager(Value) {
+  //
+  // -------------------------------------- > SM <
+  SliderContainer.classList.remove("show");
+  // -------------------------------------- > SM <
+  //
+  // ------------------------------ > CB Loading <
+  LoadingcallBack(BG_5, 1, Layer5);
+  // ------------------------------ > CB Loading <
+  //
+  // ----------------------------------- > Users <
+  if (Value == "Users") {
+    setTimeout(() => {
+      SliderContainer.innerHTML = "";
+      UsersSection();
+    }, 500);
+  }
+  // ----------------------------------- > Users <
+  //
+  // --------------------------------- > Storage <
+  else if (Value == "Storage") {
+    setTimeout(() => {
+      SliderContainer.innerHTML = "";
+      StorageSection();
+    }, 500);
+  }
+  // --------------------------------- > Storage <
+  //
+  // ----------------------------------- > Tasks <
+  else if (Value == "Tasks") {
+    setTimeout(() => {
+      SliderContainer.innerHTML = "";
+      TasksSection();
+    }, 500);
+  }
+  // ----------------------------------- > Tasks <
+  //
+  // ----------------------------------- > Notes <
+  else if (Value == "Notes") {
+    setTimeout(() => {
+      SliderContainer.innerHTML = "";
+      NotesSections();
+    }, 500);
+  }
+  // ----------------------------------- > Notes <
+  //
 }
+// ----------------------------------------------- >> SliderManager <<
+//
 // =================================================================== >> Layer 2 <<
 //
 // =================================================================== >> Layer 3 <<
-//
-
 //
 // =================================================================== >> Layer 3 <<
 //
@@ -298,15 +382,15 @@ function AC_Sidebar() {
       "Request Sucssess 👍",
       "ph:check-fat-fill",
       "green",
-      BG_3,
-      Layer3
+      BG_6,
+      Layer6
     );
     // fa:close ph:check-fat-fill
   }
   // ------------------------------------------ > L <
   //
   // ----------------------------------------- > AC <
-  BG_4.appendChild(SidebarWidget);
+  BG_3.appendChild(SidebarWidget);
   // ----------------------------------------- > AC <
   //
 }
@@ -324,12 +408,12 @@ const SidebarOperator = Operator(SidebarOperatorListener);
 //
 // ---------------------------------------------- > L <
 function SidebarOperatorListener() {
-  Layer4.classList.toggle("show");
+  Layer3.classList.toggle("show");
 }
 // ---------------------------------------------- > L <
 //
 // --------------------------------------------- > AC <
-BG_5.appendChild(SidebarOperator);
+BG_4.appendChild(SidebarOperator);
 // --------------------------------------------- > AC <
 //
 // ---------------------------------------------------- >> Operator <<

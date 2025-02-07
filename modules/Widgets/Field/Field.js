@@ -18,6 +18,7 @@
 export function Field(
   ID,
   IsFullField,
+  LabelIcon,
   LabelText,
   IsTextArea,
   FieldID,
@@ -31,24 +32,48 @@ export function Field(
   FieldContainer.id = ID;
   // ---------------------------------------------- >> Widget <<
   //
-  // ----------------------------------------------- >> Label <<
+  // ---------------------------------------------- >> Header <<
+  const FieldHeader = document.createElement("div");
+  FieldHeader.classList.add("FieldHeader");
+  //
+  // --------------------------------------- > AC <
+  if (IsFullField) {
+    FieldContainer.appendChild(FieldHeader);
+  }
+  // --------------------------------------- > AC <
+  //
+  // ------------------------------------- > icon <
+  const FieldHeaderIcon = document.createElement("iconify-icon");
+  FieldHeaderIcon.classList.add("FieldHeaderIcon");
+  //
+  // ---------------------------- Value >>
+  FieldHeaderIcon.setAttribute("icon", LabelIcon);
+  // ---------------------------- Value <<
+  //
+  // ------------------------------- AC >>
+  FieldHeader.appendChild(FieldHeaderIcon);
+  // ------------------------------- AC <<
+  //
+  // ------------------------------------- > icon <
+  //
+  // ------------------------------------ > Label <
   const FieldLabel = document.createElement("label");
   FieldLabel.classList.add("FieldLabel");
   //
-  // ------------------------------- > TextContent <
+  // --------------------- TextContent >>
   if (IsTextArea == false) {
-    FieldLabel.setAttribute("for", `${FieldID}`);
+    FieldLabel.setAttribute("for", FieldID);
   }
   FieldLabel.textContent = LabelText;
-  // ------------------------------- > TextContent <
+  // --------------------- TextContent <<
   //
-  // ------------------------------- > appendChild <
-  if (IsFullField) {
-    FieldContainer.appendChild(FieldLabel);
-  }
-  // ------------------------------- > appendChild <
+  // --------------------- appendChild >>
+  FieldHeader.appendChild(FieldLabel);
+  // --------------------- appendChild <<
   //
-  // ----------------------------------------------- >> Label <<
+  // ------------------------------------ > Label <
+  //
+  // ---------------------------------------------- >> Header <<
   //
   // ----------------------------------------------- >> Field <<
   const Field = document.createElement("div");
@@ -63,7 +88,9 @@ export function Field(
   // ------------------ icon Value <<
   //
   // -------------------------- AP >>
-  Field.appendChild(FieldIcon);
+  if (IsTextArea == false) {
+    Field.appendChild(FieldIcon);
+  }
   // -------------------------- AP <<
   //
   // -------------------------------- > Field Icon <
@@ -87,11 +114,11 @@ export function Field(
     // --------------------- Element <<
     //
     // ------------------- Attribute >>
-    TextArea.setAttribute("placeholder", `${Placeholder}`);
+    TextArea.setAttribute("placeholder", Placeholder);
     //
     if (IsFullField) {
-      TextArea.setAttribute("id", `${FieldID}`);
-      TextArea.setAttribute("name", `${LabelText}`);
+      TextArea.setAttribute("id", FieldID);
+      TextArea.setAttribute("name", LabelText);
     }
     // ------------------- Attribute <<
     //
@@ -114,11 +141,11 @@ export function Field(
     //
     // ------------------- setAttribute >>
     FieldInput.setAttribute("type", "text");
-    FieldInput.setAttribute("placeholder", `${Placeholder}`);
-    FieldInput.setAttribute("maxlength", `${maxLength}`);
+    FieldInput.setAttribute("placeholder", Placeholder);
+    FieldInput.setAttribute("maxlength", maxLength);
     if (IsFullField) {
-      FieldInput.setAttribute("id", `${FieldID}`);
-      FieldInput.setAttribute("name", `${LabelText}`);
+      FieldInput.setAttribute("id", FieldID);
+      FieldInput.setAttribute("name", LabelText);
     }
     // ------------------- setAttribute <<
     //
@@ -154,10 +181,11 @@ export function Field(
     else {
       return {
         widget: FieldContainer,
-        Input: FieldInput,
-        icon: FieldIcon,
+        labelIcon: FieldHeaderIcon,
+        labelText: FieldLabel,
         field: Field,
-        label: FieldLabel,
+        fieldIcon: FieldIcon,
+        Input: FieldInput,
       };
     }
     // ------------ Full Field <<
@@ -181,6 +209,7 @@ export function Field(
     else {
       return {
         widget: Field,
+        fieldIcon: FieldIcon,
         Input: FieldInput,
       };
     }

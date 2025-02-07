@@ -62,6 +62,7 @@
     --shadow: rgba(0, 0, 0, 0.15);
     --red: #B82132;
     --green: #5D8736;
+    --btn-padding: clamp(0.7rem, 0.75vw, 2vw) clamp(0.75rem, 1vw, 2vw)
 }
 
 /* ---------------------------------------------------- >> root << */
@@ -72,13 +73,328 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
-    font-family: 'Comic Sans MS', vazir, serif;
+    font-family: 'Roboto', vazir, serif;
     overflow: hidden;
 }
 
 /* ---------------------------------------------- >> All Father << */
 
+/* ------------------------------------------------ >> Provided << */
+.Column {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Flex {
+    display: flex;
+}
+
+#FilterFlex {
+    width: 100%;
+    transform: translateY(-200%);
+    border-bottom: 2px solid var(--white);
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    transition: all 0.5s;
+}
+
+#FilterFlex.show {
+    transform: translateY(0%);
+}
+
+/* ------------------------------------------------ >> Provided << */
+
 /* ================================================================== >> Basic << */
+
+/* ============================================================== >> Components << */
+
+/* ----------------------------------------------- >> Feild << */
+.FieldContainer {
+    display: flex;
+    gap: clamp(0.5rem, 1vw, 2rem);
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.5s;
+}
+
+.FieldHeader {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.FieldHeaderIcon {
+    font-size: clamp(1rem, 1.2vw, 2.5rem);
+    color: var(--white);
+}
+
+.FieldLabel {
+    font-size: clamp(1.2rem, 1.5vw, 3rem);
+    color: var(--white);
+}
+
+.Field {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: clamp(3.5rem, 4vw, 8rem);
+    transition: all 0.5s;
+    font-family: "Roboto", serif;
+}
+
+.FieldIcon {
+    font-size: clamp(1rem, 1.5vw, 2rem);
+}
+
+.FieldInput {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    color: white;
+    font-family: 'Roboto', serif;
+    text-align: center;
+    transition: all 0.5s;
+    z-index: 1;
+    font-size: clamp(0.95rem, 1.2vw, 2rem);
+}
+
+
+.FieldInput::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: clamp(0.85rem, 1vw, 1.5rem);
+}
+
+/* --------------------------- > Search Field < */
+#SearchField {
+    width: 50%;
+    border: 2px solid var(--white);
+    border-bottom: 0px;
+    justify-content: center;
+    padding: 0px clamp(0.8rem, 1.2vw, 1.5rem);
+    background-color: var(--black);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+#SearchFieldIcon {
+    color: var(--white);
+}
+
+#SearchInput {
+    width: 100%;
+    text-align: start;
+}
+
+/* --------------------------- > Search Field < */
+
+/* ----------------------------------------------- >> Feild << */
+
+/* ------------------------------------------------- >> BTN << */
+.BTN {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+/* ------------------------------------------------- >> BTN << */
+
+/* ---------------------------------------- >> Data Builder << */
+.DataContainer {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    transition: all 1s;
+    transform: translateY(300%);
+    z-index: 1;
+}
+
+.DataContainer.show {
+    transform: translateY(0%);
+}
+
+.DataContainer.big {
+    height: 100%;
+    justify-content: center;
+}
+
+.DataContainer.empty {
+    background-color: transparent;
+    border: none;
+    border-radius: none;
+}
+
+.ContentList {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.ContentList.havepadding {
+    margin-bottom: 15px;
+}
+
+.EmptyList {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.EmptyText {
+    font-size: clamp(0.75rem, 1.2vw, 4rem);
+    color: white;
+    padding: clamp(0.5rem, 1vw, 2rem);
+    border-top: 2px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.EmptySVG {
+    border: none;
+    outline: none;
+    width: 80%;
+    height: 80%;
+}
+
+/* ---------------------------------------- >> Data Builder << */
+
+/* ------------------------------------------ >> Pagination << */
+.PaginationContiner {
+    width: max-content;
+    height: max-content;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    background-color: var(--black);
+    padding: 0px max(0.5rem, 10px);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+    border: 2px solid var(--white25);
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.5s;
+}
+
+.PaginationContiner:hover {
+    border: 2px solid var(--white);
+}
+
+.PaginationContiner:active {
+    border: 2px solid var(--white);
+}
+
+.PaginationFlex {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.PagesNumberContainer {
+    width: max-content;
+    max-width: 400px;
+    padding: 10px 5px;
+    height: max-content;
+    display: flex;
+    overflow-x: auto;
+    border-left: 2px solid rgba(255, 255, 255, 0.25);
+    border-right: 2px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.4s;
+    scroll-behavior: smooth;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.25);
+}
+
+.PagesNumberContainer:hover {
+    transition: all 0.4s;
+    border-left: 2px solid rgba(255, 255, 255, 1);
+    border-right: 2px solid rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.25), inset 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.PageNumberContainer {
+    padding: clamp(0.5rem, 0.75vw, 2rem);
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    margin: 0px 5px;
+    cursor: pointer;
+    transition: all 0.6s;
+    color: white;
+}
+
+.PageNumberContainer:hover {
+    transition: all 0.2s;
+    scale: 1.1;
+    background-color: rgba(255, 255, 255, 1);
+    color: black;
+}
+
+.PageNumberContainer.active {
+    transition: all 0.8s;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.26);
+    border: 1px solid white;
+}
+
+.PageNumberText {
+    font-size: clamp(0.9rem, 1vw, 2rem);
+}
+
+#PaginationBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    border-radius: max(0.2rem, 5px);
+    transition: all 0.5s;
+    color: var(--white);
+    background-color: transparent;
+    padding: clamp(0.6rem, 0.8vw, 1rem) clamp(0.8rem, 1vw, 1.2rem);
+}
+
+#PaginationBtn:hover {
+    transition: all 0.5s;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+    color: var(--inactive-text);
+}
+
+#PaginationBtn:active {
+    transition: all 0.2s;
+    transform: scale(0.9);
+}
+
+#PaginationBtn span {
+    font-size: clamp(0.9rem, 1vw, 1.2rem);
+}
+
+#PaginationBtn iconify-icon {
+    font-size: clamp(1rem, 1.2vw, 2rem);
+}
+
+/* ------------------------------------------ >> Pagination << */
+
+/* ============================================================== >> Components << */
 
 /* ================================================================ >> Layer 1 << */
 .Layer1 {
@@ -138,6 +454,158 @@ body {
 
 /* -------------------------------------------------- >> Body << */
 
+/* ------------------------------------------------ >> Slider << */
+.SliderContainer {
+    width: 100%;
+    height: 100%;
+    transition: all 1s;
+    position: absolute;
+    bottom: 0%;
+}
+
+.SliderContainer.show {
+    bottom: 0%;
+}
+
+/* ------------------------------------------------ >> Slider << */
+
+/* ------------------------------------------------- >> Users << */
+.UsersSection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#UsersList {
+    gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(475px, max-content));
+}
+
+/* --------------------------------- > user box < */
+.UserBox {
+    height: max-content;
+    width: 475px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: clamp(0.5rem, 0.6vw, 0.9rem);
+    background-color: var(--black);
+    border: 2px solid var(--white25);
+    border-radius: max(0.2rem, 5px);
+    transition: all 0.5s;
+}
+
+.UserBox:hover {
+    border: 2px solid var(--white);
+}
+
+.UserBox:active {
+    border: 2px solid var(--white);
+}
+
+#UserFirstFlex {
+    width: 100%;
+    align-items: center;
+    gap: 1rem;
+}
+
+.UserAvatar {
+    width: 65px;
+    height: 65px;
+    object-fit: fill;
+    border-radius: max(0.2rem, 5px);
+    border: 2px solid var(--white25);
+    transition: all 0.5s;
+}
+
+.UserAvatar:hover {
+    border: 2px solid var(--white);
+}
+
+#UserColumn {
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--white);
+}
+
+.Username {
+    font-size: clamp(0.9rem, 1vw, 1.2rem);
+}
+
+.UserPhoneNumber {
+    color: var(--white75);
+    font-size: clamp(0.8rem, 0.9vw, 1rem);
+}
+
+#UserSecondFlex {
+    width: 100%;
+    gap: 0.5rem;
+}
+
+#UserDeleteBTN,
+#UserEditBTN {
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    width: 100%;
+    background-color: var(--white25);
+    color: var(--white);
+    padding: clamp(0.7rem, 0.8vw, 0.9rem) 0px;
+    border-radius: max(0.1rem, 3px);
+    transition: all 0.5s;
+}
+
+#UserDeleteBTN:hover,
+#UserEditBTN:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+#UserDeleteBTN:active,
+#UserEditBTN:active {
+    scale: 0.95;
+    background-color: var(--white);
+    color: var(--black);
+}
+
+#UserDeleteBTN span,
+#UserEditBTN span {
+    font-size: clamp(0.8rem, 0.9vw, 1.1rem);
+}
+
+#UserDeleteBTN iconify-icon,
+#UserEditBTN iconify-icon {
+    font-size: clamp(1rem, 1.2vw, 2rem);
+}
+
+/* --------------------------------- > user box < */
+
+/* ------------------------------------------------- >> Users << */
+
+/* ------------------------------------------------- >> Tasks << */
+#FilterBTN,
+#CreateBTN {
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom: 0px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    height: 100%;
+    padding: 0px clamp(0.8rem, 1.2vw, 2rem);
+}
+
+#FilterBTN span,
+#CreateBTN span {
+    font-size: clamp(0.9rem, 1vw, 1.2rem);
+}
+
+#FilterBTN iconify-icon,
+#CreateBTN iconify-icon {
+    font-size: clamp(1rem, 1.2vw, 2rem);
+}
+
+/* ------------------------------------------------- >> Tasks << */
+
 /* ================================================================ >> Layer 2 << */
 
 /* ================================================================ >> Layer 3 << */
@@ -145,14 +613,13 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
-    bottom: -100%;
+    left: -100%;
     z-index: 2;
-    backdrop-filter: blur(50px);
     transition: all 0.5s;
 }
 
 .Layer3.show {
-    bottom: 0%;
+    left: 0%;
 }
 
 /* -------------------------------------------------- >> Body << */
@@ -160,131 +627,11 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
-}
-
-/* -------------------------------------------------- >> Body << */
-
-/* ----------------------------------------------- >> Loading << */
-.Loading {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: -100%;
-    left: 50%;
-    transform: translate(-50%, -100%);
-    z-index: 0;
-    transition: all 0.5s;
-}
-
-.Loading.show {
-    bottom: 0%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-}
-
-.LoadingText {
-    font-size: clamp(6rem, 10vw, 15rem);
-    color: var(--gold);
-    font-family: "Passion One", serif;
-    margin: auto 0px;
-}
-
-.LoadingIconContainer {
-    height: max-content;
-    width: max-content;
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-    margin-bottom: 2rem;
-}
-
-.LoadingIcon {
-    flex: auto;
-    width: 12px;
-    height: 12px;
-    border-radius: 100%;
-    transition: all 1s;
-    scale: 0.25;
-    background-color: var(--white25);
-}
-
-.LoadingIcon.animation {
-    scale: 1.5;
-    background-color: var(--white);
-}
-
-/* ----------------------------------------------- >> Loading << */
-
-/* ------------------------------------------ >> Notification << */
-.Notification {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: max-content;
-    height: max-content;
-    padding: clamp(0.8rem, 1vw, 2rem);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    border-radius: 5px;
-    border: 2px solid transparent;
-    transition: all 0.5s;
-}
-
-.Notification.red {
-    border: 2px solid var(--white);
-    background-color: var(--red);
-    color: var(--white);
-}
-
-.Notification.green {
-    border: 2px solid var(--black);
-    background-color: var(--green);
-    color: var(--black);
-}
-
-.NotificationIcon {
-    font-size: clamp(1rem, 1.5vw, 2rem);
-}
-
-.NotificationText {
-    font-size: clamp(0.85rem, 1.2vw, 2rem);
-}
-
-/* ------------------------------------------ >> Notification << */
-
-
-/* ================================================================ >> Layer 3 << */
-
-/* ================================================================ >> Layer 4 << */
-.Layer4 {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: -100%;
-    z-index: 3;
-    scale: 0;
-    transition: all 0.5s;
-}
-
-.Layer4.show {
-    left: 0%;
-    scale: 1;
-}
-
-/* -------------------------------------------------- >> Body << */
-#BG_4 {
-    width: 100%;
-    height: 100%;
-    position: relative;
     display: flex;
     align-items: start;
     justify-content: space-between;
+    background: linear-gradient(to right, var(--black25), transparent);
+    backdrop-filter: blur(5px);
 }
 
 /* -------------------------------------------------- >> Body << */
@@ -306,24 +653,13 @@ body {
     width: 100%;
     height: 70px;
     padding: clamp(1rem, 2vw, 3rem);
-    background-color: var(--white25);
-    border: 2px solid var(--white);
+    background-color: var(--white);
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: inset 0px 0px 0px var(--black25);
+    box-shadow: inset 0px 0px 10px var(--black25);
     transition: all 0.5s;
-}
-
-.SidebarLogo:hover {
-    background-color: var(--white);
-    box-shadow: inset 0px 0px 10px var(--black25);
-}
-
-.SidebarLogo:active {
-    background-color: var(--white);
-    box-shadow: inset 0px 0px 10px var(--black25);
 }
 
 .SiderbarLogoImage {
@@ -357,7 +693,7 @@ body {
     justify-content: center;
     gap: 8px;
     font-size: clamp(0.85rem, 1vw, 2rem);
-    padding: clamp(0.5rem, 1vw, 2rem);
+    padding: clamp(0.8rem, 1vw, 2rem);
     transition: all 0.5s;
     position: relative;
 }
@@ -454,13 +790,12 @@ body {
 
 /* ------------------------------- > User Info < */
 
-
 /* ----------------------------------------------- >> Sidebar << */
 
-/* ================================================================ >> Layer 4 << */
+/* ================================================================ >> Layer 3 << */
 
-/* ================================================================ >> Layer 5 << */
-.Layer5 {
+/* ================================================================ >> Layer 4 << */
+.Layer4 {
     width: 0%;
     height: 0%;
     position: absolute;
@@ -471,14 +806,14 @@ body {
     transition: all 0.5s;
 }
 
-.Layer5.show {
+.Layer4.show {
     scale: 1;
 }
 
 /* -------------------------------------------------- >> Body << */
-#BG_5 {
-    width: 100%;
-    height: 100%;
+#BG_4 {
+    width: 0%;
+    height: 0%;
     position: relative;
 }
 
@@ -573,6 +908,187 @@ body {
 
 /* ---------------------------------------------- >> operator << */
 
+/* ================================================================ >> Layer 4 << */
+
+/* ================================================================ >> Layer 5 << */
+.Layer5 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -100%;
+    z-index: 4;
+    transition: all 0.5s;
+}
+
+.Layer5.show {
+    bottom: 0%;
+}
+
+/* -------------------------------------------------- >> Body << */
+#BG_5 {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+/* -------------------------------------------------- >> Body << */
+
+/* ----------------------------------------------- >> Loading << */
+.Loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    z-index: 0;
+    transition: all 0.5s;
+}
+
+.Loading.show {
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.LoadingText {
+    font-size: clamp(6rem, 10vw, 15rem);
+    color: var(--gold);
+    font-family: "Passion One", serif;
+    margin: auto 0px;
+}
+
+.LoadingIconContainer {
+    height: max-content;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-bottom: 2rem;
+}
+
+.LoadingIcon {
+    flex: auto;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    transition: all 1s;
+    scale: 0.25;
+    background-color: var(--white25);
+}
+
+.LoadingIcon.animation {
+    scale: 1.5;
+    background-color: var(--white);
+}
+
+/* ----------------------------------------------- >> Loading << */
+
+/* --------------------------------------------------- >> BTN << */
+#ColsePopupBTN {
+    background-color: var(--white);
+    color: var(--red);
+    font-size: clamp(1.2rem, 1.5vw, 2rem);
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    padding: 1rem;
+    transform: translateY(1px);
+    z-index: 0;
+}
+
+#SubmitPopupBTN {
+    padding: 1rem 0px;
+    width: 80%;
+    background-color: var(--green);
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    transform: translateY(-1px);
+}
+
+/* --------------------------------------------------- >> BTN << */
+
+/* --------------------------------------------- >> edit user << */
+#EditUserColumn {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    transition: all 0.5s;
+}
+
+#EditUserColumn.show {
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+#EditUserBox {
+    width: 100%;
+    background-color: var(--black);
+    border: max(0.2rem, 4px) solid var(--white);
+    border-radius: max(0.2rem, 5px);
+    border-top-right-radius: 0px;
+    z-index: 2;
+    box-shadow: 0px 0px 10px var(--black25);
+    padding: 1rem;
+}
+
+#EditUserFlex {
+    width: 100%;
+    gap: 1rem;
+}
+
+.EditUserAvatarContainer {
+    width: 250px;
+    height: 200px;
+    border-radius: max(0.2rem, 5px);
+    border: max(0.2rem, 2px) solid var(--white);
+    position: relative;
+}
+
+.EditUserAvatar {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    position: absolute;
+}
+
+.EditUserImagePicker {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    z-index: 2;
+}
+
+.EditUserAvatarImagePickerIcon {
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    bottom: -1px;
+    background-color: var(--white);
+    padding: 0.5rem;
+    color: var(--black);
+    border-top-right-radius: max(0.2rem, 5px);
+    font-size: clamp(1rem, 1.5vw, 2rem);
+}
+
+#EditUserThreedColumn {
+    width: 100%;
+}
+
+/* --------------------------------------------- >> edit user << */
+
 /* ================================================================ >> Layer 5 << */
 
 /* ================================================================ >> Layer 6 << */
@@ -594,42 +1110,67 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: end;
-    padding: 1rem;
     background: linear-gradient(to top, var(--black25), transparent);
 }
 
 /* -------------------------------------------------- >> Body << */
 
+/* ------------------------------------------ >> Notification << */
+.Notification {
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    width: max-content;
+    height: max-content;
+    padding: clamp(0.8rem, 1vw, 2rem);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    transition: all 0.5s;
+}
 
+.Notification.show {
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, -5%);
+}
+
+.Notification.red {
+    border: 2px solid var(--white);
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.Notification.green {
+    border: 2px solid var(--black);
+    background-color: var(--green);
+    color: var(--black);
+}
+
+.NotificationIcon {
+    font-size: clamp(1rem, 1.5vw, 2rem);
+}
+
+.NotificationText {
+    font-size: clamp(0.85rem, 1.2vw, 2rem);
+}
+
+/* ------------------------------------------ >> Notification << */
+
+/* ------------------------------------------------- >> Chats << */
+
+
+/* ------------------------------------------------- >> Chats << */
 
 /* ================================================================ >> Layer 6 << */
 
 /* ============================================================ >> Media Query << */
 
 /* ------------------------------------------------ >> 4K << */
-@media screen and (min-width: 1800px) {
-
-    /* ----------------------------- > Layer 3 < */
-    .SidebarLogo {
-        height: 150px;
-    }
-
-    /* ----------------------------- > Layer 3 < */
-
-
-    /* ----------------------------- > Layer 4 < */
-    .SidebarOperator {
-        scale: 1.8;
-        transform: translate(40%, -100%);
-    }
-
-    /* ----------------------------- > Layer 4 < */
-
-}
+@media screen and (min-width: 1800px) {}
 
 /* ------------------------------------------------ >> 4K << */
 
@@ -641,12 +1182,32 @@ body {
 /* ------------------------------------------ >> S Laptop << */
 @media screen and (max-width: 1024px) {
 
-    /* ----------------------------- > Layer 3 < */
+    /* ----------------------- >> layer 2 << */
+    #UsersList {
+        gap: 5px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+    }
+
+    .UserBox {
+        width: 300px;
+    }
+
+    /* ----------------------- >> layer 2 << */
+
+    /* ----------------------- > Layer 3 < */
     .Sidebar {
         width: 15%;
     }
 
-    /* ----------------------------- > Layer 3 < */
+    /* ----------------------- > Layer 3 < */
+
+
+    /* ---------------------- > Layer 5 < */
+    #EditUserColumn {
+        width: 60%;
+    }
+
+    /* ---------------------- > Layer 5 < */
 
 }
 
@@ -655,12 +1216,38 @@ body {
 /* -------------------------------------------- >> tablet << */
 @media screen and (max-width: 768px) {
 
-    /* ----------------------------- > Layer 3 < */
+    /* ------------------------ >> Search << */
+    #SearchField {
+        width: 70%;
+    }
+
+    /* ------------------------ >> Search << */
+
+    /* ----------------------- >> layer 2 << */
+    #UsersList {
+        gap: 5px;
+        grid-template-columns: repeat(auto-fit, minmax(350px, max-content));
+    }
+
+    .UserBox {
+        width: 350px;
+    }
+
+    /* ----------------------- >> layer 2 << */
+
+    /* ------------------------- > Layer 3 < */
     .Sidebar {
         width: 18%;
     }
 
-    /* ----------------------------- > Layer 3 < */
+    /* ------------------------- > Layer 3 < */
+
+    /* ---------------------- > Layer 5 < */
+    #EditUserColumn {
+        width: 70%;
+    }
+
+    /* ---------------------- > Layer 5 < */
 }
 
 /* -------------------------------------------- >> tablet << */
@@ -668,20 +1255,85 @@ body {
 /* ------------------------------------------ >> L mobile << */
 @media screen and (max-width: 425px) {
 
-    /* ----------------------------- > Layer 3 < */
+    /* --------------- >> Search Feild << */
+    #SearchField {
+        width: 90%;
+    }
+
+    /* --------------- >> Search Feild << */
+
+    /* ----------------- >> Pagination << */
+    .PaginationContiner {
+        width: 95%;
+        padding: 10px 0px;
+        flex-direction: column;
+        margin-bottom: 6rem;
+    }
+
+    .PaginationFlex {
+        width: 100%;
+        padding: 0px max(0.5rem, 10px);
+    }
+
+    .PagesNumberContainer {
+        width: 100%;
+        border: 2px solid var(--white25);
+        border-left: none;
+        border-right: none;
+    }
+
+    .PagesNumberContainer:hover {
+        border: 2px solid var(--white);
+    }
+
+    .PageNumberContainer {
+        border-radius: 3px;
+    }
+
+    .PageNumberText {
+        font-size: 16px;
+    }
+
+    #PaginationBtn {
+        width: 100%;
+    }
+
+    /* ----------------- >> Pagination << */
+
+    /* ----------------------- >> layer 2 << */
+    #UsersList {
+        gap: 5px;
+        grid-template-columns: repeat(auto-fit, minmax(100%, max-content));
+    }
+
+    .UserBox {
+        width: 100%;
+    }
+
+    /* ----------------------- >> layer 2 << */
+
+    /* ---------------------- > Layer 3 < */
     .Sidebar {
         width: 30%;
     }
 
-    /* ----------------------------- > Layer 3 < */
+    /* ---------------------- > Layer 3 < */
 
-    /* ----------------------------- > Layer 4 < */
+    /* ---------------------- > Layer 4 < */
     .SidebarOperator {
         scale: 0.9;
         transform: translate(10%, -120%);
     }
 
-    /* ----------------------------- > Layer 4 < */
+    /* ---------------------- > Layer 4 < */
+
+    /* ---------------------- > Layer 5 < */
+    #EditUserColumn {
+        width: 90%;
+    }
+
+    /* ---------------------- > Layer 5 < */
+
 }
 
 /* ------------------------------------------ >> L mobile << */
@@ -689,12 +1341,12 @@ body {
 /* ------------------------------------------ >> M mobile << */
 @media screen and (max-width: 375px) {
 
-    /* ----------------------------- > Layer 3 < */
+    /* ----------------------- > Layer 3 < */
     .Sidebar {
         width: 35%;
     }
 
-    /* ----------------------------- > Layer 3 < */
+    /* ----------------------- > Layer 3 < */
 }
 
 /* ------------------------------------------ >> M mobile << */
@@ -702,12 +1354,12 @@ body {
 /* ------------------------------------------ >> S mobile << */
 @media screen and (max-width: 320px) {
 
-    /* ----------------------------- > Layer 3 < */
+    /* ----------------------- > Layer 3 < */
     .Sidebar {
         width: 40%;
     }
 
-    /* ----------------------------- > Layer 3 < */
+    /* ----------------------- > Layer 3 < */
 }
 
 /* ------------------------------------------ >> S mobile << */

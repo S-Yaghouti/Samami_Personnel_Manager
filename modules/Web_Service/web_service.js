@@ -56,7 +56,7 @@ async function POST(url, data) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // token: getCookie("token") || "",
+        token: RetrieveLocalStorage("token") || "",
       },
       body: JSON.stringify(data),
     });

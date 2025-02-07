@@ -15,7 +15,6 @@ import { POST } from "./modules/Web_Service/web_service.js";
 // ----------------------------------------------- >> Local Storage <<
 import {
   setLocalStorage,
-  RetrieveLocalStorage,
 } from "./modules/Local_Storage/local_storage.js";
 // ----------------------------------------------- >> Local Storage <<
 //
@@ -200,6 +199,7 @@ function StepOne() {
   const PhoneFeild = Field(
     "PhoneNumber",
     true,
+    "",
     "Phone Number",
     false,
     FeildID,
@@ -323,6 +323,7 @@ function StepTwo() {
   const OTPField = Field(
     "OTP",
     true,
+    "",
     "OTP Verifaction",
     false,
     FieldID,
@@ -486,7 +487,7 @@ function StepThree() {
   //
   // ---------------------- Varibels >
   const FeildID = "UserNameFeild";
-  const Icon = "";
+  const FeildIcon = "";
   const Placeholder = "enter your name";
   // ---------------------- Varibels <
   //
@@ -494,16 +495,17 @@ function StepThree() {
   const UserNameFeild = Field(
     "UserName",
     true,
+    "",
     "User Name",
     false,
     FeildID,
-    Icon,
+    FeildIcon,
     Placeholder,
     20
   );
   // ---------------------- CallBack <
   //
-  // ---------------------- Listener <
+  // ---------------------- Listener >
   UserNameFeild.Input.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       //
@@ -765,19 +767,19 @@ function WebSerive(Status, Input, Field, BTN, Column) {
   //
   // -------------------------------------- > Send OTP <
   if (Status == 1) {
-    URL = "https://personel.samami.co/auth/send-otp";
+    URL = "https://personnel.samami.co/auth/send-otp";
   }
   // -------------------------------------- > Send OTP <
   //
   // ------------------------------------ > Verify OTP <
   else if (Status == 2) {
-    URL = "https://personel.samami.co/auth/verify-otp";
+    URL = "https://personnel.samami.co/auth/verify-otp";
   }
   // ------------------------------------ > Verify OTP <
   //
   // ---------------------------------------- > Signup <
   else if (Status == 3) {
-    URL = "https://personel.samami.co/user/signup";
+    URL = "https://personnel.samami.co/user/signup";
   }
   // ---------------------------------------- > Signup <
   //
@@ -872,7 +874,6 @@ function WebSerive(Status, Input, Field, BTN, Column) {
     //
     POST(URL, Data)
       .then((response) => {
-        console.log(response);
         //
         //
         // ----------------------------- 200 >>

@@ -136,7 +136,9 @@ export function LoadingcallBack(Father, Status, layer) {
   if (Status == 1) {
     //
     // --------------------------------------- AC >>
-    Father.appendChild(Widget);
+    if (!Father.querySelector(".Loading")) {
+      Father.appendChild(Widget);
+    }
     // --------------------------------------- AC <<
     //
     // --------------------------------------- SM >>
@@ -152,6 +154,10 @@ export function LoadingcallBack(Father, Status, layer) {
   // --------------------------------------------- > Remove <
   else if (Status == 2) {
     //
+    // ---------------------------------------- V >>
+    const Loading = document.querySelector(".Loading");
+    // ---------------------------------------- V <<
+    //
     // --------------------------------------- SM >>
     layer.classList.remove("show");
     Widget.classList.remove("show");
@@ -159,7 +165,7 @@ export function LoadingcallBack(Father, Status, layer) {
     //
     // --------------------------------------- AC >>
     setTimeout(() => {
-      Father.removeChild(Widget);
+      Father.removeChild(Loading);
     }, 500);
     // --------------------------------------- AC <<
     //

@@ -24,7 +24,7 @@ import { GET } from "./../Web_Service/web_service.js";
 //
 // L = > { Loading }
 //
-// I = > { Icon }
+// i = > { icon }
 //
 // T = > { Text }
 //
@@ -32,51 +32,48 @@ import { GET } from "./../Web_Service/web_service.js";
 //
 // A = > { Animation }
 //
-// I = > { Information }
+// SM = > { State Management }
 //
-// CM = > { Class Management }
-//
-// AP = > { AppendChild }
+// AC = > { Append Child }
 //
 // ================================================================= >> Difinations <<
 //
 // ============================================================= >> Content Builder <<
 export function DataBuilder(
   Id,
-  InforamtionApi,
-  Filter,
-  infoLimit = 27,
-  responseCallBack,
-  PadginationBtnListener,
-  NotFoundText
+  URL,
+  Query,
+  Limit,
+  Transmitter,
+  PadginationBtnListener
 ) {
-  // ---------------------------------------------------- >> V << ( Varibales )
+  // ---------------------------------------------------- >> V <<
   let page = 1;
-  //
   let totalPage = 1;
-  // ---------------------------------------------------- >> V << ( Varibales )
+  // ---------------------------------------------------- >> V <<
   //
-  // --------------------------------------------------- >> DC << ( Data Container )
+  // -------------------------------------------------- >> div <<
   const DataContainer = document.createElement("div");
   DataContainer.classList.add("DataContainer");
   DataContainer.id = Id;
-  // --------------------------------------------------- >> DC << ( Data Container )
+  // -------------------------------------------------- >> div <<
   //
-  // ---------------------------------------------------- >> P << ( Pagination )
+  // ---------------------------------------------------- >> P <<
   //
   // --------------------------------------------- > V <
   let Pagination = null;
   // --------------------------------------------- > V <
   //
   // ------------------------------------------- > P B <
-  GET(`${InforamtionApi}?${Filter}`)
+  GET(`${URL}?${Query}`)
     .then((response) => {
       //
-      // -------------- > Calculate Total Page <
-      totalPage = Math.ceil(response.data.list_length / infoLimit);
-      // -------------- > Calculate Total Page <
+      // ------------------------ > Total Page <
+      // totalPage = Math.ceil(response.data.data.length / Limit);
+      totalPage = Math.ceil(response.data.pagination.total_pages);
+      // ------------------------ > Total Page <
       //
-      // --------------- > Pagination CallBack <
+      // ------------------------------ > P CB <
       const pagination = paginationModule(
         FirstIndexOnClick,
         pervBtn,
@@ -86,137 +83,205 @@ export function DataBuilder(
         totalPage,
         page
       );
-      // --------------- > Pagination CallBack <
-
-      // >> handeller function <<
-      ClassManagement();
+      // ------------------------------ > P CB <
+      //
+      // ------------------------ > Handellers <
+      StateManagement();
       DisplayData();
       ScrollManagement();
-      // >> handeller function <<
+      // ------------------------ > Handellers <
 
-      // >> append user pagination <<
+      // ---------------------------- > Save P <
       Pagination = pagination;
-      // >> append user pagination <<
+      // ---------------------------- > Save P <
     })
     .catch((error) => {
-      console.log(`Fetch Data Pagination Error Is : ${error}`);
+      console.log(`Pagination error is : ${error}`);
     });
   // ------------------------------------------- > P B <
   //
-  // ---------------------------------------------------- >> P << ( Pagination )
+  // ---------------------------------------------------- >> P <<
   //
-  // ---------------------------------------------------- >> B << ( Builder )
-  //
-  // -------------------------------------------- > E L <
-  const EmptyList = document.createElement("div");
-  EmptyList.classList.add("EmptyList");
-  //
-  // --------------------------------------- A >>
-  const ghostLink = document.createElement("iframe");
-  ghostLink.classList.add("Ghost");
-  ghostLink.setAttribute(
-    "src",
-    "https://lottie.host/embed/e932a03c-76fe-4317-b43b-2fc7fd3f33ad/vEY73EibQ6.lottie"
-  );
-  // --------------------------------------- A <<
-  //
-  // --------------------------------------- t >>
-  const EmptyText = document.createElement("span");
-  EmptyText.classList.add("EmptyText");
-  EmptyText.textContent = NotFoundText;
-  // --------------------------------------- t <<
-  //
-  // -------------------------------------- AP >>
-  EmptyList.appendChild(ghostLink);
-  EmptyList.appendChild(EmptyText);
-  // -------------------------------------- AP <<
-  //
-  // -------------------------------------------- > E L <
+  // ---------------------------------------------------- >> L <<
   //
   // -------------------------------------------- > B I <
+  //
+  // ------------------------------------ > div <
   const ContentList = document.createElement("div");
   ContentList.classList.add("ContentList");
+  // ------------------------------------ > div <
   //
+  // -------------------------------------- > B <
   function DisplayData() {
     //
-    // ------------------------------------- V >>
-    let api = `${InforamtionApi}?limit=${infoLimit}&page=${page}&${Filter}`;
-    // ------------------------------------- V >>
+    // ------------------------------- V >>
+    let api = `${URL}?limit=${Limit}&page=${page}&${Query}`;
+    // ------------------------------- V >>
     //
-    // ------------------------------------- B >>
+    // --------------------- Web Service >>
     GET(api)
-      // ---------------- Builder Response <
+      //
       .then((response) => {
         //
-        // { Varibels }
-        const length = response.data.list_length;
-        // { Varibels }
+        // -------- Length >
+        const length = response.data.data.length;
+        // -------- Length <
         //
-        // { ClassManamgent }
-        ContentList.innerHTML = "";
-        setTimeout(() => {
-          DataContainer.classList.add("show");
-        }, 100);
-        // { ClassManamgent }
-        //
-        // { Response CallBack }
-        responseCallBack(response);
-        // { Response CallBack }
-        //
-        // { in case of empty reponse }
-        if (length == 0) {
-          DataContainer.classList.add("big");
-          DataContainer.appendChild(EmptyList);
-          DataContainer.id = "";
-        }
-        // { in case of empty reponse }
-        //
-        // { in case of full reponse }
-        else if (length <= 3) {
-          DataContainer.classList.add("big");
+        // ----------- 200 >
+        if (response.status == 200) {
+          //
+          // -------------- >> SM
+          ContentList.innerHTML = "";
+          setTimeout(() => {
+            DataContainer.classList.add("show");
+          }, 100);
+          // -------------- << SM
+          //
+          // -------------- >> Transmitter
+          Transmitter(response);
+          // -------------- << Transmitter
+          //
+          // -------------- >> List AC
           DataContainer.appendChild(ContentList);
-        } else {
-          DataContainer.appendChild(ContentList);
-        }
-        // { in case of full reponse }
-        //
-        // { Pagination Append }
-        if (page <= totalPage) {
+          // -------------- << List AC
+          //
+          // -------------- >> Pagination AC
           DataContainer.appendChild(Pagination);
+          // -------------- << Pagination AC
+          //
+          // -------------- >> SM
+          StateManagement();
+          ScrollManagement();
+          // -------------- << SM
+          //
         }
-        // { Pagination Append }
+        // ----------- 200 <
         //
-        // { Pagination Class Managemnt }
-        if (page == totalPage) {
-          Pagination.classList.add("rounded");
-        } else {
-          Pagination.classList.remove("rounded");
+        // --------- error >
+        else if (response.status !== 200) {
+          //
+          // --------------- >> SM
+          ContentList.innerHTML = "";
+          setTimeout(() => {
+            DataContainer.classList.add("show");
+          }, 100);
+          //
+          DataContainer.classList.add("big");
+          DataContainer.id = "";
+          // --------------- << SM
+          //
+          // --------------- >> CB
+          //
+          // ------------------ > V <
+          const SVG_URL = "./../../../assets/svg/Error_Response.svg";
+          // ------------------ > V <
+          //
+          // ------------------ > Widget <
+          const Widget = FaildRequest(SVG_URL, "");
+          // ------------------ > Widget <
+          //
+          // ------------------ > AC <
+          ContentList.appendChild(Widget);
+          // ------------------ > AC <
+          //
+          // --------------- << CB
+          //
         }
-        // { Pagination Class Managemnt }
+        // --------- error <
         //
-        // { CallBack }
-        ClassManagement();
-        ScrollManagement();
-        // { CallBack }
+        // --------- empty >
+        else if (length == 0) {
+          //
+          // -------------- >> SM
+          ContentList.innerHTML = "";
+          setTimeout(() => {
+            DataContainer.classList.add("show");
+          }, 100);
+          //
+          DataContainer.classList.add("big");
+          DataContainer.id = "";
+          // -------------- << SM
+          //
+          // -------------- >> CB
+          //
+          // ----------------- > V <
+          const SVG_URL = "./../../../assets/svg/Empty_Response.svg";
+          // ----------------- > V <
+          //
+          // ----------------- > Widget <
+          const Widget = FaildRequest(SVG_URL, "Empty Response");
+          // ----------------- > Widget <
+          //
+          // ----------------- > AC <
+          ContentList.appendChild(Widget);
+          // ----------------- > AC <
+          //
+          // -------------- << CB
+          //
+        }
+        // --------- empty <
         //
       })
-      // ---------------- Builder Response <
       //
-      // ------------------- Builder Error >
       .catch(
         (error) => {
           console.log(error);
         }
         // ----------------- Builder Error <
       );
-    // ------------------------------------- B <<
+    // --------------------- Web Service <<
   }
+  // -------------------------------------- > B <
+  //
   // -------------------------------------------- > B I <
-
-  // ---------------------------------------------------- >> B << ( Builder )
-
-  // --------------------------------------------------- >> CM << ( Class Managemnet )
-  function ClassManagement() {
+  //
+  // ---------------------------------------------------- >> L <<
+  //
+  // ------------------------------------------------ >> Error <<
+  function FaildRequest(URL, TextValue) {
+    //
+    // -------------------------------------- > div <
+    const EmptyList = document.createElement("div");
+    EmptyList.classList.add("EmptyList");
+    // -------------------------------------- > div <
+    //
+    // -------------------------------------- > SVG <
+    const EmptySVG = document.createElement("img");
+    EmptySVG.classList.add("EmptySVG");
+    //
+    // ------------------------------- src >>
+    EmptySVG.src = URL;
+    // ------------------------------- src <<
+    //
+    // -------------------------------- AC >>
+    EmptyList.appendChild(EmptySVG);
+    // ---------------------------------- AC <<
+    //
+    // -------------------------------------- > SVG <
+    //
+    // ------------------------------------- > span <
+    const EmptyText = document.createElement("span");
+    EmptyText.classList.add("EmptyText");
+    //
+    // ---------------------------- value >>
+    EmptyText.textContent = TextValue;
+    // ---------------------------- value <<
+    //
+    // ------------------------------- AC >>
+    EmptyList.appendChild(EmptyText);
+    // ------------------------------- AC <<
+    //
+    // ------------------------------------- > span <
+    //
+    // ----------------------------------- > return <
+    return EmptyList;
+    // ----------------------------------- > return <
+    //
+  }
+  // ------------------------------------------------ >> Error <<
+  //
+  // --------------------------------------------------- >> SM <<
+  function StateManagement() {
     //
     // --------------------------- > Query Selectors <
     const PageNumberContiner =
@@ -233,9 +298,9 @@ export function DataBuilder(
     });
     // --------------------------- > Class Managemnt <
   }
-  // --------------------------------------------------- >> CM << ( Class Managemnet )
-
-  // --------------------------------------------------- >> SM << ( Scroll Managment )
+  // --------------------------------------------------- >> SM <<
+  //
+  // --------------------------------------------------- >> SM <<
   function ScrollManagement() {
     //
     // ----------------------------- > Query Selectors <
@@ -270,9 +335,9 @@ export function DataBuilder(
     }
     // ----------------------------------- > Condition <
   }
-  // --------------------------------------------------- >> SM << ( Scroll Managment )
-
-  // --------------------------------------------------- >> SP << ( Selected Page )
+  // --------------------------------------------------- >> SM <<
+  //
+  // --------------------------------------------------- >> SP <<
   function OnPageClick(pageNum) {
     //
     // Page Controller >>
@@ -297,9 +362,9 @@ export function DataBuilder(
     // Scroll Controller <<
     //
   }
-  // --------------------------------------------------- >> SP << ( Selected Page )
-
-  // -------------------------------------------------- >> F P << ( First Page )
+  // --------------------------------------------------- >> SP <<
+  //
+  // -------------------------------------------------- >> F P <<
   function FirstIndexOnClick() {
     if (page !== 1) {
       //
@@ -326,9 +391,9 @@ export function DataBuilder(
       //
     }
   }
-  // -------------------------------------------------- >> F P << ( First Page )
-
-  // ----------------------------------------------- >> Perv P << ( Perv Page )
+  // -------------------------------------------------- >> F P <<
+  //
+  // ----------------------------------------------- >> Perv P <<
   function pervBtn() {
     if (page > 1) {
       //
@@ -355,9 +420,9 @@ export function DataBuilder(
       //
     }
   }
-  // ----------------------------------------------- >> Perv P << ( Perv Page )
-
-  // ----------------------------------------------- >> Next P << ( Next Page )
+  // ----------------------------------------------- >> Perv P <<
+  //
+  // ----------------------------------------------- >> Next P <<
   function nextBtn() {
     if (page < totalPage) {
       //
@@ -384,9 +449,9 @@ export function DataBuilder(
       //
     }
   }
-  // ----------------------------------------------- >> Next P << ( Next Page )
-
-  // ----------------------------------------------- >> Last P << ( Last Page )
+  // ----------------------------------------------- >> Next P <<
+  //
+  // ----------------------------------------------- >> Last P <<
   function lastIndexOnClick() {
     if (page !== totalPage) {
       //
@@ -413,8 +478,8 @@ export function DataBuilder(
       //
     }
   }
-  // ----------------------------------------------- >> Last P << ( Last Page )
-
+  // ----------------------------------------------- >> Last P <<
+  //
   // ----------------------------------------------- >> retrun <<
   return {
     widget: DataContainer,

@@ -214,6 +214,14 @@ body {
     transition: all 0.5s;
 }
 
+.FieldHeader {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
 .FieldLabel {
     font-size: clamp(1.2rem, 1.5vw, 3rem);
     color: var(--white);

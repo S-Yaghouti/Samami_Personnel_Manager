@@ -54,9 +54,11 @@ export function NotificationCallBack(Text, Icon, classname, Father, layer) {
   // -------------------------------------------------- >> SM <<
   //
   layer.classList.add("show");
+  Notif.classList.add("show");
   //
   setTimeout(() => {
     layer.classList.remove("show");
+    Notif.classList.remove("show");
   }, 2000);
   //
   setTimeout(() => {

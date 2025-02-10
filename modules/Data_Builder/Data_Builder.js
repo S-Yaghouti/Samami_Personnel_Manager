@@ -132,9 +132,6 @@ export function DataBuilder(
           //
           // -------------- >> SM
           ContentList.innerHTML = "";
-          setTimeout(() => {
-            DataContainer.classList.add("show");
-          }, 100);
           // -------------- << SM
           //
           // -------------- >> Transmitter

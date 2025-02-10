@@ -90,9 +90,9 @@ async function PostImage(url, data) {
   try {
     const response = await fetch(url, {
       method: "POST",
-      // headers: {
-      //   token: getCookie("token") || "",
-      // },
+      headers: {
+        token: RetrieveLocalStorage("token") || "",
+      },
       body: data,
     });
 
@@ -125,10 +125,10 @@ async function PUT(url, data) {
   try {
     const response = await fetch(url, {
       method: "PUT",
-      // headers: {
-      //   "Content-Type": "application/json",
-      //   token: getCookie("token") || "",
-      // },
+      headers: {
+        "Content-Type": "application/json",
+        token: RetrieveLocalStorage("token") || "",
+      },
       body: JSON.stringify(data),
     });
 
@@ -161,9 +161,10 @@ async function DELETE(url) {
   try {
     const response = await fetch(url, {
       method: "DELETE",
-      // headers: {
-      //   token: getCookie("token") || "",
-      // },
+      headers: {
+        "Content-Type": "application/json",
+        token: RetrieveLocalStorage("token") || "",
+      },
     });
 
     // >> Check if the response status is OK (200) <<

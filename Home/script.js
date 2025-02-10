@@ -89,13 +89,18 @@ const Layer6 = document.querySelector(".Layer6");
 const BG_6 = document.querySelector("#BG_6");
 // ------------------------------------------------------ >> layer 6 <<
 //
+// ------------------------------------------------------ >> layer 7 <<
+const Layer7 = document.querySelector(".Layer7");
+const BG_7 = document.querySelector("#BG_7");
+// ------------------------------------------------------ >> layer 7 <<
+// 
 // ==================================================================== >> Layers <<
 //
 // ======================================================================= >> DOM <<
 window.addEventListener("DOMContentLoaded", () => {
   //
   // ---------------------------------------------------- >> Loading CB <<
-  LoadingcallBack(BG_5, 1, Layer5);
+  LoadingcallBack(BG_6, 1, Layer6);
   // ---------------------------------------------------- >> Loading CB <<
   //
   // --------------------------------------------------- >> Check Token <<
@@ -140,7 +145,7 @@ function Auth() {
           // ------------------------ << Page Name
           //
           // ------------------------ >> Loading
-          LoadingcallBack(BG_5, 2, Layer5);
+          LoadingcallBack(BG_6, 2, Layer6);
           // ------------------------ << Loading
           //
           // ------------------------ >> Sidebar
@@ -183,7 +188,7 @@ function Auth() {
       .catch((error) => {
         //
         // ------------------------ > Loading
-        LoadingcallBack(BG_5, 2, Layer5);
+        LoadingcallBack(BG_6, 2, Layer6);
         // ------------------------ < Loading
         //
         // ------------------------ > Reload
@@ -221,7 +226,7 @@ function ContentManager(Value) {
   // -------------------------------------- > SM <
   //
   // ------------------------------ > CB Loading <
-  LoadingcallBack(BG_5, 1, Layer5);
+  LoadingcallBack(BG_6, 1, Layer6);
   // ------------------------------ > CB Loading <
   //
   // ----------------------------------- > Users <
@@ -382,8 +387,8 @@ function AC_Sidebar() {
       "Request Sucssess 👍",
       "ph:check-fat-fill",
       "green",
-      BG_6,
-      Layer6
+      BG_7,
+      Layer7
     );
     // fa:close ph:check-fat-fill
   }

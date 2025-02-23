@@ -69,7 +69,6 @@ export function DataBuilder(
     .then((response) => {
       //
       // ------------------------ > Total Page <
-      // totalPage = Math.ceil(response.data.data.length / Limit);
       totalPage = Math.ceil(response.data.pagination.total_pages);
       // ------------------------ > Total Page <
       //
@@ -116,7 +115,7 @@ export function DataBuilder(
     //
     // ------------------------------- V >>
     let api = `${URL}?limit=${Limit}&page=${page}&${Query}`;
-    // ------------------------------- V >>
+    // ------------------------------- V <<
     //
     // --------------------- Web Service >>
     GET(api)
@@ -127,96 +126,35 @@ export function DataBuilder(
         const length = response.data.data.length;
         // -------- Length <
         //
-        // ----------- 200 >
-        if (response.status == 200) {
-          //
-          // -------------- >> SM
-          ContentList.innerHTML = "";
-          // -------------- << SM
-          //
-          // -------------- >> Transmitter
-          Transmitter(response);
-          // -------------- << Transmitter
-          //
-          // -------------- >> List AC
-          DataContainer.appendChild(ContentList);
-          // -------------- << List AC
-          //
-          // -------------- >> Pagination AC
+        // ------------ SM <
+        ContentList.innerHTML = "";
+        // ------------ SM <
+        //
+        // --- Transmitter >
+        Transmitter(response);
+        // --- Transmitter <
+        //
+        // ------- List AC >
+        DataContainer.appendChild(ContentList);
+        // ------- List AC <
+        //
+        // - Pagination AC >
+        if (length == 0) {
+          const PaginationContiner = document.querySelector(
+            ".PaginationContiner"
+          );
+          if (DataContainer.contains(PaginationContiner)) {
+            DataContainer.removeChild(PaginationContiner);
+          }
+        } else {
           DataContainer.appendChild(Pagination);
-          // -------------- << Pagination AC
-          //
-          // -------------- >> SM
-          StateManagement();
-          ScrollManagement();
-          // -------------- << SM
-          //
         }
-        // ----------- 200 <
+        // -- Pagination AC >
         //
-        // --------- error >
-        else if (response.status !== 200) {
-          //
-          // --------------- >> SM
-          ContentList.innerHTML = "";
-          setTimeout(() => {
-            DataContainer.classList.add("show");
-          }, 100);
-          //
-          DataContainer.classList.add("big");
-          DataContainer.id = "";
-          // --------------- << SM
-          //
-          // --------------- >> CB
-          //
-          // ------------------ > V <
-          const SVG_URL = "./../../../assets/svg/Error_Response.svg";
-          // ------------------ > V <
-          //
-          // ------------------ > Widget <
-          const Widget = FaildRequest(SVG_URL, "");
-          // ------------------ > Widget <
-          //
-          // ------------------ > AC <
-          ContentList.appendChild(Widget);
-          // ------------------ > AC <
-          //
-          // --------------- << CB
-          //
-        }
-        // --------- error <
-        //
-        // --------- empty >
-        else if (length == 0) {
-          //
-          // -------------- >> SM
-          ContentList.innerHTML = "";
-          setTimeout(() => {
-            DataContainer.classList.add("show");
-          }, 100);
-          //
-          DataContainer.classList.add("big");
-          DataContainer.id = "";
-          // -------------- << SM
-          //
-          // -------------- >> CB
-          //
-          // ----------------- > V <
-          const SVG_URL = "./../../../assets/svg/Empty_Response.svg";
-          // ----------------- > V <
-          //
-          // ----------------- > Widget <
-          const Widget = FaildRequest(SVG_URL, "Empty Response");
-          // ----------------- > Widget <
-          //
-          // ----------------- > AC <
-          ContentList.appendChild(Widget);
-          // ----------------- > AC <
-          //
-          // -------------- << CB
-          //
-        }
-        // --------- empty <
+        // ------------- CB >
+        StateManagement();
+        ScrollManagement();
+        // ------------- CB <
         //
       })
       //
@@ -233,49 +171,6 @@ export function DataBuilder(
   // -------------------------------------------- > B I <
   //
   // ---------------------------------------------------- >> L <<
-  //
-  // ------------------------------------------------ >> Error <<
-  function FaildRequest(URL, TextValue) {
-    //
-    // -------------------------------------- > div <
-    const EmptyList = document.createElement("div");
-    EmptyList.classList.add("EmptyList");
-    // -------------------------------------- > div <
-    //
-    // -------------------------------------- > SVG <
-    const EmptySVG = document.createElement("img");
-    EmptySVG.classList.add("EmptySVG");
-    //
-    // ------------------------------- src >>
-    EmptySVG.src = URL;
-    // ------------------------------- src <<
-    //
-    // -------------------------------- AC >>
-    EmptyList.appendChild(EmptySVG);
-    // ---------------------------------- AC <<
-    //
-    // -------------------------------------- > SVG <
-    //
-    // ------------------------------------- > span <
-    const EmptyText = document.createElement("span");
-    EmptyText.classList.add("EmptyText");
-    //
-    // ---------------------------- value >>
-    EmptyText.textContent = TextValue;
-    // ---------------------------- value <<
-    //
-    // ------------------------------- AC >>
-    EmptyList.appendChild(EmptyText);
-    // ------------------------------- AC <<
-    //
-    // ------------------------------------- > span <
-    //
-    // ----------------------------------- > return <
-    return EmptyList;
-    // ----------------------------------- > return <
-    //
-  }
-  // ------------------------------------------------ >> Error <<
   //
   // --------------------------------------------------- >> SM <<
   function StateManagement() {

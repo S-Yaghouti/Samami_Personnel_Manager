@@ -12,6 +12,7 @@ import { Sidebar, Operator } from "./../modules/Widgets/SideBar/Side_Bar.js";
 import {
   setLocalStorage,
   RetrieveLocalStorage,
+  RemoveLocalStorage,
 } from "./../modules/Local_Storage/local_storage.js";
 // ----------------------------------------------- >> Local Storage <<
 //
@@ -24,7 +25,7 @@ import { NotificationCallBack } from "./../modules/Widgets/Notification/notifica
 // ------------------------------------------------ >> Notification <<
 //
 // ------------------------------------------------------- >> Users <<
-import { UsersSection } from "./Sections/Users.js";
+import { EditUser, UsersSection } from "./Sections/Users.js";
 // ------------------------------------------------------- >> Users <<
 //
 // ----------------------------------------------------- >> Storage <<
@@ -38,6 +39,10 @@ import { TasksSection } from "./Sections/Tasks.js";
 // ------------------------------------------------------- >> Notes <<
 import { NotesSections } from "./Sections/Notes.js";
 // ------------------------------------------------------- >> Notes <<
+//
+// --------------------------------------------------------- >> BTN <<
+import { BTN } from "../modules/Widgets/BTN/BTN.js";
+// --------------------------------------------------------- >> BTN <<
 //
 // =================================================================== >> improts <<
 //
@@ -93,7 +98,7 @@ const BG_6 = document.querySelector("#BG_6");
 const Layer7 = document.querySelector(".Layer7");
 const BG_7 = document.querySelector("#BG_7");
 // ------------------------------------------------------ >> layer 7 <<
-// 
+//
 // ==================================================================== >> Layers <<
 //
 // ======================================================================= >> DOM <<
@@ -150,7 +155,7 @@ function Auth() {
           //
           // ------------------------ >> Sidebar
           FillSidebar(response.data);
-          AC_Sidebar();
+          AC_Sidebar(response.data);
           // ------------------------ << Sidebar
           //
           // ------------------------ >> SM
@@ -160,8 +165,8 @@ function Auth() {
           // ------------------------ >> Content Manager
           setTimeout(() => {
             const SidebarOptions = document.querySelectorAll(".SidebarOption");
-            SidebarOptions[0].classList.add("active");
-            ContentManager(SidebarOptions[0].children[0].textContent);
+            SidebarOptions[1].classList.add("active");
+            ContentManager(SidebarOptions[1].children[0].textContent);
           }, 500);
           // ------------------------ << Content Manager
           //
@@ -199,7 +204,6 @@ function Auth() {
       });
     //
     // ------------------------------ GET <<
-
     //
   }
   // --------------------------------------- > Get User <
@@ -221,8 +225,16 @@ BG_2.appendChild(SliderContainer);
 // ----------------------------------------------- >> SliderManager <<
 function ContentManager(Value) {
   //
+  // --------------------------------------- > V <
+  const FiltersFlex = document.getElementById("FiltersFlex");
+  const DataContainer = document.querySelector(".DataContainer");
+  // --------------------------------------- > V <
+  //
   // -------------------------------------- > SM <
-  SliderContainer.classList.remove("show");
+  if (FiltersFlex && DataContainer) {
+    FiltersFlex.classList.remove("show");
+    DataContainer.classList.remove("show");
+  }
   // -------------------------------------- > SM <
   //
   // ------------------------------ > CB Loading <
@@ -343,23 +355,26 @@ function FillSidebar(response) {
 // ------------------------------------------------ >> Fill Sidebar <<
 //
 // -------------------------------------------------- >> AC Sidebar <<
-function AC_Sidebar() {
+function AC_Sidebar(response) {
   //
   // ----------------------------------------- > CB <
   const SidebarWidget = Sidebar(
     LogoAddress,
     SiderbarIconList,
     SiderbarTextList,
-    (index, Widget) => {
-      SidebarOptionListener(index, Widget);
+    (event, index, Widget) => {
+      SidebarOptionListener(event, index, Widget);
     },
     UserInfo,
+    UserListener,
     SidebarExitListener
   );
   // ----------------------------------------- > CB <
   //
   // ------------------------------------------ > L <
-  function SidebarOptionListener(index, Widget) {
+  function SidebarOptionListener(event, index, Widget) {
+    // 
+    event.stopPropagation();
     //
     // ----------------------------------- V >>
     const SidebarOptions = document.querySelectorAll(".SidebarOption");
@@ -381,16 +396,16 @@ function AC_Sidebar() {
   // ------------------------------------------ > L <
   //
   // ------------------------------------------ > L <
-  function SidebarExitListener() {
+  function UserListener() {
     //
-    NotificationCallBack(
-      "Request Sucssess 👍",
-      "ph:check-fat-fill",
-      "green",
-      BG_7,
-      Layer7
-    );
-    // fa:close ph:check-fat-fill
+    EditUser(Layer5, BG_5, response, false);
+    //
+  }
+  // ------------------------------------------ > L <
+  //
+  // ------------------------------------------ > L <
+  function SidebarExitListener() {
+    ExitPopup();
   }
   // ------------------------------------------ > L <
   //
@@ -401,6 +416,18 @@ function AC_Sidebar() {
 }
 // -------------------------------------------------- >> AC Sidebar <<
 //
+// ---------------------------------------------------- >> Close SM <<
+Layer3.addEventListener("click", () => {
+  Layer3.classList.remove("show");
+  SidebarOperator.widget.classList.remove("active");
+  OperatorText.classList.remove("show");
+  Operatoricon.classList.remove("change");
+  Operatorline1.classList.remove("change");
+  Operatorline2.classList.remove("change");
+  Operatorline3.classList.remove("change");
+});
+// ---------------------------------------------------- >> Close SM <<
+// 
 // =================================================================== >> Layer 4 <<
 //
 // =================================================================== >> Layer 5 <<
@@ -409,6 +436,11 @@ function AC_Sidebar() {
 //
 // --------------------------------------------- > CB <
 const SidebarOperator = Operator(SidebarOperatorListener);
+const OperatorText = SidebarOperator.text;
+const Operatoricon = SidebarOperator.Icon;
+const Operatorline1 = SidebarOperator.line1;
+const Operatorline2 = SidebarOperator.line2;
+const Operatorline3 = SidebarOperator.line3;
 // --------------------------------------------- > CB <
 //
 // ---------------------------------------------- > L <
@@ -418,7 +450,7 @@ function SidebarOperatorListener() {
 // ---------------------------------------------- > L <
 //
 // --------------------------------------------- > AC <
-BG_4.appendChild(SidebarOperator);
+BG_4.appendChild(SidebarOperator.widget);
 // --------------------------------------------- > AC <
 //
 // ---------------------------------------------------- >> Operator <<
@@ -426,6 +458,149 @@ BG_4.appendChild(SidebarOperator);
 // =================================================================== >> Layer 5 <<
 //
 // =================================================================== >> Layer 6 <<
-
+function ExitPopup() {
+  //
+  // -------------------------------------------------------- >> SM <<
+  Layer5.classList.add("show");
+  // -------------------------------------------------------- >> SM <<
+  //
+  // ------------------------------------------------------- >> div <<
+  const ExitPopup = document.createElement("div");
+  ExitPopup.classList.add("Column");
+  //
+  // ------------------------------------------------ > id <
+  ExitPopup.id = "ExitPopup";
+  // ------------------------------------------------ > id <
+  //
+  // ------------------------------------------------ > AC <
+  BG_5.appendChild(ExitPopup);
+  // ------------------------------------------------ > AC <
+  //
+  // ------------------------------------------------------- >> div <<
+  //
+  // ---------------------------------------------------- >> Header <<
+  const ExitHeader = document.createElement("div");
+  ExitHeader.classList.add("Flex");
+  //
+  // --------------------------------------------- > id <
+  ExitHeader.id = "ExitHeader";
+  // --------------------------------------------- > id <
+  //
+  // --------------------------------------------- > AC <
+  ExitPopup.appendChild(ExitHeader);
+  // --------------------------------------------- > AC <
+  //
+  // ------------------------------------------ > Title <
+  //
+  // ------------------------------------ CB >>
+  const PopupTitle = BTN(
+    "PopupTitleText",
+    true,
+    "Exit page",
+    false,
+    "",
+    false,
+    () => { }
+  );
+  // ------------------------------------ CB <<
+  //
+  // ------------------------------------ AC >>
+  ExitHeader.appendChild(PopupTitle.widget);
+  // ------------------------------------ AC <<
+  //
+  // ------------------------------------------ > Title <
+  //
+  // -------------------------------------------- > BTN <
+  //
+  // -------------------------------------- CB >>
+  const ColseBTN = BTN(
+    "ColsePopupBTN",
+    false,
+    "",
+    true,
+    "fa:close",
+    true,
+    ColseBTNListener
+  );
+  // -------------------------------------- CB <<
+  //
+  // --------------------------------------- L >>
+  function ColseBTNListener() {
+    //
+    Layer5.classList.remove("show");
+    //
+    setTimeout(() => {
+      BG_5.removeChild(ExitPopup);
+    }, 500);
+    //
+  }
+  // --------------------------------------- L <<
+  //
+  // -------------------------------------- AC >>
+  ExitHeader.appendChild(ColseBTN.widget);
+  // -------------------------------------- AC <<
+  //
+  // -------------------------------------------- > BTN <
+  //
+  // ---------------------------------------------------- >> Header <<
+  //
+  // ------------------------------------------------------ >> Body <<
+  const ExitPopupBody = document.createElement("div");
+  ExitPopupBody.classList.add("Column");
+  //
+  // ----------------------------------------------- > id <
+  ExitPopupBody.id = "ExitPopupBody";
+  // ----------------------------------------------- > id <
+  //
+  // ----------------------------------------------- > AC <
+  ExitPopup.appendChild(ExitPopupBody);
+  // ----------------------------------------------- > AC <
+  //
+  // --------------------------------------------- > span <
+  const ExitPopupBodyText = document.createElement("span");
+  ExitPopupBodyText.classList.add("ExitPopupBodyText");
+  //
+  // --------------------------------------- id >>
+  ExitPopupBodyText.textContent = `Are you sure you want to leave?`;
+  // --------------------------------------- id <<
+  //
+  // --------------------------------------- AC >>
+  ExitPopupBody.appendChild(ExitPopupBodyText);
+  // --------------------------------------- AC <<
+  //
+  // --------------------------------------------- > span <
+  //
+  // ------------------------------------------------------ >> Body <<
+  //
+  // ------------------------------------------------------- >> BTN <<
+  //
+  // ------------------------------------------------ > CB <
+  const SubmitBTN = BTN(
+    "RedPopupBTN",
+    true,
+    "Exit",
+    true,
+    "ri:door-open-fill",
+    true,
+    SubmitBTNListener
+  );
+  // ------------------------------------------------ > CB <
+  //
+  // ------------------------------------------------- > L <
+  function SubmitBTNListener() {
+    //
+    RemoveLocalStorage("token");
+    window.location.replace("./../index.html");
+    //
+  }
+  // ------------------------------------------------- > L <
+  //
+  // ------------------------------------------------ > AC <
+  ExitPopup.appendChild(SubmitBTN.widget);
+  // ------------------------------------------------ > AC <
+  //
+  // ------------------------------------------------------- >> BTN <<
+  //
+}
 // =================================================================== >> Layer 6 <<
 //

@@ -75,6 +75,7 @@ body {
     position: relative;
     font-family: 'Roboto', vazir, serif;
     overflow: hidden;
+    background-color: var(--black);
 }
 
 /* ---------------------------------------------- >> All Father << */
@@ -91,19 +92,22 @@ body {
     display: flex;
 }
 
-#FilterFlex {
+#FiltersFlex {
     width: 100%;
+    height: 65px;
     transform: translateY(-200%);
     border-bottom: 2px solid var(--white);
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    /* overflow-x: scroll; */
+    gap: 0.5rem;
     margin-top: 1rem;
+    padding: 0px 1rem;
     transition: all 0.5s;
 }
 
-#FilterFlex.show {
-    transform: translateY(0%);
+#FiltersFlex.show {
+    transform: translateY(0%)
 }
 
 /* ------------------------------------------------ >> Provided << */
@@ -156,6 +160,7 @@ body {
 
 /* --------------------------- > Search Field < */
 #SearchField {
+    height: 60px;
     width: 50%;
     border: 2px solid var(--white);
     border-bottom: 0px;
@@ -215,15 +220,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: clamp(0.75rem, 1vw, 3rem) clamp(0.8rem, 1vw, 2rem);
+    padding: clamp(0.9rem, 1vw, 3rem) clamp(0.8rem, 1vw, 2rem);
     background-color: white;
     border-radius: max(0.2rem, 5px);
     font-size: clamp(0.85rem, 1.2vw, 3rem);
     cursor: pointer;
 }
 
+.DDText {
+    color: var(--black);
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
 .DDIcon {
     transition: all 0.5s;
+    font-size: clamp(0.85rem, 1.2vw, 3rem);
     color: var(--black75);
 }
 
@@ -260,9 +271,9 @@ body {
     width: 100%;
     display: flex;
     justify-content: start;
-    padding: clamp(0.5rem, 0.75vw, 2rem);
+    padding: clamp(0.65rem, 0.75vw, 2rem);
     border-radius: max(0.2rem, 5px);
-    font-size: clamp(0.75rem, 1.2vw, 3rem);
+    font-size: clamp(0.9rem, 1.2vw, 3rem);
     transition: all 0.5s;
     color: var(--black);
 }
@@ -332,37 +343,39 @@ body {
 
 .ContentList {
     width: 100%;
-    display: grid;
     justify-content: center;
     padding: 1rem;
+
 }
 
-.ContentList.havepadding {
-    margin-bottom: 15px;
+.ContentList.big {
+    align-items: center;
+    height: 100%;
 }
 
-.EmptyList {
+.RequestResult {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
 }
 
-.EmptyText {
-    font-size: clamp(0.75rem, 1.2vw, 4rem);
+.RequestResultSVG {
+    border: none;
+    outline: none;
+    width: 60%;
+    height: 60%;
+}
+
+.RequestResultText {
+    font-size: clamp(1rem, 1.2vw, 4rem);
     color: white;
     padding: clamp(0.5rem, 1vw, 2rem);
     border-top: 2px solid rgba(255, 255, 255, 0.25);
     border-bottom: 2px solid rgba(255, 255, 255, 0.25);
-}
-
-.EmptySVG {
-    border: none;
-    outline: none;
-    width: 80%;
-    height: 80%;
+    text-shadow: 0px 0px 10px var(--black);
 }
 
 /* ---------------------------------------- >> Data Builder << */
@@ -483,6 +496,226 @@ body {
 
 /* ------------------------------------------ >> Pagination << */
 
+/* ------------------------------------------- >> DatePicker <<  */
+.DatePicker {
+    width: 50%;
+    height: max-content;
+    display: flex;
+    gap: clamp(0.8rem, 1vw, 2.5rem);
+    flex-direction: column;
+    align-items: end;
+    transition: all 0.5s;
+    position: relative;
+    z-index: 3;
+}
+
+/* ------------------------------ > Title < */
+.DatePickerTitle {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    background-color: var(--white25);
+    padding: 1rem;
+    border-radius: max(0.2rem, 5px);
+    transition: all 0.5s;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+    color: var(--white75);
+}
+
+.DatePickerTitle.active {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.DatePickerTitle.check {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.DatePickerTitle.error {
+    transition: all 0.5s;
+    background-color: red;
+}
+
+.DatePickerTitle:hover {
+    transition: all 0.5s;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.DatePickerTitleText {
+    font-family: "Roboto", vazir, serif;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+.DatePickerTitleIcon {
+    transition: all 0.5s;
+}
+
+.DatePickerTitleIcon.turn {
+    transition: all 0.5s;
+    transform: rotate(180deg);
+}
+
+/* ------------------------------ > Title < */
+
+/* ------------------------------- > Body < */
+.DatePickerBody {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    gap: 0px;
+    transition: all 0.5s;
+    scale: 0;
+    z-index: 4;
+}
+
+.DatePickerBody.show {
+    transition: all 0.5s;
+    scale: 1;
+    gap: 10px;
+    top: 100%;
+    padding-top: 0.5rem;
+}
+
+#DatePickerBodyFlex {
+    width: 100%;
+    height: max-content;
+    gap: 0.5rem;
+}
+
+.DatePickerContent {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.5;
+    transition: all 0.5s;
+    pointer-events: none;
+    filter: blur(1px);
+}
+
+.DatePickerContent.show {
+    transition: all 0.5s;
+    filter: blur(0px);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.DatePickerBodyList {
+    width: 100%;
+    height: 100%;
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--black);
+    border: 2px solid white;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scroll-behavior: smooth;
+    color: white;
+    font-size: 14px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.ArrowBtn {
+    width: 100%;
+    padding: clamp(10px, 0.75vw, 20px);
+    height: max-content;
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    display: flex;
+    justify-content: center;
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--black);
+    border: 2px solid white;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ArrowBtn:active {
+    transition: all 0.2s;
+    scale: 0.9;
+}
+
+.ItemContainer {
+    width: 100%;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    transition: all 0.5s;
+    cursor: pointer;
+    font-size: clamp(0.95rem, 1.1vw, 4rem);
+    color: var(--white75);
+}
+
+.ItemContainer:hover {
+    transition: all 0.5s;
+    background-color: var(--white25);
+    color: var(--white);
+}
+
+.ItemContainer.Active {
+    transition: all 0.2s;
+    background-color: var(--white);
+    color: var(--black);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+}
+
+/* ------------------------------- > Body < */
+
+/* -------------------------------- > Btn < */
+.DatePickerBtn {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(0.5rem, 0.8vw, 1.2rem) 0px;
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--black);
+    border: 2px solid white;
+    font-size: var(--Feild-Font-Size);
+    color: white;
+    cursor: pointer;
+    transition: all 0.5s;
+    scale: 0;
+}
+
+.DatePickerBtn.show {
+    transition: all 0.5s;
+    scale: 1;
+}
+
+.DatePickerBtn:hover {
+    transition: all 0.5s;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+.DatePickerBtn:active {
+    transition: all 0.5s;
+    scale: 0.95;
+}
+
+.DatePickerBtn.error {
+    transition: all 0.5s;
+    background-color: red;
+    color: white;
+}
+
+/* -------------------------------- > Btn < */
+
+/* ------------------------------------------- >> DatePicker <<  */
+
 /* ============================================================== >> Components << */
 
 /* ================================================================ >> Layer 1 << */
@@ -547,13 +780,8 @@ body {
 .SliderContainer {
     width: 100%;
     height: 100%;
-    transition: all 1s;
+    transition: all 0.5s;
     position: absolute;
-    bottom: 0%;
-}
-
-.SliderContainer.show {
-    bottom: 0%;
 }
 
 /* ------------------------------------------------ >> Slider << */
@@ -566,10 +794,22 @@ body {
     flex-direction: column;
 }
 
+#UsersFiltersFlex {
+    width: 100%;
+    height: 70px;
+    border-bottom: 2px solid var(--white);
+    padding-top: 0.5rem;
+    justify-content: center;
+}
+
+/* ------------------------------------- > List < */
 #UsersList {
+    display: grid;
     gap: 5px;
     grid-template-columns: repeat(auto-fit, minmax(475px, max-content));
 }
+
+/* ------------------------------------- > List < */
 
 /* --------------------------------- > user box < */
 .UserBox {
@@ -577,7 +817,7 @@ body {
     width: 475px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
     padding: clamp(0.5rem, 0.6vw, 0.9rem);
     background-color: var(--black);
     border: 2px solid var(--white25);
@@ -602,7 +842,6 @@ body {
 #UsernameFlex {
     gap: 0.5rem;
 }
-
 
 .UserAvatar {
     width: 65px;
@@ -630,6 +869,12 @@ body {
 .UserPhoneNumber {
     color: var(--white75);
     font-size: clamp(0.8rem, 0.9vw, 1.2rem);
+}
+
+.UserDivider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
 }
 
 #UserSecondFlex {
@@ -676,7 +921,222 @@ body {
 
 /* ------------------------------------------------- >> Users << */
 
+/* ----------------------------------------------- >> Storage << */
+#StorageSection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --------------------------------- > header < */
+#PerviousBTN,
+#NextBTN {
+    flex: 0 0 auto;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom: none;
+    height: 100%;
+    padding: 0px 1.2rem;
+    border-top-left-radius: max(0.2rem, 5px);
+    border-top-right-radius: max(0.2rem, 5px);
+    font-size: clamp(1.2rem, 1.4vw, 1.8rem);
+}
+
+#PathField {
+    flex: 0 0 auto;
+    width: 60%;
+    height: 100%;
+    padding-left: 1rem;
+    background-color: var(--black);
+    border-top-left-radius: max(0.2rem, 5px);
+    border-top-right-radius: max(0.2rem, 5px);
+    border: 2px solid var(--white);
+    border-bottom: none;
+    color: var(--white);
+    font-size: clamp(1rem, 1.4vw, 1.7rem);
+}
+
+#PathInput {
+    width: 100%;
+    height: 70%;
+    text-align: start;
+    padding-left: 1rem;
+    border-left: 2px solid var(--white25);
+    font-size: clamp(0.9rem, 1vw, 1.7rem);
+}
+
+#SearchBTN {
+    flex: 0 0 auto;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom: none;
+    height: 100%;
+    padding: 0px 1.2rem;
+    border-top-left-radius: max(0.2rem, 5px);
+    border-top-right-radius: max(0.2rem, 5px);
+    font-size: clamp(1rem, 1.1vw, 1.4rem);
+}
+
+/* --------------------------------- > header < */
+
+/* --------------------------------- > Content < */
+.StorageContent {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 1rem;
+    padding: 1rem 1rem 0px 1rem;
+    scale: 0.6;
+    opacity: 0;
+    transition: all 1s;
+    position: relative;
+    z-index: 0;
+}
+
+.StorageContent.show {
+    scale: 1;
+    opacity: 1;
+}
+
+.StorageContent.big {
+    display: flex;
+}
+
+/* --------------------------------- > Content < */
+
+/* ------------------------------------ > item < */
+.StorageItem {
+    height: max-content;
+    width: 125px;
+    height: max-content;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: max(0.2rem, 5px);
+    transition: all 0.5s;
+    z-index: 1;
+}
+
+.StorageItem:hover {
+    background-color: var(--white25);
+    box-shadow: 0px 0px 10px var(--black25);
+}
+
+.StorageItem:active {
+    background-color: var(--white25);
+    box-shadow: 0px 0px 10px var(--black25);
+    scale: 0.9;
+}
+
+.StorageItemIcon {
+    width: 40px;
+    height: 40px;
+}
+
+.StorageItemName {
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+/* ------------------------------------ > item < */
+
+/* ---------------------------------- > Option < */
+#OptionsColumn {
+    width: 200px;
+    height: max-content;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: var(--black);
+    border-radius: max(0.2rem, 5px);
+    padding: 0.5rem;
+    border: max(0.1rem, 3px) solid var(--white);
+    transition: all 0.25s;
+    scale: 0;
+}
+
+#OptionsColumn.show {
+    scale: 1;
+}
+
+#OptionBTN {
+    flex: 0 0 auto;
+    width: 100%;
+    height: max-content;
+    padding: 1rem;
+    justify-content: start;
+    flex-direction: row-reverse;
+    gap: 0.5rem;
+    transition: all 0.5s;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 1vw, 1.6rem);
+    background-color: transparent;
+    color: var(--white75);
+    border-radius: max(0.1rem, 3px);
+}
+
+#OptionBTN:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+#OptionBTN:active {
+    background-color: var(--white);
+    color: var(--black);
+    scale: 0.9;
+}
+
+#OptionBTN iconify-icon {
+    font-size: clamp(1rem, 1.2vw, 1.6rem);
+}
+
+.OptionsDivider {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+/* ---------------------------------- > Option < */
+
+/* ------------------------------- > File Picker */
+.FilePicker {
+    position: absolute;
+    scale: 0
+}
+
+/* ------------------------------- > File Picker */
+
+/* ----------------------------------------------- >> Storage << */
+
 /* ------------------------------------------------- >> Tasks << */
+.TasksSection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ----------------------------------- > Filter < */
+#TasksFiltersSecondFlex {
+    gap: 0.5rem;
+    height: 100%;
+}
+
 #FilterBTN,
 #CreateBTN {
     background-color: var(--black);
@@ -685,7 +1145,7 @@ body {
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     height: 100%;
-    padding: 0px clamp(0.8rem, 1.2vw, 2rem);
+    padding: 0px clamp(0.8rem, 1.2vw, 1.5rem);
 }
 
 #FilterBTN span,
@@ -698,7 +1158,263 @@ body {
     font-size: clamp(1rem, 1.2vw, 2rem);
 }
 
+/* ----------------------------------- > Filter < */
+
+/* ------------------------------------- > List < */
+#TasksList {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ------------------------------------- > List < */
+
+/* --------------------------------- > task box < */
+.TaskBox {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#taskStatus {
+    cursor: auto;
+    background-color: var(--white);
+    padding: 1rem;
+    border-top-left-radius: max(0.2rem, 5px);
+    border-top-right-radius: max(0.2rem, 5px);
+    color: var(--black);
+    font-size: clamp(1rem, 1.2vw, 1.6rem);
+    font-weight: 600;
+    z-index: 0;
+}
+
+#taskStatus.green {
+    background-color: var(--green);
+}
+
+#taskStatus.red {
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.TaskBoxBody {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1rem;
+    padding: 1rem;
+    border: max(0.2rem, 3px) solid var(--white);
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--black);
+    box-shadow: 0px 0px 10px var(--black25);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    color: var(--white);
+    z-index: 1;
+}
+
+.TaskBoxBody.green {
+    border: max(0.2rem, 3px) solid var(--green);
+}
+
+.TaskBoxBody.red {
+    border: max(0.2rem, 3px) solid var(--red);
+}
+
+.TaskTitle,
+.TaskDescription {
+    text-align: end;
+}
+
+.TaskHorizontalDivider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+.TaskFlex {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.TaskAtachedUsers,
+.TaskCreateDate,
+.TaskExpirationDate {
+    color: var(--white75);
+    padding: 1rem 0px;
+}
+
+.TaskVerticalDivider {
+    height: 100%;
+    width: 1px;
+    background-color: var(--white25);
+    font-size: clamp(0.8rem, 1vw, 1.4rem);
+}
+
+.TaskButtonsFlex {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    z-index: 0;
+    justify-content: center;
+}
+
+#TaskBTN {
+    gap: 0.5rem;
+    width: 25%;
+    cursor: pointer;
+    background-color: var(--white25);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    transition: all 0.5s;
+    padding: 1rem;
+    font-size: clamp(1rem, 1.2vw, 1.6rem);
+    color: var(--white75);
+}
+
+#TaskBTN:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+#TaskBTN:active {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+/* --------------------------------- > task box < */
+
 /* ------------------------------------------------- >> Tasks << */
+
+/* ------------------------------------------------- >> Notes << */
+.NotesSection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ----------------------------------- > Create < */
+#CreateBTN {
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom: 0px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    height: 100%;
+    padding: 0px clamp(0.8rem, 1.2vw, 1.5rem);
+}
+
+#CreateBTN span {
+    font-size: clamp(0.9rem, 1vw, 1.2rem);
+}
+
+#CreateBTN iconify-icon {
+    font-size: clamp(1rem, 1.2vw, 2rem);
+}
+
+/* ----------------------------------- > Create < */
+
+/* ------------------------------------- > List < */
+#NotesList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* ------------------------------------- > List < */
+
+/* --------------------------------- > Note box < */
+.NoteBox {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#NoteLabel {
+    cursor: auto;
+    background-color: var(--white);
+    padding: 1rem;
+    border-top-left-radius: max(0.2rem, 5px);
+    border-top-right-radius: max(0.2rem, 5px);
+    color: var(--black);
+    font-size: clamp(1rem, 1.2vw, 1.6rem);
+    font-weight: 600;
+    z-index: 0;
+}
+
+.NoteBoxBody {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1rem;
+    padding: 1rem;
+    border: max(0.2rem, 3px) solid var(--white);
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--black);
+    box-shadow: 0px 0px 10px var(--black25);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    color: var(--white);
+    z-index: 1;
+}
+
+.NoteTitle,
+.NoteDescription {
+    text-align: end;
+}
+
+.NoteHorizontalDivider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+.NoteCreateDate {
+    margin: 0px auto;
+    color: var(--white75);
+}
+
+.NoteButtonsFlex {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    z-index: 0;
+    justify-content: center;
+}
+
+#NoteBTN {
+    gap: 0.5rem;
+    width: 25%;
+    cursor: pointer;
+    background-color: var(--white25);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    transition: all 0.5s;
+    padding: 1rem;
+    font-size: clamp(1rem, 1.2vw, 1.6rem);
+    color: var(--white75);
+}
+
+#NoteBTN:hover {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+#NoteBTN:active {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+/* --------------------------------- > Note box < */
+
+/* ------------------------------------------------- >> Notes << */
 
 /* ================================================================ >> Layer 2 << */
 
@@ -787,7 +1503,7 @@ body {
     justify-content: center;
     gap: 8px;
     font-size: clamp(0.85rem, 1vw, 2rem);
-    padding: clamp(0.8rem, 1vw, 2rem);
+    padding: clamp(0.9rem, 1vw, 2rem);
     transition: all 0.5s;
     position: relative;
 }
@@ -1030,7 +1746,7 @@ body {
 
 /* -------------------------------------------------- >> Body << */
 
-/* --------------------------------------------------- >> BTN << */
+/* -------------------------------------- >> Provided Classes << */
 #ColsePopupBTN {
     background-color: var(--white);
     color: var(--red);
@@ -1042,18 +1758,18 @@ body {
     z-index: 0;
 }
 
-#SubmitPopupBTN {
+#GreenPopupBTN {
     padding: 1rem 0px;
     width: 80%;
     background-color: var(--green);
     font-size: clamp(1rem, 1.2vw, 1.5rem);
     border-bottom-right-radius: max(0.2rem, 5px);
     border-bottom-left-radius: max(0.2rem, 5px);
-    z-index: 0;
+    z-index: -1;
     transform: translateY(-1px);
 }
 
-#DeletePopupBTN {
+#RedPopupBTN {
     gap: 0.5rem;
     width: 80%;
     padding: 1rem 0px;
@@ -1066,7 +1782,20 @@ body {
     font-size: clamp(1rem, 1.2vw, 1.5rem);
 }
 
-/* --------------------------------------------------- >> BTN << */
+#PopupTitleText {
+    cursor: auto;
+    background-color: var(--white);
+    color: var(--black);
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    padding: 1rem;
+    gap: 0.5rem;
+    transform: translateY(1px);
+    z-index: 0;
+}
+
+/* -------------------------------------- >> Provided Classes << */
 
 /* --------------------------------------------- >> edit user << */
 #EditUserColumn {
@@ -1145,11 +1874,7 @@ body {
     gap: 1rem;
 }
 
-#EditUserFieldLabelIcon {
-    color: var(--white);
-    font-size: clamp(1rem, 1.2vw, 2.5rem);
-}
-
+#EditUserFieldLabelIcon,
 #EditUserFieldLabelText {
     color: var(--white);
     font-size: clamp(1rem, 1.2vw, 2.5rem);
@@ -1224,6 +1949,938 @@ body {
 }
 
 /* ------------------------------------------- >> Delete user << */
+
+/* ----------------------------------------- >> create folder << */
+#CreateFolderPopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    z-index: 1;
+}
+
+#CreateFolderHeader {
+    width: 100%;
+    z-index: 0;
+    transform: translateY(1px);
+    justify-content: space-between;
+}
+
+#CreateFolderBody {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 1;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    gap: 0.5rem;
+}
+
+#CreateFolderTitleField {
+    width: 100%;
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--white25);
+}
+
+#CreateFolderTitleFieldInput {
+    text-align: start;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+/* ----------------------------------------- >> create folder << */
+
+/* -------------------------------------------- >> Properties << */
+#PropertiesPopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+#PropertiesHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#PropertiesTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    align-items: end;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    z-index: -1;
+}
+
+#PropertiesBody {
+    text-align: start;
+    width: 100%;
+    gap: 1rem;
+    height: max-content;
+    padding: 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+.PropertiesItemFlex {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.PropertiesItemPath {
+    user-select: text;
+}
+
+.PropertiesDeivider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+.PropertiesItemSVG {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* -------------------------------------------- >> Properties << */
+
+/* -------------------------------------------- >> Move Popup << */
+#MovePopupPopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+#MovePopupHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#MovePopupTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    transform: translateY(1px);
+    z-index: -1;
+}
+
+#MovePopupBody {
+    text-align: start;
+    width: 100%;
+    gap: 1rem;
+    height: max-content;
+    padding: 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+#MovePopupCurrentPathField,
+#MovePopupNewPathField {
+    width: 100%;
+    background-color: var(--white25);
+    border-radius: max(0.2rem, 5px);
+    padding: 0px 1rem;
+}
+
+#MovePopupCurrentPathFieldInput,
+#MovePopupNewPathFieldInput {
+    width: 100%;
+    text-align: start;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+/* -------------------------------------------- >> Move Popup << */
+
+/* -------------------------------------------- >> Rename Popup << */
+#RenamePopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+#RenamePopupHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#RenamePopupTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    transform: translateY(1px);
+    z-index: -1;
+}
+
+#RenamePopupBody {
+    text-align: start;
+    width: 100%;
+    gap: 1rem;
+    height: max-content;
+    padding: 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+#RenamePopupCurrentNameField,
+#RenamePopupNewNameField {
+    width: 100%;
+    background-color: var(--white25);
+    border-radius: max(0.2rem, 5px);
+    padding: 0px 1rem;
+}
+
+#RenamePopupCurrentNameFieldInput,
+#RenamePopupNewNameFieldInput {
+    width: 100%;
+    text-align: start;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+/* -------------------------------------------- >> Rename Popup << */
+
+/* -------------------------------------------- >> Delete Popup << */
+#DeletePopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+#DeletePopupHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#DeletePopupTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    transform: translateY(1px);
+    z-index: -1;
+}
+
+#DeletePopupBody {
+    text-align: center;
+    width: 100%;
+    gap: 1rem;
+    height: max-content;
+    padding: 2rem 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+/* -------------------------------------------- >> Delete Popup << */
+
+/* -------------------------------------------- >> Search Popup << */
+#SearchPopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+}
+
+#SearchPopupHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#SearchPopupTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    transform: translateY(1px);
+    z-index: -1;
+}
+
+#SearchPopupBody {
+    text-align: center;
+    width: 100%;
+    gap: 1rem;
+    height: max-content;
+    padding: 1rem 1rem 0px 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+#SearchPopupField {
+    width: 100%;
+    padding: 0px 1rem;
+    background-color: var(--white25);
+    border-radius: max(0.2rem, 5px);
+}
+
+#SearchPopupFieldInput {
+    width: 100%;
+    text-align: start;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+.SearchPopupDivider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+.SearchPopupList {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: all 0.5s;
+    transform: translateY(50%);
+    overflow-y: scroll;
+    padding-bottom: 1rem;
+}
+
+.SearchPopupList.show {
+    transform: translateY(0%);
+    opacity: 1;
+}
+
+.SearchedWidget {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    transition: all 0.5s;
+    color: var(--white75);
+    border-radius: max(0.2rem, 5px);
+}
+
+.SearchedWidget.active {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.SearchedWidget:hover {
+    background-color: var(--white25);
+    color: var(--white);
+}
+
+.SearchedWidget:active {
+    background-color: var(--white);
+    color: var(--black);
+    scale: 0.95;
+}
+
+.SearchedWidgetIcon {
+    width: 3rem;
+}
+
+.SearchedWidgetText {
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+/* -------------------------------------------- >> Search Popup << */
+
+/* ------------------------------------------- >> Create Task << */
+#CraateTaskPopup {
+    width: 50%;
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    z-index: 1;
+}
+
+#CreateTaskHeader {
+    width: 100%;
+    z-index: 0;
+    transform: translateY(1px);
+    justify-content: space-between;
+}
+
+#CreateTaskBody {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 1;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    gap: 0.5rem;
+}
+
+.CreateTaskDivider {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+#CreateTaskTitleField {
+    width: 100%;
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--white25);
+}
+
+#CreateTaskTitleFieldInput {
+    text-align: start;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+#CreateTaskDescriptionField {
+    width: 100%;
+    height: 150px;
+}
+
+#CreateTaskDescriptionFieldInput {
+    border-radius: max(0.2rem, 5px);
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white25);
+    color: var(--white);
+    font-family: "Roboto", vazir, serif;
+    border: none;
+    outline: none;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+#CreateTaskDescriptionFieldInput::placeholder {
+    color: var(--white75);
+
+}
+
+#CreateTaskLabel {
+    width: 100%;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.CreateTaskLabelIcon,
+.CreateTaskLabelText {
+    color: var(--white);
+    font-size: clamp(1rem, 1.2vw, 2.5rem);
+}
+
+#CrateTaskDatePickerFlex {
+    gap: 0.5rem;
+}
+
+.CreateTaskDatepickersDivider {
+    width: 2px;
+    background-color: var(--white25);
+}
+
+#CreateTaskSelectedUsersList {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 70px;
+    align-items: center;
+    border-left: 1px solid var(--white50);
+    border-right: 1px solid var(--white50);
+    overflow-x: scroll;
+    gap: 0.5rem;
+    padding: 0px 0.5rem;
+}
+
+.CreateTaskAllUsersList {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--white50);
+
+}
+
+.MiniUser {
+    flex: 0 0 auto;
+    cursor: pointer;
+    width: max-content;
+    height: max-content;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-radius: max(0.2rem, 5px);
+    background-color: transparent;
+    border: 2px solid var(--white25);
+    transition: all 0.5s;
+    color: var(--white);
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+}
+
+.MiniUser:hover {
+    background-color: var(--white);
+    border: 2px solid var(--white);
+    color: var(--black);
+}
+
+.MiniUser:active {
+    scale: 0.9;
+}
+
+.MiniUser.active {
+    background-color: var(--white);
+    border: 2px solid var(--white);
+    color: var(--black);
+}
+
+.MiniUserAvatar {
+    width: 40px;
+    height: 40px;
+    object-fit: fill;
+    border-radius: max(0.1rem, 2px);
+    box-shadow: 0px 0px 0px var(--black25);
+    background-color: transparent;
+    border: 2px solid var(--white25);
+    transition: all 0.5s;
+}
+
+.MiniUser:hover .MiniUserAvatar {
+    box-shadow: 0px 0px 10px var(--black25);
+    background-color: var(--white);
+    border: 2px solid var(--white);
+}
+
+.MiniUser:active .MiniUserAvatar {
+    box-shadow: 0px 0px 10px var(--black25);
+    background-color: var(--white);
+    border: 2px solid var(--white);
+}
+
+.MiniUser.active .MiniUserAvatar {
+    box-shadow: 0px 0px 10px var(--black25);
+    background-color: var(--white);
+    border: 2px solid var(--white);
+}
+
+/* ------------------------------------------- >> Create Task << */
+
+/* --------------------------------------------- >> Check Task << */
+#CheckTaskPopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+    align-items: center;
+}
+
+#CheckTaskHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#CheckTaskTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    transform: translateY(1px);
+    z-index: -1;
+}
+
+#CheckTaskBody {
+    text-align: center;
+    width: 100%;
+    height: max-content;
+    padding: 2rem 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+/* --------------------------------------------- >> Check Task << */
+
+/* ------------------------------------------- >> Delete Task << */
+#DeleteTaskPopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+    align-items: center;
+}
+
+#DeleteTaskHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#DeleteTaskTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    transform: translateY(1px);
+    z-index: -1;
+}
+
+#DeleteTaskBody {
+    text-align: center;
+    width: 100%;
+    height: max-content;
+    padding: 2rem 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+/* ------------------------------------------- >> Delete Task << */
+
+/* ------------------------------------------- >> Filter Task << */
+#FilterTaskPopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    transition: all 0.5s;
+    z-index: 1;
+}
+
+#FilterTaskHeader {
+    width: 100%;
+    z-index: 0;
+    transform: translateY(1px);
+    justify-content: space-between;
+}
+
+#FilterTaskBody {
+    width: 100%;
+    height: max-content;
+    overflow-y: scroll;
+    padding: 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 1;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    gap: 0.5rem;
+    transition: all 0.5s;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+}
+
+.FilterTaskDivider {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+#FilterTaskLabel {
+    width: 100%;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.FilterTaskLabelIcon,
+.FilterTaskLabelText {
+    color: var(--white);
+    font-size: clamp(1rem, 1.2vw, 2.5rem);
+}
+
+#FilterTaskDatePickerFlex {
+    gap: 0.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.FilterTaskDatepickersDivider {
+    width: 2px;
+    background-color: var(--white25);
+}
+
+#FilterTaskDivider {
+    width: 100%;
+    height: 2px;
+    background-color: var(--white25);
+}
+
+#FilterTaskButtonFlex {
+    width: 90%;
+    gap: 1rem;
+    z-index: 0;
+}
+
+/* ------------------------------------------- >> Filter Task << */
+
+/* ------------------------------------------- >> Create Note << */
+#CreateNotePopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    z-index: 1;
+}
+
+#CreateNoteHeader {
+    width: 100%;
+    z-index: 0;
+    transform: translateY(1px);
+    justify-content: space-between;
+}
+
+#CreateNoteBody {
+    width: 100%;
+    height: max-content;
+    overflow-y: scroll;
+    padding: 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 1;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    gap: 0.5rem;
+}
+
+.CreateNoteDivider {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 1px;
+    background-color: var(--white25);
+}
+
+#CreateNoteLabelField {
+    width: 100%;
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--white25);
+}
+
+#CreateNoteLabelFieldInput {
+    text-align: start;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+#CreateNoteTitleField {
+    width: 100%;
+    border-radius: max(0.2rem, 5px);
+    background-color: var(--white25);
+}
+
+#CreateNoteTitleFieldInput {
+    text-align: start;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+#CreateNoteDescriptionField {
+    width: 100%;
+    height: 150px;
+}
+
+#CreateNoteDescriptionFieldInput {
+    border-radius: max(0.2rem, 5px);
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    background-color: var(--white25);
+    color: var(--white);
+    font-family: "Roboto", vazir, serif;
+    border: none;
+    outline: none;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+}
+
+#CreateNoteDescriptionFieldInput::placeholder {
+    color: var(--white75);
+}
+
+/* ------------------------------------------- >> Create Note << */
+
+/* ------------------------------------------- >> Delete Note << */
+#DeleteNotePopup {
+    width: 50%;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+    align-items: center;
+}
+
+#DeleteNoteHeader {
+    width: 100%;
+    justify-content: space-between;
+}
+
+#DeleteNoteTitle {
+    height: 100%;
+    gap: 0.5rem;
+    flex-direction: row-reverse;
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0px 1rem;
+    border-top-right-radius: max(0.2rem, 5px);
+    border-top-left-radius: max(0.2rem, 5px);
+    transform: translateY(1px);
+    z-index: -1;
+}
+
+#DeleteNoteBody {
+    text-align: center;
+    width: 100%;
+    height: max-content;
+    padding: 2rem 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 0;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+/* ------------------------------------------- >> Delete Note << */
+
+/* -------------------------------------------------- >> Exit << */
+#ExitPopup {
+    width: 50%;
+    align-items: center;
+    height: max-content;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#ExitHeader {
+    width: 100%;
+    justify-content: space-between;
+    align-items: end;
+    z-index: 0;
+}
+
+#ExitPopupBody {
+    text-align: center;
+    width: 100%;
+    height: max-content;
+    padding: 2rem 1rem;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    z-index: 1;
+    color: var(--white);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+}
+
+/* -------------------------------------------------- >> Exit << */
 
 /* ================================================================ >> Layer 5 << */
 
@@ -1385,7 +3042,15 @@ body {
 /* ============================================================ >> Media Query << */
 
 /* ------------------------------------------------ >> 4K << */
-@media screen and (min-width: 1800px) {}
+@media screen and (min-width: 1800px) {
+
+    /* ----------------------------- Filter Flex */
+    #FiltersFlex {
+        height: 80px;
+    }
+
+    /* ----------------------------- Filter Flex */
+}
 
 /* ------------------------------------------------ >> 4K << */
 
@@ -1411,16 +3076,29 @@ body {
 
     /* ----------------------- > Layer 3 < */
     .Sidebar {
-        width: 15%;
+        width: 16%;
     }
 
     /* ----------------------- > Layer 3 < */
 
 
     /* ---------------------- > Layer 5 < */
+
+    /* edit user */
     #EditUserColumn {
         width: 60%;
     }
+
+    /* edit user */
+
+
+    /* Filter */
+    #FilterTaskPopup {
+        width: 70%;
+    }
+
+    /* Filter */
+
 
     /* ---------------------- > Layer 5 < */
 
@@ -1448,21 +3126,117 @@ body {
         width: 350px;
     }
 
+    .TaskBox {
+        width: 95%;
+    }
+
+    .TaskButtonsFlex {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+    }
+
+    #TaskBTN {
+        width: 90%;
+        border-radius: max(0.2rem, 5px);
+    }
+
+
+
     /* ----------------------- >> layer 2 << */
 
     /* ------------------------- > Layer 3 < */
     .Sidebar {
-        width: 18%;
+        width: 20%;
     }
 
     /* ------------------------- > Layer 3 < */
 
-    /* ---------------------- > Layer 5 < */
+    /* ------------------------- > Layer 5 < */
+
+    /* edit user */
     #EditUserColumn {
-        width: 70%;
+        width: 75%;
     }
 
-    /* ---------------------- > Layer 5 < */
+    /* edit user */
+
+    /* Create task */
+    #CraateTaskPopup {
+        width: 75%;
+    }
+
+    /* Create task */
+
+
+    /* Move */
+    #MovePopupPopup {
+        width: 75%;
+    }
+
+    /* Move */
+
+    /* Rename */
+    #RenamePopup {
+        width: 75%;
+    }
+
+    /* Rename */
+
+    /* Delete */
+    #DeletePopup {
+        width: 75%;
+    }
+
+    /* Delete */
+
+    /* Properties */
+    #PropertiesPopup {
+        width: 75%;
+    }
+
+    /* Properties */
+
+    /* Create Folder */
+    #CreateFolderPopup {
+        width: 75%;
+    }
+
+    /* Create Folder */
+
+    /* Check task */
+    #CheckTaskPopup {
+        width: 75%;
+    }
+
+    /* Check task */
+
+    /* Delete task */
+    #DeleteTaskPopup {
+        width: 75%;
+    }
+
+    /* Delete task */
+
+
+    /* Search popup */
+    #SearchPopup {
+        width: 75%;
+    }
+
+    /* Search popup */
+
+
+    /* Filter */
+    #FilterTaskPopup {
+        width: 70%;
+        top: 40%;
+    }
+
+    /* Filter */
+
+    /* ------------------------- > Layer 5 < */
 }
 
 /* -------------------------------------------- >> tablet << */
@@ -1473,9 +3247,25 @@ body {
     /* --------------- >> Search Feild << */
     #SearchField {
         width: 90%;
+        height: 100%;
+        flex: 0 0 auto;
     }
 
     /* --------------- >> Search Feild << */
+
+    /* ---------------- >> Date Picker << */
+    .DatePicker {
+        width: 100%;
+    }
+
+    /* ---------------- >> Date Picker << */
+
+    /* ------------- >> Data Container << */
+    .RequestResultSVG {
+        width: 100%;
+    }
+
+    /* ------------- >> Data Container << */
 
     /* ----------------- >> Pagination << */
     .PaginationContiner {
@@ -1491,10 +3281,10 @@ body {
     }
 
     .PagesNumberContainer {
-        width: 100%;
+        min-width: 5%;
+        max-width: 95%;
         border: 2px solid var(--white25);
-        border-left: none;
-        border-right: none;
+        border-radius: 5px;
     }
 
     .PagesNumberContainer:hover {
@@ -1515,7 +3305,11 @@ body {
 
     /* ----------------- >> Pagination << */
 
-    /* ----------------------- >> layer 2 << */
+    /* ---------------------- >> Users << */
+    #UsersFiltersFlex {
+        flex: 0 0 auto;
+    }
+
     #UsersList {
         gap: 5px;
         grid-template-columns: repeat(auto-fit, minmax(100%, max-content));
@@ -1525,11 +3319,61 @@ body {
         width: 100%;
     }
 
-    /* ----------------------- >> layer 2 << */
+    /* ---------------------- >> Users << */
+
+    /* -------------------- >> Storage << */
+    #PathField {
+        width: 80%;
+    }
+
+    .StorageContent {
+        flex-wrap: nowrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 6rem;
+    }
+
+    .StorageItem {
+        width: 100px;
+        align-items: center;
+    }
+
+    /* -------------------- >> Storage << */
+
+    /* ---------------------- >> Tasks << */
+    #FiltersFlex {
+        justify-content: start;
+        overflow-x: scroll;
+        flex: 0 0 auto;
+    }
+
+    .TaskAtachedUsers,
+    .TaskCreateDate,
+    .TaskExpirationDate {
+        text-align: center;
+    }
+
+    /* ---------------------- >> Tasks << */
+
+    .NoteBox {
+        width: 100%;
+    }
 
     /* ---------------------- > Layer 3 < */
     .Sidebar {
-        width: 30%;
+        width: 35%;
+    }
+
+    .SidebarLogo {
+        width: 100%;
+        height: 50px;
+    }
+
+    .SiderbarLogoImage {
+        max-width: 40%;
+        object-fit: fill;
     }
 
     /* ---------------------- > Layer 3 < */
@@ -1543,13 +3387,118 @@ body {
     /* ---------------------- > Layer 4 < */
 
     /* ---------------------- > Layer 5 < */
+
+    /* exit */
+    #ExitPopup {
+        width: 95%;
+    }
+
+    /* exit */
+
+    /* edit user */
     #EditUserColumn {
-        width: 90%;
+        width: 95%;
     }
 
     #DeleteUserPopup {
         width: 90%;
     }
+
+    /* edit user */
+
+    /* Create Folder */
+    #CreateFolderPopup {
+        width: 95%;
+    }
+
+    /* Create Folder */
+
+    /* Properties */
+    #PropertiesPopup {
+        width: 95%;
+    }
+
+    /* Properties */
+
+    /* Move */
+    #MovePopupPopup {
+        width: 95%;
+    }
+
+    /* Move */
+
+    /* Rename */
+    #RenamePopup {
+        width: 95%;
+    }
+
+    /* Rename */
+
+    /* Delete */
+    #DeletePopup {
+        width: 95%;
+    }
+
+    /* Delete */
+
+    /* Search popup */
+    #SearchPopup {
+        width: 95%;
+    }
+
+    /* Search popup */
+
+    /* Create task */
+    #CraateTaskPopup {
+        width: 95%;
+    }
+
+    #CrateTaskDatePickerFlex {
+        flex-direction: column;
+    }
+
+    .CreateTaskDatepickersDivider {
+        width: 100%;
+        height: 1px;
+    }
+
+    #EndDate {
+        z-index: 0;
+    }
+
+    /* Create task */
+
+    /* Filter task */
+    #FilterTaskPopup {
+        width: 95%;
+    }
+
+    #FilterTaskDatePickerFlex {
+        flex-direction: column;
+    }
+
+    .FilterTaskDatepickersDivider {
+        width: 100%;
+        height: 1px;
+    }
+
+    /* Filter task */
+
+    #NoteBTN {
+        width: 40%;
+    }
+
+    /* Delete Note */
+    #DeleteNotePopup {
+        width: 95%;
+    }
+
+    /* Delete Note */
+
+    #CreateNotePopup {
+        width: 95%;
+    }
+
 
     /* ---------------------- > Layer 5 < */
 
@@ -1562,7 +3511,7 @@ body {
 
     /* ----------------------- > Layer 3 < */
     .Sidebar {
-        width: 35%;
+        width: 40%;
     }
 
     /* ----------------------- > Layer 3 < */
@@ -1575,7 +3524,7 @@ body {
 
     /* ----------------------- > Layer 3 < */
     .Sidebar {
-        width: 40%;
+        width: 45%;
     }
 
     /* ----------------------- > Layer 3 < */

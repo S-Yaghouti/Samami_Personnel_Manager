@@ -222,8 +222,9 @@ export function DropDown(labelicon, labeltext, Data, Listener) {
   //
   // ------------------------------------------------ >> Return <<
   return {
-    widget : DD,
-    title:DDText,
+    widget: DD,
+    title: DDText,
+    icon: DDIcon,
   };
   // ------------------------------------------------ >> Return <<
 }

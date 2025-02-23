@@ -12,6 +12,22 @@ import { Field } from "./../../modules/Widgets/Field/Field.js";
 import { BTN } from "./../../modules/Widgets/BTN/BTN.js";
 // ---------------------------------------------------- >> BTN <<
 //
+// ------------------------------------------- >> Data Builder <<
+import { DataBuilder } from "../../modules/Data_Builder/Data_Builder.js";
+// ------------------------------------------- >> Data Builder <<
+//
+// ----------------------------------------- >> Request Result <<
+import { RequestResult } from "../../modules/Data_Builder/request_result.js";
+// ----------------------------------------- >> Request Result <<
+//
+// -------------------------------------------- >> Web Service <<
+import { DELETE, GET, POST } from "../../modules/Web_Service/web_service.js";
+// -------------------------------------------- >> Web Service <<
+//
+// ------------------------------------------- >> Notification <<
+import { NotificationCallBack } from "./../../modules/Widgets/Notification/notification_box.js";
+// ------------------------------------------- >> Notification <<
+//
 // ============================================================== >> Imports <<
 //
 // ========================================================== >> Definitions <<
@@ -32,10 +48,24 @@ import { BTN } from "./../../modules/Widgets/BTN/BTN.js";
 //
 // ==================================================================== >> V <<
 //
+// -------------------------------------------------------- >> Query <<
+let Query = ``;
+// -------------------------------------------------------- >> Query <<
+//
 // ------------------------------------------------------ >> Layer 5 <<
 const Layer5 = document.querySelector(".Layer5");
 const BG_5 = document.querySelector("#BG_5");
 // ------------------------------------------------------ >> Layer 5 <<
+//
+// ------------------------------------------------------ >> Layer 6 <<
+const Layer6 = document.querySelector(".Layer6");
+const BG_6 = document.querySelector("#BG_6");
+// ------------------------------------------------------ >> Layer 6 <<
+//
+// ------------------------------------------------------ >> Layer 7 <<
+const Layer7 = document.querySelector(".Layer7");
+const BG_7 = document.querySelector("#BG_7");
+// ------------------------------------------------------ >> Layer 7 <<
 //
 // ==================================================================== >> V <<
 //
@@ -46,116 +76,121 @@ export function NotesSections() {
   const SliderContainer = document.querySelector(".SliderContainer");
   // ----------------------------------------------------- >> V <<
   //
-  // ---------------------------------------------------- >> SM <<
-  setTimeout(() => {
-    SliderContainer.classList.add("show");
-  }, 500);
-  // ---------------------------------------------------- >> SM <<
-  //
-  // ---------------------------------------- >> Remove Loading <<
-  LoadingcallBack(BG_5, 2, Layer5);
-  // ---------------------------------------- >> Remove Loading <<
-  //
   // ------------------------------------------------ >> Column <<
-  const NoteSection = document.createElement("div");
-  NoteSection.classList.add("Column");
+  const NotesSection = document.createElement("div");
+  NotesSection.classList.add("Column");
   //
   // ----------------------------------------- > id <
-  NoteSection.id = "NoteSection";
+  NotesSection.id = "NotesSection";
   // ----------------------------------------- > id <
   //
   // ----------------------------------------- > AC <
-  SliderContainer.appendChild(NoteSection);
+  SliderContainer.appendChild(NotesSection);
   // ----------------------------------------- > AC <
   //
   // ------------------------------------------------ >> Column <<
   //
   // -------------------------------------------------- >> List <<
-  //
-  // -------------------------------------------- > V <
-
-  // -------------------------------------------- > V <
-  //
-  // ------------------------------------------- > CB <
-  List(true, NoteSection);
-  // ------------------------------------------- > CB <
-  //
+  List(true);
   // -------------------------------------------------- >> List <<
   //
-  // ------------------------------------------------ >> Return <<
-  return NoteSection;
-  // ------------------------------------------------ >> Return <<
 }
 // =============================================================== >> Module <<
 //
-// ============================================================== >> Widgets <<
 //
-// ------------------------------------------------- >> Filter <<
+// =============================================================== >> Filter <<
 function Filter(father) {
   //
-  // --------------------------------------- > div <
+  // --------------------------------------------------- >> div <<
   const Flex = document.createElement("div");
   Flex.classList.add("Flex");
-  // --------------------------------- id >>
-  Flex.id = "FilterFlex";
-  // --------------------------------- id <<
+  // -------------------------------------------- > id <
+  Flex.id = "FiltersFlex";
+  // -------------------------------------------- > id <
   //
-  // --------------------------------- AC >>
+  // -------------------------------------------- > AC <
   father.appendChild(Flex);
-  // --------------------------------- AC <<
+  // -------------------------------------------- > AC <
   //
-  // --------------------------------------- > div <
+  // --------------------------------------------------- >> div <<
   //
-  // ------------------------------------- > Feild <
+  // ------------------------------------------------ >> Search <<
   //
-  // ----------------------- Varibels >
-  const FeildID = "SearchInput";
-  const Icon = "icon-park-outline:doc-search-two";
+  // ----------------------------------- > Varibels <
+  const SearchFeildInputID = "SearchInput";
+  const Icon = "mdi:text-box-search";
   const Placeholder = " Search for notes ...";
-  // ----------------------- Varibels <
+  // ----------------------------------- > Varibels <
   //
-  // ----------------------- CallBack >
+  // ----------------------------------- > CallBack <
   const SearchField = Field(
     "SearchField",
     false,
     "",
     "",
     false,
-    FeildID,
+    SearchFeildInputID,
     Icon,
     Placeholder,
     20
   );
-  // ----------------------- CallBack <
+  // ----------------------------------- > CallBack <
   //
-  // ------------------------- Set id <
+  // ------------------------------------- > Set id <
   SearchField.widget.id = "SearchField";
   SearchField.fieldIcon.id = "SearchFieldIcon";
-  // ------------------------- Set id <
+  // ------------------------------------- > Set id <
   //
-  // ----------------------- Listener <
+  // ------------------------------------------ > L <
   SearchField.Input.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
+      //
+      // ------------------------ Loading CB >>
+      LoadingcallBack(BG_6, 1, Layer6);
+      // ------------------------ Loading CB <<
+      //
+      // -------------------------------- SM >>
+      //
+      const DataContainer = document.querySelector(".DataContainer");
+      DataContainer.classList.remove("show");
+      //
+      setTimeout(() => {
+        if (father.contains(DataContainer)) {
+          father.removeChild(DataContainer);
+        }
+      }, 500);
+      //
+      // -------------------------------- SM <<
+      //
+      // ----------------------------- Query >>
+      Query = `search=${SearchField.Input.value}`;
+      // ----------------------------- Query <<
+      //
+      // --------------------------- List CB >>
+      setTimeout(() => {
+        List(false);
+      }, 500);
+      // --------------------------- List CB <<
+      //
     }
   });
-  // ----------------------- Listener <
+  // ------------------------------------------ > L <
   //
-  // ----------------------------- AP >
+  // ----------------------------------------- > AC <
   Flex.appendChild(SearchField.widget);
-  // ----------------------------- AP <
+  // ----------------------------------------- > AC <
   //
+  // ------------------------------------------------ >> Search <<
   //
-  // ------------------------------------- > Feild <
+  // ------------------------------------------------ >> Create <<
   //
-  // ------------------------------------ > Create <
-  //
-  // ------------------------------ > V <
+  // ------------------------------------------ > V <
   const CreateBTNId = "CreateBTN";
   const CreateBtnText = "Create";
   const CreateBtnIcon = "ic:baseline-post-add";
-  // ------------------------------ > V <
+  // ------------------------------------------ > V <
   //
-  // ----------------------------- > CB <
+  // ----------------------------------------- > CB <
   const CreateBTN = BTN(
     CreateBTNId,
     true,
@@ -165,36 +200,1077 @@ function Filter(father) {
     true,
     CreateBTNListener
   );
-  // ----------------------------- > CB <
+  // ----------------------------------------- > CB <
   //
-  // ------------------------------ > L <
-  function CreateBTNListener() {}
-  // ------------------------------ > L <
+  // ------------------------------------------ > L <
+  function CreateBTNListener() {
+    CreateNote();
+  }
+  // ------------------------------------------ > L <
   //
-  // ----------------------------- > AP <
+  // ----------------------------------------- > AP <
   Flex.appendChild(CreateBTN.widget);
-  // ----------------------------- > AP <
+  // ----------------------------------------- > AP <
   //
-  // ------------------------------------ > Create <
+  // ------------------------------------------------ >> Create <<
   //
 }
-// ------------------------------------------------- >> Filter <<
+// =============================================================== >> Filter <<
 //
-// ------------------------------------------------ >> Builder <<
-function List(rebuild, father) {
+// ============================================================== >> Builder <<
+function List(Build) {
   //
-  // -------------------------------- > Condition <
-  if (rebuild == true) {
+  // --------------------------------------------- >> Selector <<
+  const father = document.querySelector("#NotesSection");
+  // --------------------------------------------- >> Selector <<
+  //
+  // ---------------------------------------------------- >> V <<
+  const Id = "Notes";
+  const URL = `https://personnel.samami.co/note/get`;
+  const limit = 21;
+  // ---------------------------------------------------- >> V <<
+  //
+  // --------------------------------------------------- >> CB <<
+  const Notes = DataBuilder(
+    Id,
+    URL,
+    Query,
+    limit,
+    ResponseCallBack,
+    PaginationBtnListener
+  );
+  // --------------------------------------------------- >> CB <<
+  //
+  // ----------------------------------------- >> List element <<
+  const List = Notes.List;
+  List.id = "NotesList";
+  // ----------------------------------------- >> List element <<
+  //
+  // ----------------------------------------- >> Pagination L <<
+  function PaginationBtnListener() {
+    //
+    // ----------------------- > Add Loading <
+    LoadingcallBack(BG_6, 1, Layer6);
+    // ----------------------- > Add Loading <
+    //
+  }
+  // ----------------------------------------- >> Pagination L <<
+  //
+  // -------------------------------------------- >> P Builder <<
+  function ResponseCallBack(response) {
+    //
+    // ----------------------- > Remove Loading <
+    LoadingcallBack(BG_6, 2, Layer6);
+    // ----------------------- > Remove Loading <
+    //
+    // ----------------------------------- > SM <
+    const FiltersFlex = document.getElementById("FiltersFlex");
+    FiltersFlex.classList.add("show");
+    setTimeout(() => {
+      Notes.widget.classList.add("show");
+    }, 250);
+    //
+    if (response.data.data.length == 1) {
+      Notes.widget.classList.add("big");
+      Notes.List.classList.add("big");
+    }
+    // ----------------------------------- > SM <
+    //
+    // ----------------------------------- > RM <
+    RM(response, Notes.widget, List);
+    // ----------------------------------- > RM <
+    //
+  }
+  // -------------------------------------------- >> P Builder <<
+  //
+  // --------------------------------------------- >> Build ?! <<
+  if (Build == true) {
     Filter(father);
   }
-  // -------------------------------- > Condition <
+  // --------------------------------------------- >> Build ?! <<
+  //
+  // --------------------------------------------------- >> AP <<
+  const NotesList = document.getElementById("Notes");
+  if (!NotesList) {
+    father.appendChild(Notes.widget);
+  }
+  // --------------------------------------------------- >> AP <<
+  //
+  // ----------------------------------------------- >> return <<
+  return Notes.widget;
+  // ----------------------------------------------- >> return <<
   //
 }
-// ------------------------------------------------ >> Builder <<
+// ============================================================== >> Builder <<
 //
-// ============================================================== >> Widgets <<
+// =================================================================== >> RM <<
+function RM(response, Father, List) {
+  //
+  // --------------------------------------------------------- >> V <<
+  const length = response.data.data.length;
+  // --------------------------------------------------------- >> V <<
+  //
+  // -------------------------------------------------------- >> 👍 <<
+  if (response.status == 200 && length !== 0) {
+    //
+    response.data.data.forEach((info) => {
+      //
+      const NoteWidget = NoteBox(info);
+      //
+      List.appendChild(NoteWidget);
+      //
+    });
+    //
+  }
+  // -------------------------------------------------------- >> 👍 <<
+  //
+  // ----------------------------------------------------- >> Empty <<
+  else if (response.status == 200 && length == 0) {
+    //
+    // -------------- >> SM
+    List.innerHTML = "";
+    setTimeout(() => {
+      Father.classList.add("show");
+      Father.classList.add("big");
+      List.classList.add("big");
+    }, 100);
+    //
+    Father.classList.add("big");
+    Father.id = "";
+    // -------------- << SM
+    //
+    // -------------- >> CB
+    //
+    // ----------------- > V <
+    const SVG_URL = "./../assets/svg/Empty_Response.svg";
+    // ----------------- > V <
+    //
+    // ----------------- > Widget <
+    const Widget = RequestResult(SVG_URL, "Empty Response");
+    // ----------------- > Widget <
+    //
+    // ----------------- > AC <
+    List.appendChild(Widget);
+    // ----------------- > AC <
+    //
+    // -------------- << CB
+    //
+  }
+  // ----------------------------------------------------- >> Empty <<
+  //
+  // -------------------------------------------------------- >> 👎 <<
+  else if (response.status !== 200) {
+    //
+    // --------------- >> SM
+    List.innerHTML = "";
+    setTimeout(() => {
+      Father.classList.add("show");
+      Father.classList.add("big");
+      List.classList.add("big");
+    }, 100);
+    //
+    Father.classList.add("big");
+    Father.id = "";
+    // --------------- << SM
+    //
+    // --------------- >> CB
+    //
+    // ------------------ > V <
+    const SVG_URL = "./../../assets/svg/Error_Response.svg";
+    // ------------------ > V <
+    //
+    // ------------------ > Widget <
+    const Widget = RequestResult(SVG_URL, "Faild request 👎");
+    // ------------------ > Widget <
+    //
+    // ------------------ > AC <
+    List.appendChild(Widget);
+    // ------------------ > AC <
+    //
+    // --------------- << CB
+    //
+  }
+  // -------------------------------------------------------- >> 👎 <<
+  //
+}
+// =================================================================== >> RM <<
 //
-// ============================================================ >> Operators <<
+// ============================================================= >> Note Box <<
+function NoteBox(response) {
+  //
+  // ------------------------------------------------- >> div <<
+  const NoteBox = document.createElement("div");
+  NoteBox.classList.add("NoteBox");
+  //
+  // ------------------------------------------ > id <
+  NoteBox.id = response.id;
+  // ------------------------------------------ > id <
+  //
+  // ------------------------------------------------- >> div <<
+  //
+  // ---------------------------------------------- >> Label <<
+  //
+  // ---------------------------------------- > V <
+  const NoteLabelId = "NoteLabel";
+  const NoteLabelText = response.label;
+  const NoteLabelIcon = "material-symbols:note-stack";
+  // ---------------------------------------- > V <
+  //
+  // --------------------------------------- > CB <
+  const NoteLabel = BTN(
+    NoteLabelId,
+    true,
+    NoteLabelText,
+    true,
+    NoteLabelIcon,
+    false,
+    () => {}
+  );
+  // --------------------------------------- > CB <
+  //
+  // --------------------------------------- > AC <
+  NoteBox.appendChild(NoteLabel.widget);
+  // --------------------------------------- > AC <
+  //
+  // ---------------------------------------------- >> Label <<
+  //
+  // ------------------------------------------------ >> Body <<
+  const NoteBoxBody = document.createElement("div");
+  NoteBoxBody.classList.add("NoteBoxBody");
+  //
+  // ----------------------------------------- > AC <
+  NoteBox.appendChild(NoteBoxBody);
+  // ----------------------------------------- > AC <
+  //
+  // --------------------------------------- > span <
+  const NoteTitle = document.createElement("span");
+  NoteTitle.classList.add("NoteTitle");
+  //
+  // ------------------------------ value >>
+  NoteTitle.textContent = response.title;
+  // ------------------------------ value <<
+  //
+  // --------------------------------- AC >>
+  NoteBoxBody.appendChild(NoteTitle);
+  // --------------------------------- AC <<
+  //
+  // --------------------------------------- > span <
+  //
+  // ------------------------------------ > Divider <
+  const NoteHorizontalDivider1 = document.createElement("div");
+  NoteHorizontalDivider1.classList.add("NoteHorizontalDivider");
+  //
+  // ------------------------------ AC >>
+  NoteBoxBody.appendChild(NoteHorizontalDivider1);
+  // ------------------------------ AC <<
+  //
+  // ------------------------------------ > Divider <
+  //
+  // --------------------------------------- > span <
+  const NoteDescription = document.createElement("span");
+  NoteDescription.classList.add("NoteDescription");
+  //
+  // ------------------------------ value >>
+  NoteDescription.textContent = response.description;
+  // ------------------------------ value <<
+  //
+  // --------------------------------- AC >>
+  NoteBoxBody.appendChild(NoteDescription);
+  // --------------------------------- AC <<
+  //
+  // --------------------------------------- > span <
+  //
+  // ------------------------------------ > Divider <
+  const NoteHorizontalDivider2 = document.createElement("div");
+  NoteHorizontalDivider2.classList.add("NoteHorizontalDivider");
+  //
+  // ------------------------------ AC >>
+  NoteBoxBody.appendChild(NoteHorizontalDivider2);
+  // ------------------------------ AC <<
+  //
+  // ------------------------------------ > Divider <
+  //
+  // --------------------------------------- > span <
+  const NoteCreateDate = document.createElement("span");
+  NoteCreateDate.classList.add("NoteCreateDate");
+  //
+  // ------------------------------ value >>
+  NoteCreateDate.textContent = `Created at : ${response.created_at}`;
+  // ------------------------------ value <<
+  //
+  // --------------------------------- AC >>
+  NoteBoxBody.appendChild(NoteCreateDate);
+  // --------------------------------- AC <<
+  //
+  // --------------------------------------- > span <
+  //
+  // ------------------------------------------------ >> Body <<
+  //
+  // ------------------------------------------------ >> Flex <<
+  const NoteButtonsFlex = document.createElement("div");
+  NoteButtonsFlex.classList.add("NoteButtonsFlex");
+  //
+  // ----------------------------------------- > AC <
+  NoteBox.appendChild(NoteButtonsFlex);
+  // ----------------------------------------- > AC <
+  //
+  // -------------------------------------- > Chats <
+  //
+  // --------------------------------- V >>
+  const NoteChatsBTNId = "NoteBTN";
+  const NoteChatsBTNText = "Chats";
+  const NoteChatsBTNIcon = "dashicons:format-chat";
+  // --------------------------------- V <<
+  //
+  // -------------------------------- CB >>
+  const NoteChatsBTN = BTN(
+    NoteChatsBTNId,
+    true,
+    NoteChatsBTNText,
+    true,
+    NoteChatsBTNIcon,
+    true,
+    NoteChatsBTNListener
+  );
+  // -------------------------------- CB <<
+  //
+  // --------------------------------- L >>
+  function NoteChatsBTNListener() {}
+  // --------------------------------- L <<
+  //
+  // -------------------------------- AC >>
+  NoteButtonsFlex.appendChild(NoteChatsBTN.widget);
+  // -------------------------------- AC <<
+  //
+  // -------------------------------------- > Chats <
+  //
+  // -------------------------------------- > Delete <
+  //
+  // --------------------------------- V >>
+  const NoteDeleteBTNId = "NoteBTN";
+  const NoteDeleteBTNText = "Delete";
+  const NoteDeleteBTNIcon = "tdesign:task-error-filled";
+  // --------------------------------- V <<
+  //
+  // -------------------------------- CB >>
+  const NoteDeleteBTN = BTN(
+    NoteDeleteBTNId,
+    true,
+    NoteDeleteBTNText,
+    true,
+    NoteDeleteBTNIcon,
+    true,
+    NoteDeleteBTNListener
+  );
+  // -------------------------------- CB <<
+  //
+  // --------------------------------- L >>
+  function NoteDeleteBTNListener() {
+    DeleteNotePopup(response.title, response.id);
+  }
+  // --------------------------------- L <<
+  //
+  // -------------------------------- AC >>
+  NoteButtonsFlex.appendChild(NoteDeleteBTN.widget);
+  // -------------------------------- AC <<
+  //
+  // -------------------------------------- > Delete <
+  //
+  // ------------------------------------------------ >> Flex <<
+  //
+  // ---------------------------------------------- >> return <<
+  return NoteBox;
+  // ---------------------------------------------- >> return <<
+  //
+}
+// ============================================================= >> Note Box <<
 //
-// ============================================================ >> Operators <<
+// =============================================================== >> Create <<
+function CreateNote() {
+  //
+  // ---------------------------------------------------- >> SM <<
+  Layer5.classList.add("show");
+  // ---------------------------------------------------- >> SM <<
+  //
+  // --------------------------------------------------- >> div <<
+  const CreateNotePopup = document.createElement("div");
+  CreateNotePopup.classList.add("Column", "show");
+  //
+  // -------------------------------------------- > id <
+  CreateNotePopup.id = "CreateNotePopup";
+  // -------------------------------------------- > id <
+  //
+  // -------------------------------------------- > AC <
+  BG_5.appendChild(CreateNotePopup);
+  // -------------------------------------------- > AC <
+  //
+  // --------------------------------------------------- >> div <<
+  //
+  // -------------------------------------------------- >> Flex <<
+  const CreateNoteHeader = document.createElement("div");
+  CreateNoteHeader.classList.add("Flex");
+  //
+  // ------------------------------------------- > id <
+  CreateNoteHeader.id = "CreateNoteHeader";
+  // ------------------------------------------- > id <
+  //
+  // ------------------------------------------- > AC <
+  CreateNotePopup.appendChild(CreateNoteHeader);
+  // ------------------------------------------- > AC <
+  //
+  // ---------------------------------------- > Title <
+  //
+  // ---------------------------------- CB >>
+  const PopupTitle = BTN(
+    "PopupTitleText",
+    true,
+    "Create Note",
+    false,
+    "",
+    false,
+    () => {}
+  );
+  // ---------------------------------- CB <<
+  //
+  // ---------------------------------- AC >>
+  CreateNoteHeader.appendChild(PopupTitle.widget);
+  // ---------------------------------- AC <<
+  //
+  // ---------------------------------------- > Title <
+  //
+  // ------------------------------------------ > BTN <
+  //
+  // ------------------------------------ CB >>
+  const ColseBTN = BTN(
+    "ColsePopupBTN",
+    false,
+    "",
+    true,
+    "fa:close",
+    true,
+    ColseBTNListener
+  );
+  // ------------------------------------ CB <<
+  //
+  // ------------------------------------- L >>
+  function ColseBTNListener() {
+    //
+    Layer5.classList.remove("show");
+    //
+    setTimeout(() => {
+      BG_5.removeChild(CreateNotePopup);
+    }, 500);
+    //
+  }
+  // ------------------------------------- L <<
+  //
+  // ------------------------------------ AC >>
+  CreateNoteHeader.appendChild(ColseBTN.widget);
+  // ------------------------------------ AC <<
+  //
+  // ------------------------------------------ > BTN <
+  //
+  // -------------------------------------------------- >> Flex <<
+  //
+  // -------------------------------------------------- >> Body <<
+  const CreateNoteBody = document.createElement("div");
+  CreateNoteBody.classList.add("Column");
+  //
+  // ------------------------------------------- > id <
+  CreateNoteBody.id = "CreateNoteBody";
+  // ------------------------------------------- > id <
+  //
+  // ------------------------------------------- > AC <
+  CreateNotePopup.appendChild(CreateNoteBody);
+  // ------------------------------------------- > AC <
+  //
+  // --------------------------------------- > Field <
+  //
+  // ---------------------------------- V >>
+  const CreateNoteLabelID = "CreateNoteLabelFeild";
+  //
+  const CreateNoteLabelLabel = "Label";
+  //
+  const CreateNoteLabelFeildID = "CreateNoteLabelFeild";
+  //
+  const CreateNoteLabelInputPlaceholder = "enter your Label ...";
+  //
+  // ---------------------------------- V <<
+  //
+  // --------------------------------- CB >>
+  const CreateNoteLabel = Field(
+    CreateNoteLabelID,
+    true,
+    "ic:round-short-text",
+    CreateNoteLabelLabel,
+    false,
+    CreateNoteLabelFeildID,
+    "",
+    CreateNoteLabelInputPlaceholder,
+    1000
+  );
+  // --------------------------------- CB <<
+  //
+  // --------------------------------- id >>
+  CreateNoteLabel.labelIcon.id = "CreateNoteLabelFieldLabelIcon";
+  CreateNoteLabel.labelText.id = "CreateNoteLabelFieldLabelText";
+  CreateNoteLabel.field.id = "CreateNoteLabelField";
+  CreateNoteLabel.Input.id = "CreateNoteLabelFieldInput";
+  // --------------------------------- id <<
+  //
+  // --------------------------------- AC >>
+  CreateNoteBody.appendChild(CreateNoteLabel.widget);
+  // --------------------------------- AC <<
+  //
+  // --------------------------------------- > Field <
+  //
+  // ------------------------------------- > Divider <
+  const CreateNoteDivider1 = document.createElement("div");
+  CreateNoteDivider1.classList.add("CreateNoteDivider");
+  //
+  // ------------------------------- AC >>
+  CreateNoteBody.appendChild(CreateNoteDivider1);
+  // ------------------------------- AC <<
+  //
+  // ------------------------------------- > Divider <
+  //
+  // --------------------------------------- > Field <
+  //
+  // ---------------------------------- V >>
+  const CreateNoteTitleID = "CreateNoteTitleFeild";
+  //
+  const CreateNoteTitleLabel = "Title";
+  //
+  const CreateNoteTitleFeildID = "CreateNoteTitleFeild";
+  //
+  const CreateNoteTitleInputPlaceholder = "enter your title ...";
+  //
+  // ---------------------------------- V <<
+  //
+  // --------------------------------- CB >>
+  const CreateNoteTitle = Field(
+    CreateNoteTitleID,
+    true,
+    "ic:round-short-text",
+    CreateNoteTitleLabel,
+    false,
+    CreateNoteTitleFeildID,
+    "",
+    CreateNoteTitleInputPlaceholder,
+    1000
+  );
+  // --------------------------------- CB <<
+  //
+  // --------------------------------- id >>
+  CreateNoteTitle.labelIcon.id = "CreateNoteTitleFieldLabelIcon";
+  CreateNoteTitle.labelText.id = "CreateNoteTitleFieldLabelText";
+  CreateNoteTitle.field.id = "CreateNoteTitleField";
+  CreateNoteTitle.Input.id = "CreateNoteTitleFieldInput";
+  // --------------------------------- id <<
+  //
+  // --------------------------------- AC >>
+  CreateNoteBody.appendChild(CreateNoteTitle.widget);
+  // --------------------------------- AC <<
+  //
+  // --------------------------------------- > Field <
+  //
+  // ------------------------------------- > Divider <
+  const CreateNoteDivider2 = document.createElement("div");
+  CreateNoteDivider2.classList.add("CreateNoteDivider");
+  //
+  // ------------------------------- AC >>
+  CreateNoteBody.appendChild(CreateNoteDivider2);
+  // ------------------------------- AC <<
+  //
+  // ------------------------------------- > Divider <
+  //
+  // --------------------------------------- > Field <
+  //
+  // ---------------------------------- V >>
+  const CreateNoteDescriptionID = "CreateNoteDescriptionFeild";
+  //
+  const CreateNoteDescriptionLabel = "Description";
+  //
+  const CreateNoteDescriptionFeildID = "CreateNoteDescriptionFeild";
+  //
+  const CreateNoteDescriptionInputPlaceholder = "enter your description ...";
+  //
+  // ---------------------------------- V <<
+  //
+  // --------------------------------- CB >>
+  const CreateNoteDescription = Field(
+    CreateNoteDescriptionID,
+    true,
+    "fluent:text-description-32-filled",
+    CreateNoteDescriptionLabel,
+    true,
+    CreateNoteDescriptionFeildID,
+    "",
+    CreateNoteDescriptionInputPlaceholder,
+    10000
+  );
+  // --------------------------------- CB <<
+  //
+  // --------------------------------- id >>
+  CreateNoteDescription.labelIcon.id = "CreateNoteDescriptionFieldLabelIcon";
+  CreateNoteDescription.labelText.id = "CreateNoteDescriptionFieldLabelText";
+  CreateNoteDescription.field.id = "CreateNoteDescriptionField";
+  CreateNoteDescription.Input.id = "CreateNoteDescriptionFieldInput";
+  // --------------------------------- id <<
+  //
+  // --------------------------------- AC >>
+  CreateNoteBody.appendChild(CreateNoteDescription.widget);
+  // --------------------------------- AC <<
+  //
+  // --------------------------------------- > Field <
+  //
+  // -------------------------------------------------- >> Body <<
+  //
+  // --------------------------------------------------- >> BTN <<
+  //
+  // -------------------------------------------- > CB <
+  const SubmitBTN = BTN(
+    "GreenPopupBTN",
+    true,
+    "Submit",
+    true,
+    "line-md:check-all",
+    true,
+    SubmitBTNListener
+  );
+  // -------------------------------------------- > CB <
+  //
+  // --------------------------------------------- > L <
+  function SubmitBTNListener() {
+    //
+    // ------------------------------------- CB >>
+    let Validation = Validator(
+      CreateNoteLabel.Input,
+      CreateNoteTitle.Input,
+      CreateNoteDescription.Input
+    );
+    // ------------------------------------- CB <<
+    //
+    // ------------------------------------- 👎 >>
+    if (!Validation) {
+      //
+      // ------------------------------ CB >
+      NotificationCallBack(
+        "Enter valid inforamtion ¯_(ツ)_/¯",
+        "fa:close",
+        "red",
+        BG_7,
+        Layer7
+      );
+      // ------------------------------ CB <
+      //
+    }
+    // ------------------------------------- 👎 <<
+    //
+    // ------------------------------------- 👍 >>
+    else {
+      //
+      // ------------------------------ CB >
+      LoadingcallBack(BG_6, 1, Layer6);
+      // ------------------------------ CB <
+      //
+      // --------------------- Web Service >
+      PostTask(
+        CreateNoteLabel.Input.value,
+        CreateNoteTitle.Input.value,
+        CreateNoteDescription.Input.value
+      );
+      // --------------------- Web Service <
+      //
+    }
+    // ------------------------------------- 👍 <<
+    //
+  }
+  // --------------------------------------------- > L <
+  //
+  // -------------------------------------------- > AC <
+  CreateNotePopup.appendChild(SubmitBTN.widget);
+  // -------------------------------------------- > AC <
+  //
+  // --------------------------------------------------- >> BTN <<
+  //
+}
+// =============================================================== >> Create <<
 //
+// ============================================================ >> Validator <<
+function Validator(LabelInput, TitleInput, DescriptionInput) {
+  //
+  // -------------------------------------------------- >> V <<
+  let LabelValue = LabelInput.value.trim();
+  let TitleValue = TitleInput.value.trim();
+  let DescriptionValue = DescriptionInput.value;
+  // -------------------------------------------------- >> V <<
+  //
+  // --------------------------------------------- >> RegExp <<
+  const regex = /^(?!\s*$)[\s\S]+$/;
+  // --------------------------------------------- >> RegExp <<
+  //
+  // ----------------------------------------- >> Validation <<
+  let LabelValid = regex.test(LabelValue);
+  let TitleValid = regex.test(TitleValue);
+  let DescriptionValid = regex.test(DescriptionValue);
+  // ----------------------------------------- >> Validation <<
+  //
+  // --------------------------------------------- >> return <<
+  return LabelValid && TitleValid && DescriptionValid;
+  // --------------------------------------------- >> return <<
+  //
+}
+// ============================================================ >> Validator <<
+//
+// ================================================================= >> POST <<
+function PostTask(labelValue, titleValue, descriptionValue) {
+  //
+  // ----------------------------------------------------- >> API <<
+  const Api = `https://personnel.samami.co/note/create`;
+  // ----------------------------------------------------- >> API <<
+  //
+  // ---------------------------------------------------- >> DATA <<
+  let Data = {
+    label: labelValue,
+    title: titleValue,
+    description: descriptionValue,
+  };
+  // ---------------------------------------------------- >> DATA <<
+  //
+  // ---------------------------------------------------- >> POST <<
+  POST(Api, Data)
+    .then((response) => {
+      //
+      // ---------------------------------------- > 👍 <
+      if (response.status == 200) {
+        //
+        // -------------------------------- CB >>
+        LoadingcallBack(BG_6, 2, Layer6);
+        //
+        NotificationCallBack(
+          "Note created successfully 👍",
+          "ph:check-fat-fill",
+          "green",
+          BG_7,
+          Layer7
+        );
+        // -------------------------------- CB <<
+        //
+        // -------------------------------- SM >>
+        //
+        setTimeout(() => {
+          Layer5.classList.remove("show");
+        }, 500);
+        //
+        setTimeout(() => {
+          BG_5.innerHTML = "";
+        }, 1000);
+        //
+        setTimeout(() => {
+          //
+          LoadingcallBack(BG_6, 1, Layer6);
+          //
+          const DataContainer = document.querySelector(".DataContainer");
+          DataContainer.classList.remove("show");
+          setTimeout(() => {
+            const NotesSection = document.getElementById("NotesSection");
+            NotesSection.removeChild(DataContainer);
+          }, 500);
+          //
+        }, 1500);
+        //
+        setTimeout(() => {
+          List(false);
+        }, 2500);
+        //
+        // -------------------------------- SM <<
+        //
+      }
+      // ---------------------------------------- > 👍 <
+      //
+      // ---------------------------------------- > 👎 <
+      else {
+        //
+        // -------------------------------- CB >>
+        LoadingcallBack(BG_6, 2, Layer6);
+        //
+        NotificationCallBack(
+          "Request faild 👎",
+          "fa:close",
+          "red",
+          BG_7,
+          Layer7
+        );
+        // -------------------------------- CB <<
+        //
+      }
+      // ---------------------------------------- > 👎 <
+      //
+    })
+    //
+    // ------------------------------------------ > 👎 <
+    .catch((error) => {
+      //
+      console.log(error);
+      //
+      // ---------------------------------- CB >>
+      LoadingcallBack(BG_6, 2, Layer6);
+      //
+      NotificationCallBack("Request faild 👎", "fa:close", "red", BG_7, Layer7);
+      // ---------------------------------- CB <<
+      //
+    });
+  // --------------------------------------------- > 👎 <
+  //
+  // ---------------------------------------------------- >> POST <<
+}
+// ================================================================= >> POST <<
+//
+// ========================================================== >> Delete Note <<
+function DeleteNotePopup(NoteTitle, Noteid) {
+  //
+  // ----------------------------------------------- >> SM <<
+  Layer5.classList.add("show");
+  // ----------------------------------------------- >> SM <<
+  //
+  // ---------------------------------------------- >> div <<
+  const Column = document.createElement("div");
+  Column.classList.add("Column");
+  //
+  // --------------------------------------- > id <
+  Column.id = "DeleteNotePopup";
+  // --------------------------------------- > id <
+  //
+  // --------------------------------------- > AC <
+  BG_5.appendChild(Column);
+  // --------------------------------------- > AC <
+  //
+  // ---------------------------------------------- >> div <<
+  //
+  // --------------------------------------------- >> Flex <<
+  const Flex = document.createElement("div");
+  Flex.classList.add("Flex");
+  //
+  // -------------------------------------- > id <
+  Flex.id = "DeleteNoteHeader";
+  // -------------------------------------- > id <
+  //
+  // -------------------------------------- > AC <
+  Column.appendChild(Flex);
+  // -------------------------------------- > AC <
+  //
+  // --------------------------------------------- >> Flex <<
+  //
+  // -------------------------------------------- >> Title <<
+  //
+  // --------------------------------------- > CB <
+  const Title = BTN(
+    "PopupTitleText",
+    true,
+    "Delete Note",
+    true,
+    "icon-park-solid:delete-four",
+    false,
+    () => {}
+  );
+  // ------------------------------------- > CB <
+  //
+  // ------------------------------------- > AC <
+  Flex.appendChild(Title.widget);
+  // ------------------------------------- > AC <
+  //
+  // -------------------------------------------- >> Title <<
+  //
+  // ---------------------------------------------- >> BTN <<
+  //
+  // --------------------------------------- > CB <
+  const ColseBTN = BTN(
+    "ColsePopupBTN",
+    false,
+    "",
+    true,
+    "fa:close",
+    true,
+    ColseBTNListener
+  );
+  // --------------------------------------- > CB <
+  //
+  // ---------------------------------------- > L <
+  function ColseBTNListener() {
+    //
+    Layer5.classList.remove("show");
+    //
+    setTimeout(() => {
+      BG_5.removeChild(Column);
+    }, 500);
+    //
+  }
+  // ---------------------------------------- > L <
+  //
+  // --------------------------------------- > AC <
+  Flex.appendChild(ColseBTN.widget);
+  // --------------------------------------- > AC <
+  //
+  // ---------------------------------------------- >> BTN <<
+  //
+  // --------------------------------------------- >> Body <<
+  const DeleteNoteBody = document.createElement("div");
+  DeleteNoteBody.classList.add("Column");
+  //
+  // -------------------------------------- > id <
+  DeleteNoteBody.id = "DeleteNoteBody";
+  // -------------------------------------- > id <
+  //
+  // -------------------------------------- > AC <
+  Column.appendChild(DeleteNoteBody);
+  // -------------------------------------- > AC <
+  //
+  // ------------------------------------ > span <
+  const DeleteUserText = document.createElement("span");
+  DeleteUserText.classList.add("DeleteUserText");
+  //
+  // ------------------------------ id >>
+  DeleteUserText.textContent = `Are you sure you want to delete " ${NoteTitle} " Note?`;
+  // ------------------------------ id <<
+  //
+  // ------------------------------ AC >>
+  DeleteNoteBody.appendChild(DeleteUserText);
+  // ------------------------------ AC <<
+  //
+  // ------------------------------------ > span <
+  //
+  // --------------------------------------------- >> Body <<
+  //
+  // ---------------------------------------------- >> BTN <<
+  //
+  // --------------------------------------- > CB <
+  const SubmitBTN = BTN(
+    "RedPopupBTN",
+    true,
+    "Delete",
+    true,
+    "mdi:delete-empty",
+    true,
+    SubmitBTNListener
+  );
+  // --------------------------------------- > CB <
+  //
+  // ---------------------------------------- > L <
+  function SubmitBTNListener() {
+    //
+    // ----------------------- Add Loading >>
+    LoadingcallBack(BG_6, 1, Layer6);
+    // ----------------------- Add Loading <<
+    //
+    // ------------------------------- API >>
+    let Api = `https://personnel.samami.co/note/delete?note_id=${Noteid}`;
+    // ------------------------------- API <<
+    //
+    // ------------------------------- GET >>
+    DELETE(Api)
+      .then((response) => {
+        //
+        // --------------------- 200 >
+        if (response.status == 200) {
+          //
+          // ------------------------- >> remove loading <<
+          LoadingcallBack(BG_6, 2, Layer6);
+          // ------------------------- >> remove loading <<
+          //
+          // ------------------------- >> Notif <<
+          NotificationCallBack(
+            "Note deleted successfully 👍",
+            "ph:check-fat-fill",
+            "green",
+            BG_7,
+            Layer7
+          );
+          // ------------------------- >> Notif <<
+          //
+          // ------------------------- >> SM <<
+          //
+          setTimeout(() => {
+            Layer5.classList.remove("show");
+          }, 500);
+          //
+          setTimeout(() => {
+            BG_5.removeChild(Column);
+          }, 1000);
+          //
+          setTimeout(() => {
+            //
+            LoadingcallBack(BG_6, 1, Layer6);
+            //
+            const DataContainer = document.querySelector(".DataContainer");
+            DataContainer.classList.remove("show");
+            setTimeout(() => {
+              const NotesSection = document.getElementById("NotesSection");
+              NotesSection.removeChild(DataContainer);
+            }, 500);
+            //
+          }, 1500);
+          //
+          setTimeout(() => {
+            List(false);
+          }, 2500);
+          //
+          // ------------------------- >> SM <<
+          //
+        }
+        // --------------------- 200 <
+        //
+        // ------------------- error >
+        else {
+          //
+          // ------------------------- >> remove loading <<
+          LoadingcallBack(BG_6, 2, Layer6);
+          // ------------------------- >> remove loading <<
+          //
+          // ------------------------- >> Notif <<
+          NotificationCallBack(
+            "request faild 👎",
+            "fa:close",
+            "red",
+            BG_7,
+            Layer7
+          );
+          // ------------------------- >> Notif <<
+          //
+        }
+        // ------------------- error <
+        //
+      })
+      // --------------------- catch >
+      .catch((error) => {
+        //
+        // --------------------------- >> remove loading <<
+        LoadingcallBack(BG_6, 2, Layer6);
+        // --------------------------- >> remove loading <<
+        //
+        // --------------------------- >> Notif <<
+        NotificationCallBack(
+          "request faild 👎",
+          "fa:close",
+          "red",
+          BG_7,
+          Layer7
+        );
+        // --------------------------- >> Notif <<
+        //
+      });
+    // ----------------------- catch <
+    //
+    // ------------------------------- GET <<
+    //
+  }
+  // ---------------------------------------- > L <
+  //
+  // --------------------------------------- > AC <
+  Column.appendChild(SubmitBTN.widget);
+  // --------------------------------------- > AC <
+  //
+  // ---------------------------------------------- >> BTN <<
+  //
+}
+// ========================================================== >> Delete Note <<

@@ -31,6 +31,7 @@ export function Sidebar(
   OptionTexts,
   OptionListeners,
   UserInfo,
+  UserListener,
   ExitListener
 ) {
   //
@@ -78,8 +79,8 @@ export function Sidebar(
     //
     // -------------------------------------- > CB <
     const SidebarOption = SidebarOptionWidget(
-      () => {
-        OptionListeners(index, SidebarOption);
+      (event) => {
+        OptionListeners(event,index, SidebarOption);
       },
       OptionIcons[index],
       OptionTexts[index]
@@ -110,6 +111,12 @@ export function Sidebar(
   // ------------------------------------------- > AC <
   Sidebar.appendChild(SidebarUserInfo);
   // ------------------------------------------- > AC <
+  //
+  // -------------------------------------------- > L <
+  SidebarUserInfo.addEventListener("click", () => {
+    UserListener();
+  });
+  // -------------------------------------------- > L <
   //
   // --------------------------------------- > Avatar <
   const SidebarUserAvatar = document.createElement("img");
@@ -177,7 +184,9 @@ export function Sidebar(
   // -------------------------------------------- > V <
   //
   // ------------------------------------------- > CB <
-  const ExitBTN = SidebarOptionWidget(exitListener, ExitIcon, ExitText);
+  const ExitBTN = SidebarOptionWidget((event => {
+    exitListener(event);
+  }), ExitIcon, ExitText);
   // ------------------------------------------- > CB <
   //
   // -------------------------------------------- > L <
@@ -208,8 +217,8 @@ function SidebarOptionWidget(Listener, Icon, Text) {
   // ------------------------------------------ >> div <<
   //
   // -------------------------------------------- >> L <<
-  SidebarOption.addEventListener("click", () => {
-    Listener();
+  SidebarOption.addEventListener("click", (event) => {
+    Listener(event);
   });
   // -------------------------------------------- >> L <<
   //
@@ -348,7 +357,14 @@ export function Operator(listener) {
   // ------------------------------------------------ >> Icon <<
   //
   // ---------------------------------------------- >> return <<
-  return SidebarOperator;
+  return {
+    widget: SidebarOperator,
+    text: SidebarOperatorText,
+    Icon: SidebarOperatorIcon,
+    line1: SidebarOperatorIconLine1,
+    line2: SidebarOperatorIconLine2,
+    line3: SidebarOperatorIconLine3,
+  };
   // ---------------------------------------------- >> return <<
   //
 }

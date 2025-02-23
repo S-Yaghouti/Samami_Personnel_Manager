@@ -115,6 +115,7 @@ export function Field(
     //
     // ------------------- Attribute >>
     TextArea.setAttribute("placeholder", Placeholder);
+    TextArea.style.resize = "none";
     //
     if (IsFullField) {
       TextArea.setAttribute("id", FieldID);
@@ -171,8 +172,10 @@ export function Field(
     if (TextArea) {
       return {
         widget: FieldContainer,
-        Input: TextArea,
+        labelIcon: FieldHeaderIcon,
+        labelText: FieldLabel,
         field: Field,
+        Input: TextArea,
       };
     }
     // -------------- TextArea <<

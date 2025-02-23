@@ -664,7 +664,7 @@ function Validator(Field, State) {
   // ------------------------------------------------ >> Patterns <<
   const phoneRegex = /^[0-9]{11}$/;
   const numberRegex = /^[0-9]{4}$/;
-  const englishWordsRegex = /^[A-Za-z]+$/;
+  const NameRegExp = /^[A-Za-z0-9\s!@#$%^&*(),.?":{}|<>-]+$/;
   // ------------------------------------------------ >> Patterns <<
   //
   // -------------------------------------------------- >> switch <<
@@ -698,7 +698,7 @@ function Validator(Field, State) {
     case 3:
       //
       // Validation >
-      IsValid = englishWordsRegex.test(fieldinput);
+      IsValid = NameRegExp.test(fieldinput);
       // Validation <
       //
       break;
@@ -871,6 +871,7 @@ function WebSerive(Status, Input, Field, BTN, Column) {
   //
   // ------------------------------------------ > OTP <
   else if (Status == 2) {
+    console.log(Data);
     //
     POST(URL, Data)
       .then((response) => {

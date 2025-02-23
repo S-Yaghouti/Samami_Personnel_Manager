@@ -33,6 +33,10 @@ import { DataBuilder } from "./../../modules/Data_Builder/Data_Builder.js";
 import { BTN } from "./../../modules/Widgets/BTN/BTN.js";
 // ------------------------------------------- >> Data Builder <<
 //
+// ------------------------------------------- >>  <<
+import { RequestResult } from "../../modules/Data_Builder/request_result.js";
+// ------------------------------------------- >>  <<
+//
 // ============================================================== >> Imports <<
 //
 // ========================================================== >> Definitions <<
@@ -101,9 +105,6 @@ export function UsersSection() {
   List(true);
   // -------------------------------------------------- >> List <<
   //
-  // ------------------------------------------------ >> Return <<
-  return UsersSection;
-  // ------------------------------------------------ >> Return <<
 }
 // =============================================================== >> Module <<
 //
@@ -113,12 +114,14 @@ function Filter(father) {
   // --------------------------------------------------- >> div <<
   const Flex = document.createElement("div");
   Flex.classList.add("Flex");
+  //
   // -------------------------------------------- > id <
-  Flex.id = "FilterFlex";
+  Flex.id = "UsersFiltersFlex";
   // -------------------------------------------- > id <
   //
   // -------------------------------------------- > AC <
   father.appendChild(Flex);
+
   // -------------------------------------------- > AC <
   //
   // --------------------------------------------------- >> div <<
@@ -237,15 +240,20 @@ function List(Build) {
     // ----------------------- > Remove Loading <
     //
     // ----------------------------------- > SM <
-    const FilterFlex = document.getElementById("FilterFlex");
-    FilterFlex.classList.add("show");
+    const FiltersFlex = document.getElementById("UsersFiltersFlex");
+    FiltersFlex.classList.add("show");
     setTimeout(() => {
       Users.widget.classList.add("show");
     }, 250);
+    //
+    if (response.data.data.length < 3) {
+      Users.widget.classList.add("big");
+      Users.List.classList.add("big");
+    }
     // ----------------------------------- > SM <
     //
     // ----------------------------------- > RM <
-    RM(response.data.data, List);
+    RM(response, Users.widget, List);
     // ----------------------------------- > RM <
     //
   }
@@ -267,19 +275,98 @@ function List(Build) {
   // ----------------------------------------------- >> return <<
   return Users.widget;
   // ----------------------------------------------- >> return <<
+  //
 }
 // ============================================================== >> Builder <<
 //
 // =================================================================== >> RM <<
-function RM(response, father) {
+function RM(response, Father, List) {
   //
-  response.forEach((info) => {
+  // --------------------------------------------------------- >> V <<
+  const length = response.data.data.length;
+  // --------------------------------------------------------- >> V <<
+  //
+  // -------------------------------------------------------- >> 👍 <<
+  if (response.status == 200 && length !== 0) {
     //
-    const UserWidget = UserBox(info);
+    response.data.data.forEach((info) => {
+      //
+      const UserWidget = UserBox(info);
+      //
+      List.appendChild(UserWidget);
+      //
+    });
     //
-    father.appendChild(UserWidget);
+  }
+  // -------------------------------------------------------- >> 👍 <<
+  //
+  // ----------------------------------------------------- >> Empty <<
+  else if (response.status == 200 && length == 0) {
     //
-  });
+    // -------------- >> SM
+    List.innerHTML = "";
+    setTimeout(() => {
+      Father.classList.add("show");
+      Father.classList.add("big");
+      List.classList.add("big");
+    }, 100);
+    //
+    Father.classList.add("big");
+    Father.id = "";
+    // -------------- << SM
+    //
+    // -------------- >> CB
+    //
+    // ----------------- > V <
+    const SVG_URL = "./../assets/svg/Empty_Response.svg";
+    // ----------------- > V <
+    //
+    // ----------------- > Widget <
+    const Widget = RequestResult(SVG_URL, "Empty Response");
+    // ----------------- > Widget <
+    //
+    // ----------------- > AC <
+    List.appendChild(Widget);
+    // ----------------- > AC <
+    //
+    // -------------- << CB
+    //
+  }
+  // ----------------------------------------------------- >> Empty <<
+  //
+  // -------------------------------------------------------- >> 👎 <<
+  else if (response.status !== 200) {
+    //
+    // --------------- >> SM
+    List.innerHTML = "";
+    setTimeout(() => {
+      Father.classList.add("show");
+      Father.classList.add("big");
+      List.classList.add("big");
+    }, 100);
+    //
+    Father.classList.add("big");
+    Father.id = "";
+    // --------------- << SM
+    //
+    // --------------- >> CB
+    //
+    // ------------------ > V <
+    const SVG_URL = "./../../assets/svg/Error_Response.svg";
+    // ------------------ > V <
+    //
+    // ------------------ > Widget <
+    const Widget = RequestResult(SVG_URL, "Faild request 👎");
+    // ------------------ > Widget <
+    //
+    // ------------------ > AC <
+    List.appendChild(Widget);
+    // ------------------ > AC <
+    //
+    // --------------- << CB
+    //
+  }
+  // -------------------------------------------------------- >> 👎 <<
   //
 }
 // =================================================================== >> RM <<
@@ -393,6 +480,16 @@ function UserBox(response) {
   // ------------------------------------- > span <
   //
   // ---------------------------------------------- >> Column <<
+  //
+  // --------------------------------------------- >> Divider <<
+  const UserDivider = document.createElement("div");
+  UserDivider.classList.add("UserDivider");
+  //
+  // -------------------------------------- > AC <
+  UserBox.appendChild(UserDivider);
+  // -------------------------------------- > AC <
+  //
+  // --------------------------------------------- >> Divider <<
   //
   // ------------------------------------------------ >> Flex <<
   const SecondFlex = document.createElement("div");
@@ -629,7 +726,7 @@ export function EditUser(layer, father, response, editable) {
     //
     // --------------------------- > Web Service <
     if (file) {
-      PostAvatar(file, response.id, EditUserAvatar);
+      PostAvatar(file, response.id, EditUserAvatar, editable);
     }
     // --------------------------- > Web Service <
     //
@@ -764,7 +861,7 @@ export function EditUser(layer, father, response, editable) {
   //
   // ---------------------------- > Accessibility <
   if (editable == false) {
-    PhoneNumber.widget.pointerEvents = "none";
+    PhoneNumber.widget.style.pointerEvents = "none";
   }
   // ---------------------------- > Accessibility <
   //
@@ -804,6 +901,13 @@ export function EditUser(layer, father, response, editable) {
   );
   // ------------------------------------ CB <<
   //
+  // ------------------------- Accessibility >>
+  if (editable == false) {
+    DD.widget.style.pointerEvents = "none";
+    DD.icon.style.display = "none";
+  }
+  // ------------------------- Accessibility <<
+  //
   // ------------------------------------ CB <<
   DD.title.textContent = response.user_type;
   // ------------------------------------ CB <<
@@ -817,7 +921,7 @@ export function EditUser(layer, father, response, editable) {
   // ------------------------------------------------ >> BTN <<
   //
   // ------------------------------------------ > V <
-  const SubmitBTNId = "SubmitPopupBTN";
+  const SubmitBTNId = "GreenPopupBTN";
   const SubmitBtnText = "Submit";
   const SubmitBtnIcon = "line-md:check-all";
   // ------------------------------------------ > V <
@@ -848,7 +952,7 @@ export function EditUser(layer, father, response, editable) {
     // ----------------------------------- V <<
     //
     // ---------------------------------- CB >>
-    PutData(Name, Number, UserType, response.id);
+    PutData(Name, Number, UserType, response.id, editable);
     // ---------------------------------- CB <<
     //
   }
@@ -864,7 +968,7 @@ export function EditUser(layer, father, response, editable) {
 // ============================================================ >> Edit User <<
 //
 // ========================================================== >> Post Avatar <<
-function PostAvatar(image, id, widget) {
+function PostAvatar(image, id, widget, IsAdmin) {
   //
   // ------------------------------------------- > FormData <
   const formData = new FormData();
@@ -884,6 +988,7 @@ function PostAvatar(image, id, widget) {
   // --------------------------------------- POST >>
   PostImage(Api, formData)
     .then((response) => {
+      console.log(response);
       //
       // ----------------------------- 200 >
       if (response.status == 200) {
@@ -903,13 +1008,26 @@ function PostAvatar(image, id, widget) {
         // ------------------------------- > CB <
         //
         // ------------------------------- > SM <
-        const SelectedUserImageWidget = document.getElementById(`${id}`);
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          SelectedUserImageWidget.children[0].children[0].src = e.target.result;
-          widget.src = e.target.result;
-        };
-        reader.readAsDataURL(image);
+        if (IsAdmin == true) {
+          const SelectedUserImageWidget = document.getElementById(`${id}`);
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            SelectedUserImageWidget.children[0].children[0].src =
+              e.target.result;
+            widget.src = e.target.result;
+          };
+          reader.readAsDataURL(image);
+        } else {
+          const EditUserAvatar = document.querySelector(".EditUserAvatar");
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            EditUserAvatar.src = e.target.result;
+          };
+          reader.readAsDataURL(image);
+          setTimeout(() => {
+            location.reload();
+          }, 2500);
+        }
         // ------------------------------- > SM <
         //
       }
@@ -955,15 +1073,13 @@ function PostAvatar(image, id, widget) {
 // ========================================================== >> Post Avatar <<
 //
 // ============================================================ >> Post Data <<
-function PutData(nameinput, numberinput, type, id) {
+function PutData(nameinput, numberinput, type, id, IsAdmin) {
   //
   // ----------------------------------------- >> Validation <<
   //
   // ----------------------------------- > V <
   let Name = nameinput.value;
   let Number = numberinput.value;
-  console.log(Name);
-  console.log(Number);
   // ----------------------------------- > V <
   //
   // ---------------------------------- > CB <
@@ -1007,6 +1123,7 @@ function PutData(nameinput, numberinput, type, id) {
     // ----------------- PUT >>
     PUT(URL, Data)
       .then((response) => {
+        console.log(response);
         //
         // -------------------- > 200 <
         if (response.status == 200) {
@@ -1025,20 +1142,30 @@ function PutData(nameinput, numberinput, type, id) {
           );
           // -------------------------- >> Notif <<
           //
-          // -------------------------- >> V <<
-          const EditedUserBox = document.getElementById(id);
-          const Username =
-            EditedUserBox.children[0].children[1].children[0].children[0];
-          const Usertype =
-            EditedUserBox.children[0].children[1].children[0].children[2];
-          const Usernumber = EditedUserBox.children[0].children[1].children[1];
-          // -------------------------- >> V <<
+          if (IsAdmin == true) {
+            // ------------------------ >> V <<
+            const EditedUserBox = document.getElementById(id);
+            const Username =
+              EditedUserBox.children[0].children[1].children[0].children[0];
+            const Usertype =
+              EditedUserBox.children[0].children[1].children[0].children[2];
+            const Usernumber =
+              EditedUserBox.children[0].children[1].children[1];
+            // ------------------------ >> V <<
+            //
+            // ------------------------ >> SM <<
+            Username.textContent = Name;
+            Usertype.textContent = type;
+            Usernumber.textContent = Number;
+            // ------------------------ >> SM <<
+            //
+          }
           //
-          // -------------------------- >> SM <<
-          Username.textContent = Name;
-          Usertype.textContent = type;
-          Usernumber.textContent = Number;
-          // -------------------------- >> SM <<
+          else {
+            setTimeout(() => {
+              location.reload();
+            }, 2500);
+          }
           //
         }
         // -------------------- > 200 <
@@ -1098,7 +1225,7 @@ function PutData(nameinput, numberinput, type, id) {
 function Validator(name, number, type) {
   //
   // --------------------------------------------- >> RegExp <<
-  const NameRegExp = /^[A-Za-z0-9 ]+$/;
+  const NameRegExp = /^[A-Za-z0-9\s!@#$%^&*(),.?":{}|<>-]+$/;
   const NumberRegExp = /^\d{11}$/;
   const TypeRegExp = /^(user|admin)$/;
   // --------------------------------------------- >> RegExp <<
@@ -1235,7 +1362,7 @@ function DeleteUser(layer, father, username, id) {
   //
   // --------------------------------------- > CB <
   const SubmitBTN = BTN(
-    "DeletePopupBTN",
+    "RedPopupBTN",
     true,
     "Delete",
     true,

@@ -165,8 +165,8 @@ function Auth() {
           // ------------------------ >> Content Manager
           setTimeout(() => {
             const SidebarOptions = document.querySelectorAll(".SidebarOption");
-            SidebarOptions[1].classList.add("active");
-            ContentManager(SidebarOptions[1].children[0].textContent);
+            SidebarOptions[2].classList.add("active");
+            ContentManager(SidebarOptions[2].children[0].textContent);
           }, 500);
           // ------------------------ << Content Manager
           //
@@ -196,6 +196,7 @@ function Auth() {
         LoadingcallBack(BG_6, 2, Layer6);
         // ------------------------ < Loading
         //
+        console.log(error);
         // ------------------------ > Reload
         setTimeout(() => {
           window.location.reload();
@@ -373,7 +374,7 @@ function AC_Sidebar(response) {
   //
   // ------------------------------------------ > L <
   function SidebarOptionListener(event, index, Widget) {
-    // 
+    //
     event.stopPropagation();
     //
     // ----------------------------------- V >>
@@ -427,7 +428,7 @@ Layer3.addEventListener("click", () => {
   Operatorline3.classList.remove("change");
 });
 // ---------------------------------------------------- >> Close SM <<
-// 
+//
 // =================================================================== >> Layer 4 <<
 //
 // =================================================================== >> Layer 5 <<
@@ -500,7 +501,7 @@ function ExitPopup() {
     false,
     "",
     false,
-    () => { }
+    () => {}
   );
   // ------------------------------------ CB <<
   //

@@ -28,6 +28,10 @@ import { DELETE, GET, POST } from "../../modules/Web_Service/web_service.js";
 import { NotificationCallBack } from "./../../modules/Widgets/Notification/notification_box.js";
 // ------------------------------------------- >> Notification <<
 //
+// ---------------------------------------------- >> Chat Rome <<
+import { ChatRome } from "../../modules/Chat_Rome/Chat_Rome.js";
+// ---------------------------------------------- >> Chat Rome <<
+//
 // ============================================================== >> Imports <<
 //
 // ========================================================== >> Definitions <<
@@ -119,7 +123,7 @@ function Filter(father) {
   // ----------------------------------- > Varibels <
   const SearchFeildInputID = "SearchInput";
   const Icon = "mdi:text-box-search";
-  const Placeholder = " Search for notes ...";
+  const Placeholder = " Search ...";
   // ----------------------------------- > Varibels <
   //
   // ----------------------------------- > CallBack <
@@ -132,7 +136,7 @@ function Filter(father) {
     SearchFeildInputID,
     Icon,
     Placeholder,
-    20
+    2000
   );
   // ----------------------------------- > CallBack <
   //
@@ -173,6 +177,22 @@ function Filter(father) {
       // --------------------------- List CB <<
       //
     }
+  });
+  // ------------------------------------------ > L <
+  //
+  // ------------------------------------------ > L <
+  SearchField.Input.addEventListener("input", function () {
+    //
+    // -------------------------------- Align >
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(SearchField.Input.value)) {
+      SearchField.Input.style.textAlign = "end";
+      SearchField.Input.placeholder = " ... جستو جو ";
+    } else if (/^[A-Za-z\s]+$/.test(SearchField.Input.value)) {
+      SearchField.Input.style.textAlign = "start";
+      SearchField.Input.placeholder = " Search ...";
+    }
+    // -------------------------------- Align <
+    //
   });
   // ------------------------------------------ > L <
   //
@@ -227,7 +247,7 @@ function List(Build) {
   // ---------------------------------------------------- >> V <<
   const Id = "Notes";
   const URL = `https://personnel.samami.co/note/get`;
-  const limit = 21;
+  const limit = 10;
   // ---------------------------------------------------- >> V <<
   //
   // --------------------------------------------------- >> CB <<
@@ -450,6 +470,14 @@ function NoteBox(response) {
   NoteTitle.textContent = response.title;
   // ------------------------------ value <<
   //
+  // ------------------------------ Align >>
+  if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(NoteTitle.textContent)) {
+    NoteTitle.style.textAlign = "end";
+  } else if (/^[A-Za-z\s]+$/.test(NoteTitle.textContent)) {
+    NoteTitle.style.textAlign = "start";
+  }
+  // ------------------------------ Align <<
+  //
   // --------------------------------- AC >>
   NoteBoxBody.appendChild(NoteTitle);
   // --------------------------------- AC <<
@@ -473,6 +501,14 @@ function NoteBox(response) {
   // ------------------------------ value >>
   NoteDescription.textContent = response.description;
   // ------------------------------ value <<
+  //
+  // ------------------------------ Align >>
+  if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(NoteDescription.textContent)) {
+    NoteDescription.style.textAlign = "end";
+  } else if (/^[A-Za-z\s]+$/.test(NoteDescription.textContent)) {
+    NoteDescription.style.textAlign = "start";
+  }
+  // ------------------------------ Align <<
   //
   // --------------------------------- AC >>
   NoteBoxBody.appendChild(NoteDescription);
@@ -535,7 +571,11 @@ function NoteBox(response) {
   // -------------------------------- CB <<
   //
   // --------------------------------- L >>
-  function NoteChatsBTNListener() {}
+  function NoteChatsBTNListener() {
+    // -------------------------- CB >
+    ChatRome(response.chat_room_id);
+    // -------------------------- CB <
+  }
   // --------------------------------- L <<
   //
   // -------------------------------- AC >>
@@ -571,7 +611,9 @@ function NoteBox(response) {
   // --------------------------------- L <<
   //
   // -------------------------------- AC >>
-  NoteButtonsFlex.appendChild(NoteDeleteBTN.widget);
+  if (response.owner_access == true) {
+    NoteButtonsFlex.appendChild(NoteDeleteBTN.widget);
+  }
   // -------------------------------- AC <<
   //
   // -------------------------------------- > Delete <
@@ -709,6 +751,7 @@ function CreateNote() {
     CreateNoteLabelInputPlaceholder,
     1000
   );
+  CreateNoteLabel.fieldIcon.style.display = "none";
   // --------------------------------- CB <<
   //
   // --------------------------------- id >>
@@ -717,6 +760,22 @@ function CreateNote() {
   CreateNoteLabel.field.id = "CreateNoteLabelField";
   CreateNoteLabel.Input.id = "CreateNoteLabelFieldInput";
   // --------------------------------- id <<
+  //
+  // ---------------------------------- L >>
+  CreateNoteLabel.Input.addEventListener("input", function () {
+    //
+    // ------------------------ Align >
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(CreateNoteLabel.Input.value)) {
+      CreateNoteLabel.Input.style.textAlign = "end";
+      CreateNoteLabel.Input.placeholder = " ... برجسب یادداشت را وارد کنید ";
+    } else if (/^[A-Za-z\s]+$/.test(CreateNoteLabel.Input.value)) {
+      CreateNoteLabel.Input.style.textAlign = "start";
+      CreateNoteLabel.Input.placeholder = "enter your Label ...";
+    }
+    // ------------------------ Align <
+    //
+  });
+  // ---------------------------------- L <<
   //
   // --------------------------------- AC >>
   CreateNoteBody.appendChild(CreateNoteLabel.widget);
@@ -743,7 +802,7 @@ function CreateNote() {
   //
   const CreateNoteTitleFeildID = "CreateNoteTitleFeild";
   //
-  const CreateNoteTitleInputPlaceholder = "enter your title ...";
+  const CreateNoteTitleInputPlaceholder = " enter your title ...";
   //
   // ---------------------------------- V <<
   //
@@ -759,6 +818,7 @@ function CreateNote() {
     CreateNoteTitleInputPlaceholder,
     1000
   );
+  CreateNoteTitle.fieldIcon.style.display = "none";
   // --------------------------------- CB <<
   //
   // --------------------------------- id >>
@@ -767,6 +827,22 @@ function CreateNote() {
   CreateNoteTitle.field.id = "CreateNoteTitleField";
   CreateNoteTitle.Input.id = "CreateNoteTitleFieldInput";
   // --------------------------------- id <<
+  //
+  // ---------------------------------- L >>
+  CreateNoteTitle.Input.addEventListener("input", function () {
+    //
+    // ------------------------ Align >
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(CreateNoteTitle.Input.value)) {
+      CreateNoteTitle.Input.style.textAlign = "end";
+      CreateNoteTitle.Input.placeholder = " ... عنوان یادداشت را وارد کنید ";
+    } else if (/^[A-Za-z\s]+$/.test(CreateNoteTitle.Input.value)) {
+      CreateNoteTitle.Input.style.textAlign = "start";
+      CreateNoteTitle.Input.placeholder = " enter your title ...";
+    }
+    // ------------------------ Align <
+    //
+  });
+  // ---------------------------------- L <<
   //
   // --------------------------------- AC >>
   CreateNoteBody.appendChild(CreateNoteTitle.widget);
@@ -793,7 +869,7 @@ function CreateNote() {
   //
   const CreateNoteDescriptionFeildID = "CreateNoteDescriptionFeild";
   //
-  const CreateNoteDescriptionInputPlaceholder = "enter your description ...";
+  const CreateNoteDescriptionInputPlaceholder = " enter your description ...";
   //
   // ---------------------------------- V <<
   //
@@ -809,6 +885,7 @@ function CreateNote() {
     CreateNoteDescriptionInputPlaceholder,
     10000
   );
+
   // --------------------------------- CB <<
   //
   // --------------------------------- id >>
@@ -817,6 +894,25 @@ function CreateNote() {
   CreateNoteDescription.field.id = "CreateNoteDescriptionField";
   CreateNoteDescription.Input.id = "CreateNoteDescriptionFieldInput";
   // --------------------------------- id <<
+  //
+  // ---------------------------------- L >>
+  CreateNoteDescription.Input.addEventListener("input", function () {
+    //
+    // ------------------------ Align >
+    if (
+      /[\u0600-\u06FF\uFB50-\uFDFF]/.test(CreateNoteDescription.Input.value)
+    ) {
+      CreateNoteDescription.Input.style.textAlign = "end";
+      CreateNoteDescription.Input.placeholder =
+        " ... توضیحات یادداشت را وارد کنید ";
+    } else if (/^[A-Za-z\s]+$/.test(CreateNoteDescription.Input.value)) {
+      CreateNoteDescription.Input.style.textAlign = "start";
+      CreateNoteDescription.Input.placeholder = " enter your description ...";
+    }
+    // ------------------------ Align <
+    //
+  });
+  // ---------------------------------- L <<
   //
   // --------------------------------- AC >>
   CreateNoteBody.appendChild(CreateNoteDescription.widget);

@@ -148,7 +148,6 @@ body {
     outline: none;
     color: white;
     font-family: 'Roboto', vazir, serif;
-    text-align: center;
     transition: all 0.5s;
     z-index: 1;
 }
@@ -160,11 +159,11 @@ body {
 
 /* --------------------------- > Search Field < */
 #SearchField {
+
     height: 60px;
     width: 50%;
     border: 2px solid var(--white);
     border-bottom: 0px;
-    justify-content: center;
     padding: 0px clamp(0.8rem, 1.2vw, 1.5rem);
     background-color: var(--black);
     border-top-left-radius: 0.5rem;
@@ -178,7 +177,6 @@ body {
 
 #SearchInput {
     width: 100%;
-    text-align: start;
     font-size: clamp(0.9rem, 1vw, 2rem);
 }
 
@@ -360,6 +358,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    transition: all 0.5s;
+}
+
+.RequestResult.remove {
+    transform: translateY(100%);
+    opacity: 0;
+    scale: 0.5;
 }
 
 .RequestResultSVG {
@@ -1203,7 +1208,6 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: end;
     gap: 1rem;
     padding: 1rem;
     border: max(0.2rem, 3px) solid var(--white);
@@ -1221,11 +1225,6 @@ body {
 
 .TaskBoxBody.red {
     border: max(0.2rem, 3px) solid var(--red);
-}
-
-.TaskTitle,
-.TaskDescription {
-    text-align: end;
 }
 
 .TaskHorizontalDivider {
@@ -1353,7 +1352,6 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: end;
     gap: 1rem;
     padding: 1rem;
     border: max(0.2rem, 3px) solid var(--white);
@@ -1363,11 +1361,6 @@ body {
     font-size: clamp(0.9rem, 1.1vw, 1.5rem);
     color: var(--white);
     z-index: 1;
-}
-
-.NoteTitle,
-.NoteDescription {
-    text-align: end;
 }
 
 .NoteHorizontalDivider {
@@ -1988,10 +1981,10 @@ body {
     width: 100%;
     border-radius: max(0.2rem, 5px);
     background-color: var(--white25);
+    padding: 0px 1rem;
 }
 
 #CreateFolderTitleFieldInput {
-    text-align: start;
     font-size: clamp(0.9rem, 1vw, 1.5rem);
 }
 
@@ -2122,7 +2115,6 @@ body {
 #MovePopupCurrentPathFieldInput,
 #MovePopupNewPathFieldInput {
     width: 100%;
-    text-align: start;
     font-size: clamp(0.9rem, 1vw, 1.5rem);
 }
 
@@ -2291,7 +2283,6 @@ body {
 
 #SearchPopupFieldInput {
     width: 100%;
-    text-align: start;
     font-size: clamp(0.9rem, 1vw, 1.5rem);
 }
 
@@ -2402,6 +2393,7 @@ body {
     width: 100%;
     border-radius: max(0.2rem, 5px);
     background-color: var(--white25);
+    padding: 0px 1rem;
 }
 
 #CreateTaskTitleFieldInput {
@@ -2760,6 +2752,7 @@ body {
     width: 100%;
     border-radius: max(0.2rem, 5px);
     background-color: var(--white25);
+    padding: 0px 1rem;
 }
 
 #CreateNoteLabelFieldInput {
@@ -2771,6 +2764,7 @@ body {
     width: 100%;
     border-radius: max(0.2rem, 5px);
     background-color: var(--white25);
+    padding: 0px 1rem;
 }
 
 #CreateNoteTitleFieldInput {
@@ -2881,6 +2875,201 @@ body {
 }
 
 /* -------------------------------------------------- >> Exit << */
+
+/* --------------------------------------------- >> Chat Rome << */
+.ChatRome {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+    bottom: -100%;
+    left: 50%;
+    z-index: 0;
+    transform: translate(-50%, -100%);
+    transition: all 1s;
+    opacity: 0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.ChatRome.show {
+    opacity: 1;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.ChatsList {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.7rem;
+    background-color: var(--black);
+    border-top-left-radius: max(0.3rem, 8px);
+    border: max(0.1rem, 2px) solid var(--white);
+    border-bottom: none;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    transition: all 0.5s;
+}
+
+.Chat {
+    max-width: 50%;
+    height: max-content;
+    display: flex;
+    transition: all 0.5s;
+}
+
+.ChatAvatar {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: fill;
+    border: max(0.1rem, 2px) solid var(--white);
+    background-color: var(--white);
+    z-index: 1;
+}
+
+.ChatAvatar.left {
+    border-top-left-radius: max(0.2rem, 5px);
+    border-bottom-left-radius: max(0.2rem, 5px);
+    border-right: none;
+    box-shadow: -2px 0px 10px var(--black25);
+}
+
+.ChatAvatar.right {
+    border-top-right-radius: max(0.2rem, 5px);
+    border-bottom-right-radius: max(0.2rem, 5px);
+    border-left: none;
+    box-shadow: 2px 0px 10px var(--black25);
+}
+
+.ChatData {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: max-content;
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: max(0.2rem, 5px);
+    z-index: 0;
+}
+
+.ChatData.left {
+    align-items: start;
+    border-top-left-radius: 0px;
+}
+
+.ChatData.right {
+    align-items: end;
+    border-top-right-radius: 0px;
+}
+
+.ChatAvatarName {
+    flex: 0 0 auto;
+    color: var(--black75);
+    font-size: clamp(0.7rem, 1vw, 1.3rem);
+}
+
+.ChatIcon {
+    width: 3rem;
+    margin: 0px auto;
+}
+
+.ChatText {
+    width: 100%;
+    color: var(--black);
+    font-size: clamp(0.9rem, 1.1vw, 1.5rem);
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.ChatText.left {
+    text-align: end;
+}
+
+.ChatText.right {
+    text-align: start;
+}
+
+.ChatFlex {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--black75);
+    font-size: clamp(0.7rem, 0.9vw, 1.3rem);
+    font-family: vazir;
+}
+
+.ChatFlex.left {
+    margin-left: auto;
+}
+
+.ChatFlex.right {
+    margin-right: auto;
+}
+
+.ChatFlexDivider {
+    width: 2px;
+    height: 100%;
+    background-color: var(--black25);
+}
+
+.SendSection {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem;
+    background-color: var(--black);
+    border-bottom-right-radius: max(0.3rem, 8px);
+    border-bottom-left-radius: max(0.3rem, 8px);
+    border: max(0.1rem, 2px) solid var(--white);
+}
+
+#ChatMessageField {
+    width: 100%;
+    min-height: max-content;
+}
+
+#ChatMessageFieldInput {
+    width: 100%;
+    max-height: 125px;
+    padding: 0.7rem;
+    outline: none;
+    border: none;
+    resize: none;
+    border-radius: max(0.1rem, 3px);
+    background-color: var(--white);
+    font-family: 'Roboto', vazir, serif;
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
+    color: var(--black);
+}
+
+#ChatMessageFieldInpu::placeholder {
+    color: var(--black75);
+}
+
+#ChatsBTN {
+    cursor: pointer;
+    border-radius: max(0.1rem, 3px);
+    padding: 1rem;
+    color: var(--black);
+    font-size: clamp(1rem, 1.6vw, 2rem);
+    background-color: var(--white);
+    transition: all 0.5s;
+}
+
+#ChatsBTN:active {
+    scale: 0.9;
+}
+
+/* --------------------------------------------- >> Chat Rome << */
 
 /* ================================================================ >> Layer 5 << */
 
@@ -3006,6 +3195,7 @@ body {
     border-radius: 5px;
     border: 2px solid transparent;
     transition: all 0.5s;
+    z-index: 1;
 }
 
 .Notification.show {
@@ -3043,6 +3233,10 @@ body {
 
 /* ------------------------------------------------ >> 4K << */
 @media screen and (min-width: 1800px) {
+
+    #SearchField {
+        height: 100%;
+    }
 
     /* ----------------------------- Filter Flex */
     #FiltersFlex {
@@ -3499,6 +3693,14 @@ body {
         width: 95%;
     }
 
+
+    .Chat {
+        max-width: 75%;
+    }
+
+    .ChatData {
+        max-width: 80%;
+    }
 
     /* ---------------------- > Layer 5 < */
 

@@ -573,7 +573,7 @@ function SearchPopup() {
     true,
     "mdi:cloud-search",
     false,
-    () => { }
+    () => {}
   );
   // ----------------------------- CB <<
   //
@@ -654,9 +654,9 @@ function SearchPopup() {
   // ----------------------------- CB <<
   //
   // -------------------- remove icon >>
-  SearchPopupField.fieldIcon.style.display = "none"
+  SearchPopupField.fieldIcon.style.display = "none";
   // -------------------- remove icon <<
-  // 
+  //
   // ----------------------------- id >>
   SearchPopupField.widget.id = "SearchPopupField";
   SearchPopupField.Input.id = "SearchPopupFieldInput";
@@ -666,6 +666,7 @@ function SearchPopup() {
   SearchPopupBody.appendChild(SearchPopupField.widget);
   // ----------------------------- AC <<
   //
+  // --------------------------------------- > L <
   SearchPopupField.Input.addEventListener("keyup", function (event) {
     if (event.key === "Enter") {
       //
@@ -684,20 +685,20 @@ function SearchPopup() {
         // --------------------------- SM <
         //
         // ------------------- WebService >
-        // 
+        //
         // -------------------------------- > API <
         let Api = `https://personnel.samami.co/storage/search-${SearchPopupField.Input.value}`;
         // -------------------------------- > API <
-        // 
+        //
         // -------------------------------- > GET <
         GET(Api)
           .then((response) => {
-            // 
+            //
             setTimeout(() => {
               LoadingcallBack(BG_6, 2, Layer6);
               ListaManager(response);
             }, 500);
-            // 
+            //
           })
           .catch((error) => {
             setTimeout(() => {
@@ -706,7 +707,7 @@ function SearchPopup() {
             }, 500);
           });
         // -------------------------------- > GET <
-        // 
+        //
         // ------------------- WebService <
         //
       }
@@ -726,44 +727,61 @@ function SearchPopup() {
       //
     }
   });
-  // 
+  // --------------------------------------- > L <
+  //
+  // --------------------------------------- > L <
+  SearchPopupField.Input.addEventListener("input", function () {
+    //
+    // ---------------------------- Align >>
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(SearchPopupField.Input.value)) {
+      SearchPopupField.Input.style.textAlign = "end";
+      SearchPopupField.Input.placeholder = " ... جستو جو ";
+    } else if (/^[A-Za-z\s]+$/.test(SearchPopupField.Input.value)) {
+      SearchPopupField.Input.style.textAlign = "start";
+      SearchPopupField.Input.placeholder = " search ...";
+    }
+    // ---------------------------- Align <<
+    //
+  });
+  // --------------------------------------- > L <
+  //
   // ----------------------------------- > Field <
-  // 
+  //
   // --------------------------------- > Divider <
   const SearchPopupDivider = document.createElement("div");
   SearchPopupDivider.classList.add("SearchPopupDivider");
-  // 
+  //
   // --------------------------- AC >>
   SearchPopupBody.appendChild(SearchPopupDivider);
   // --------------------------- AC <<
-  // 
+  //
   // --------------------------------- > Divider <
-  // 
+  //
   // ------------------------------------ > List <
   const SearchPopupList = document.createElement("div");
   SearchPopupList.classList.add("SearchPopupList");
-  // 
-  // ------------------------------ AC >> 
+  //
+  // ------------------------------ AC >>
   SearchPopupBody.appendChild(SearchPopupList);
   // ------------------------------ AC <<
-  // 
+  //
   // ------------------------------ CB >>
-  // 
+  //
   const EmptyData = {
     data: [],
     status: 200,
-  }
-  // 
-  ListaManager(EmptyData)
+  };
+  //
+  ListaManager(EmptyData);
   // ------------------------------ CB <<
-  // 
+  //
   // ------------------------------------ > List <
-  // 
+  //
   // --------------------------------- > Manager <
   let selectedwidget;
 
   function ListaManager(response) {
-    // 
+    //
     // ---------------------- empty >>
     if (response.data.length == 0) {
       //
@@ -788,42 +806,42 @@ function SearchPopup() {
       //
     }
     // ---------------------- empty <<
-    // 
+    //
     // ------------------------- 👍 >>
     else if (response.data.length !== 0 && response.status == 200) {
-      // 
+      //
       SearchPopupList.innerHTML = "";
       setTimeout(() => {
         SearchPopupList.classList.add("show");
       }, 500);
-      // 
-      response.data.forEach(data => {
-        // 
+      //
+      response.data.forEach((data) => {
+        //
         const Widget = SearchedWidget(data, (widget) => {
-          Listener(widget)
+          Listener(widget);
         });
-        // 
+        //
         function Listener(widget) {
-          // 
+          //
           // ------------------- > SM <
           const SearchedWidget = document.querySelectorAll(".SearchedWidget");
-          SearchedWidget.forEach(element => {
+          SearchedWidget.forEach((element) => {
             element.classList.remove("active");
           });
           widget.classList.add("active");
           // ------------------- > SM <
-          // 
-          selectedwidget = widget
-          // 
+          //
+          selectedwidget = widget;
+          //
         }
-        // 
+        //
         SearchPopupList.appendChild(Widget);
-        // 
+        //
       });
-      // 
+      //
     }
     // ------------------------- 👍 <<
-    // 
+    //
     // ------------------------- 👎 >>
     else if (response.status !== 200 && response.data.length !== 0) {
       //
@@ -848,10 +866,10 @@ function SearchPopup() {
       //
     }
     // ------------------------- 👎 <<
-    // 
+    //
   }
   // --------------------------------- > Manager <
-  // 
+  //
   // --------------------------------------------- >> Body <<
   //
   // ---------------------------------------------- >> BTN <<
@@ -870,40 +888,40 @@ function SearchPopup() {
   //
   // ---------------------------------------- > L <
   function SubmitBTNListener() {
-    // 
+    //
     // --------------------------------- V >>
     const List = document.querySelector(".StorageContent");
     const PathInput = document.querySelector("#PathInput");
     // --------------------------------- V <<
-    // 
+    //
     // -------------------------------- SM >>
-    LoadingcallBack(BG_6, 1, Layer6)
+    LoadingcallBack(BG_6, 1, Layer6);
     // -------------------------------- SM <<
-    // 
+    //
     // -------------------------------- CB >>
     IdToPath(selectedwidget.id, (path) => {
-      //  
+      //
       // ----------------------- SM >>
-      // 
+      //
       List.classList.remove("show");
       Layer5.classList.remove("show");
       setTimeout(() => {
         PathInput.value = path.data;
-        CurrentPath = path.data
+        CurrentPath = path.data;
         List.innerHTML = "";
         BG_5.innerHTML = "";
       }, 500);
       // ----------------------- SM <<
-      // 
+      //
       // ----------------------- GC >>
       setTimeout(() => {
-        GetChildren(path.data)
+        GetChildren(path.data);
       }, 500);
       // ----------------------- GC <<
-      // 
-    })
+      //
+    });
     // -------------------------------- CB <<
-    // 
+    //
   }
   // ---------------------------------------- > L <
   //
@@ -917,21 +935,21 @@ function SearchPopup() {
 //
 // ====================================================== >> Searched Widget <<
 function SearchedWidget(data, listener) {
-  // 
+  //
   // ------------------------------------------ >> div <<
   const SearchedWidget = document.createElement("div");
   SearchedWidget.classList.add("SearchedWidget");
-  // 
-  SearchedWidget.id = data.id
-  // 
+  //
+  SearchedWidget.id = data.id;
+  //
   // ------------------------------------------ >> div <<
-  // 
+  //
   // -------------------------------------------- >> L <<
   SearchedWidget.addEventListener("click", () => {
-    listener(SearchedWidget)
+    listener(SearchedWidget);
   });
   // -------------------------------------------- >> L <<
-  // 
+  //
   // ----------------------------------------- >> icon <<
   const SearchedWidgetIcon = document.createElement("img");
   SearchedWidgetIcon.classList.add("SearchedWidgetIcon");
@@ -1006,51 +1024,51 @@ function SearchedWidget(data, listener) {
   // ---------------------------------- > AC <
   //
   // ----------------------------------------- >> icon <<
-  // 
+  //
   // ----------------------------------------- >> span <<
   const SearchedWidgetText = document.createElement("span");
   SearchedWidgetText.classList.add("SearchedWidgetText");
-  // 
+  //
   // ------------------------------- > value <
   SearchedWidgetText.textContent = data.name;
   // ------------------------------- > value <
-  // 
+  //
   // ---------------------------------- > AC <
   SearchedWidget.appendChild(SearchedWidgetText);
   // ---------------------------------- > AC <
-  // 
+  //
   // ----------------------------------------- >> span <<
-  // 
+  //
   // --------------------------------------- >> return <<
   return SearchedWidget;
   // --------------------------------------- >> return <<
-  // 
+  //
 }
 // ====================================================== >> Searched Widget <<
-// 
+//
 // ============================================================= >> IdToPath <<
 function IdToPath(id, operator) {
-  // 
+  //
   // ------------------------------------------------- >> API <<
   let Api = `https://personnel.samami.co/storage/id-to-path?id=${id}`;
   // ------------------------------------------------- >> API <<
-  // 
+  //
   // ------------------------------------------------- >> GET <<
   GET(Api)
     .then((response) => {
-      // 
+      //
       // --------------------------------------- 👍 >>
       if (response.status == 200) {
-        operator(response)
+        operator(response);
       }
       // --------------------------------------- 👍 <<
-      // 
+      //
       // --------------------------------------- 👎 >>
       else {
-        // 
+        //
         // -------------------------------- SM >
-        LoadingcallBack(BG_6, 2, Layer6)
-        // 
+        LoadingcallBack(BG_6, 2, Layer6);
+        //
         NotificationCallBack(
           "Failed to get the path",
           "fa:close",
@@ -1059,17 +1077,17 @@ function IdToPath(id, operator) {
           Layer7
         );
         // -------------------------------- SM <
-        // 
+        //
       }
       // --------------------------------------- 👎 <<
-      // 
+      //
     })
     .catch((error) => {
-      // 
+      //
       // ---------------------------------------- SM >>
-      LoadingcallBack(BG_6, 2, Layer6)
+      LoadingcallBack(BG_6, 2, Layer6);
       // ---------------------------------------- SM <<
-      // 
+      //
       // --------------------------------------- 👎 >>
       NotificationCallBack(
         "Failed to get the path",
@@ -1079,16 +1097,15 @@ function IdToPath(id, operator) {
         Layer7
       );
       // --------------------------------------- 👎 <<
-      // 
+      //
     });
   // ------------------------------------------------- >> GET <<
-  // 
+  //
   // ----------------------------------------- >> Web Service <<
-  // 
-
+  //
 }
 // ============================================================= >> IdToPath <<
-// 
+//
 // =================================================================== >> GC <<
 function GetChildren(path) {
   //
@@ -1345,16 +1362,28 @@ function ItemBox(response, listener) {
   // --------------------------- Tuch end <<
   //
   // --------------------------------------- > Tuch L <
-  // 
+  //
   // ----------------------------------- > Click L <
   //
   // --------------------- left click >>
+  let isClickable = true;
+  //
   StorageItem.addEventListener("click", (event) => {
+    //
     //
     event.preventDefault();
     //
     if (response.is_file == false && event.button === 0) {
-      listener(StorageItem);
+      if (isClickable) {
+        // Trigger the listener callback
+        listener(StorageItem);
+
+        // Disable further clicks for 1 second
+        isClickable = false;
+        setTimeout(() => {
+          isClickable = true; // Re-enable the click after 1 second
+        }, 1000); // 1000ms = 1 second
+      }
     }
     //
   });
@@ -1797,7 +1826,7 @@ function CreateFolder() {
     false,
     "",
     false,
-    () => { }
+    () => {}
   );
   // ---------------------------------- CB <<
   //
@@ -1878,7 +1907,24 @@ function CreateFolder() {
     CreateFolderTitleInputPlaceholder,
     100
   );
+  CreateFolderTitle.fieldIcon.style.display = "none";
   // ---------------------------------- CB <<
+  //
+  // ----------------------------------- L >>
+  CreateFolderTitle.Input.addEventListener("input", function () {
+    //
+    // ------------------------- Align >
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(CreateFolderTitle.Input.value)) {
+      CreateFolderTitle.Input.style.textAlign = "end";
+      CreateFolderTitle.Input.placeholder = " ... نام فولدر را وارد کنید";
+    } else if (/^[A-Za-z\s]+$/.test(CreateFolderTitle.Input.value)) {
+      CreateFolderTitle.Input.style.textAlign = "start";
+      CreateFolderTitle.Input.placeholder = "enter your folder name ...";
+    }
+    // ------------------------- Align <
+    //
+  });
+  // ----------------------------------- L <<
   //
   // ---------------------------------- id >>
   CreateFolderTitle.labelIcon.id = "CreateFolderTitleFieldLabelIcon";
@@ -2054,10 +2100,6 @@ function PostFolder(folder_name) {
 //
 // =========================================================== >> FilePicker <<
 function FilePicker() {
-  //
-  // ------------------------------------------------- >> V <<
-  const List = document.querySelector(".StorageContent");
-  // ------------------------------------------------- >> V <<
   //
   // --------------------------------------------- >> Input <<
   const FilePicker = document.createElement("input");
@@ -2370,7 +2412,7 @@ function PropertiesPopup(response) {
     true,
     "pepicons-pop:gear-circle-filled",
     false,
-    () => { }
+    () => {}
   );
   // ------------------------ CB <<
   //
@@ -2636,7 +2678,7 @@ function DownloadWebService(id) {
         // ----------------------------------- >> download <<
         //
         // ----------------------------- > V <
-        const fileUrl = response.data.link; // Use the link from the response
+        const fileUrl = response.data; // Use the link from the response
         const filename = fileUrl.split("/").pop(); // Get the filename (e.g., "20250217135606.mp4")
         // ----------------------------- > V <
         //
@@ -2770,7 +2812,7 @@ function MovePopup(id) {
     true,
     "lucide-lab:copy-file-path",
     false,
-    () => { }
+    () => {}
   );
   // ------------------------------- CB <<
   //
@@ -2854,6 +2896,7 @@ function MovePopup(id) {
   // ------------------------------- CB <<
   //
   // ------------------------------- SM >>
+  MovePopupCurrentPath.fieldIcon.style.display = "none";
   MovePopupCurrentPath.widget.style.pointerEvents = "none";
   MovePopupCurrentPath.Input.value = CurrentPath;
   // ------------------------------- SM <<
@@ -2890,7 +2933,7 @@ function MovePopup(id) {
   //
   const MovePopupNewPathFeildID = "MovePopupNewPathFeild";
   //
-  const MovePopupNewPathInputPlaceholder = "enter your path ...";
+  const MovePopupNewPathInputPlaceholder = " enter your path ...";
   //
   // -------------------------------- V <<
   //
@@ -2906,6 +2949,7 @@ function MovePopup(id) {
     MovePopupNewPathInputPlaceholder,
     100
   );
+  MovePopupNewPath.fieldIcon.style.display = "none";
   // ------------------------------- CB <<
   //
   // ------------------------------- id >>
@@ -2914,6 +2958,22 @@ function MovePopup(id) {
   MovePopupNewPath.field.id = "MovePopupNewPathField";
   MovePopupNewPath.Input.id = "MovePopupNewPathFieldInput";
   // ------------------------------- id <<
+  //
+  // ----------------------------------- L >>
+  MovePopupNewPath.Input.addEventListener("input", function () {
+    //
+    // ------------------------- Align >
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(MovePopupNewPath.Input.value)) {
+      MovePopupNewPath.Input.style.textAlign = "end";
+      MovePopupNewPath.Input.placeholder = " ... آدرس را وارد کنید ";
+    } else if (/^[A-Za-z\s]+$/.test(MovePopupNewPath.Input.value)) {
+      MovePopupNewPath.Input.style.textAlign = "start";
+      MovePopupNewPath.Input.placeholder = " enter your path ...";
+    }
+    // ------------------------- Align <
+    //
+  });
+  // ----------------------------------- L <<
   //
   // ------------------------------- AC >>
   MovePopupBody.appendChild(MovePopupNewPath.widget);
@@ -3111,7 +3171,7 @@ function RenamePopup(id, itemname) {
     true,
     "mdi:rename",
     false,
-    () => { }
+    () => {}
   );
   // ------------------------------- CB <<
   //
@@ -3195,6 +3255,7 @@ function RenamePopup(id, itemname) {
   // ------------------------------- CB <<
   //
   // ------------------------------- SM >>
+  RenamePopupCurrentName.fieldIcon.style.display = "none";
   RenamePopupCurrentName.widget.style.pointerEvents = "none";
   RenamePopupCurrentName.Input.value = itemname;
   // ------------------------------- SM <<
@@ -3231,7 +3292,7 @@ function RenamePopup(id, itemname) {
   //
   const RenamePopupNewNameFeildID = "RenamePopupNewNameFeild";
   //
-  const RenamePopupNewNameInputPlaceholder = "enter your Name ...";
+  const RenamePopupNewNameInputPlaceholder = " enter your name ...";
   //
   // -------------------------------- V <<
   //
@@ -3247,6 +3308,7 @@ function RenamePopup(id, itemname) {
     RenamePopupNewNameInputPlaceholder,
     100
   );
+  RenamePopupNewName.fieldIcon.style.display = "none";
   // ------------------------------- CB <<
   //
   // ------------------------------- id >>
@@ -3255,6 +3317,23 @@ function RenamePopup(id, itemname) {
   RenamePopupNewName.field.id = "RenamePopupNewNameField";
   RenamePopupNewName.Input.id = "RenamePopupNewNameFieldInput";
   // ------------------------------- id <<
+  //
+  // -------------------------------- L >>
+  RenamePopupNewName.Input.addEventListener("input", function () {
+    //
+    // ---------------------- Align >
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(RenamePopupNewName.Input.value)) {
+      RenamePopupNewName.Input.style.textAlign = "end";
+      RenamePopupNewName.Input.placeholder =
+        " ... نام جدید فولدر را وارد کنید ";
+    } else if (/^[A-Za-z\s]+$/.test(RenamePopupNewName.Input.value)) {
+      RenamePopupNewName.Input.style.textAlign = "start";
+      RenamePopupNewName.Input.placeholder = " enter new folder name ...";
+    }
+    // ---------------------- Align <
+    //
+  });
+  // -------------------------------- L <<
   //
   // ------------------------------- AC >>
   RenamePopupBody.appendChild(RenamePopupNewName.widget);
@@ -3458,7 +3537,7 @@ function DeletePopup(item_name, id) {
     true,
     "icon-park-solid:delete-four",
     false,
-    () => { }
+    () => {}
   );
   // ------------------------------- CB <<
   //
@@ -3517,7 +3596,7 @@ function DeletePopup(item_name, id) {
   const DeletePopupText = document.createElement("span");
   DeletePopupText.classList.add("DeletePopupText");
   //
-  DeletePopupText.textContent = `Are you shure about deleting " ${item_name}"`;
+  DeletePopupText.textContent = `Are you sure about deleting " ${item_name} "`;
   //
   DeletePopupBody.appendChild(DeletePopupText);
   //

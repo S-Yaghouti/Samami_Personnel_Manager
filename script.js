@@ -871,7 +871,6 @@ function WebSerive(Status, Input, Field, BTN, Column) {
   //
   // ------------------------------------------ > OTP <
   else if (Status == 2) {
-    console.log(Data);
     //
     POST(URL, Data)
       .then((response) => {
@@ -911,7 +910,7 @@ function WebSerive(Status, Input, Field, BTN, Column) {
           }, 1000);
           //
           setTimeout(() => {
-            window.location.assign("./Home/index.html");
+            window.location.replace("./Home/index.html");
           }, 1500);
         }
         // ----------------------------- 201 <<

@@ -36,6 +36,10 @@ import { DatePicker } from "../../modules/Widgets/Date_Picker/date_picker.js";
 import { DropDown } from "../../modules/Widgets/Dropdown/dropdown.js";
 // ---------------------------------------------- >> Drop Down <<
 //
+// ---------------------------------------------- >> Chat Rome <<
+import { ChatRome } from "./../../modules/Chat_Rome/Chat_Rome.js";
+// ---------------------------------------------- >> Chat Rome <<
+//
 // ============================================================== >> Imports <<
 //
 // ========================================================== >> Definitions <<
@@ -129,7 +133,7 @@ function Filter(father) {
   // ----------------------------------- > Varibels <
   const SearchFeildInputID = "SearchInput";
   const Icon = "gis:search-propertie";
-  const Placeholder = " Search for tasks ...";
+  const Placeholder = " Search ...";
   // ----------------------------------- > Varibels <
   //
   // ----------------------------------- > CallBack <
@@ -191,6 +195,22 @@ function Filter(father) {
       // --------------------------- List CB <<
       //
     }
+  });
+  // ------------------------------------------ > L <
+  //
+  // ------------------------------------------ > L <
+  SearchField.Input.addEventListener("input", function () {
+    //
+    // -------------------------------- Align >
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(SearchField.Input.value)) {
+      SearchField.Input.style.textAlign = "end";
+      SearchField.Input.placeholder = " ... جستو جو ";
+    } else if (/^[A-Za-z\s]+$/.test(SearchField.Input.value)) {
+      SearchField.Input.style.textAlign = "start";
+      SearchField.Input.placeholder = " Search ...";
+    }
+    // -------------------------------- Align <
+    //
   });
   // ------------------------------------------ > L <
   //
@@ -291,7 +311,7 @@ function List(Build) {
   // ---------------------------------------------------- >> V <<
   const Id = "Tasks";
   const URL = `https://personnel.samami.co/task/get`;
-  const limit = 21;
+  const limit = 10;
   // ---------------------------------------------------- >> V <<
   //
   // --------------------------------------------------- >> CB <<
@@ -489,7 +509,7 @@ function TaskBox(response) {
     taskStatusIcon = "material-symbols:check-box-rounded";
   }
   //
-  else if (response.status == "closed") {
+  else if (response.status == "expired") {
     taskStatusText = "Expired";
     taskStatusIcon = "fa:close";
   }
@@ -511,7 +531,7 @@ function TaskBox(response) {
   // --------------------------------------- > SM <
   if (response.status == "finished") {
     taskStatus.widget.classList.add("green");
-  } else if (response.status == "closed") {
+  } else if (response.status == "expired") {
     taskStatus.widget.classList.add("red");
   }
   // --------------------------------------- > SM <
@@ -529,7 +549,7 @@ function TaskBox(response) {
   // ----------------------------------------- > SM <
   if (response.status == "finished") {
     TaskBoxBody.classList.add("green");
-  } else if (response.status == "closed") {
+  } else if (response.status == "expired") {
     TaskBoxBody.classList.add("red");
   }
   // ----------------------------------------- > SM <
@@ -545,6 +565,14 @@ function TaskBox(response) {
   // ------------------------------ value >>
   TaskTitle.textContent = response.title;
   // ------------------------------ value <<
+  //
+  // ------------------------------ Align >>
+  if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(TaskTitle.textContent)) {
+    TaskTitle.style.textAlign = "end";
+  } else if (/^[A-Za-z\s]+$/.test(TaskTitle.textContent)) {
+    TaskTitle.style.textAlign = "start";
+  }
+  // ------------------------------ Align <<
   //
   // --------------------------------- AC >>
   TaskBoxBody.appendChild(TaskTitle);
@@ -569,6 +597,14 @@ function TaskBox(response) {
   // ------------------------------ value >>
   TaskDescription.textContent = response.description;
   // ------------------------------ value <<
+  //
+  // ------------------------------ Align >>
+  if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(TaskDescription.textContent)) {
+    TaskDescription.style.textAlign = "end";
+  } else if (/^[A-Za-z\s]+$/.test(TaskDescription.textContent)) {
+    TaskDescription.style.textAlign = "start";
+  }
+  // ------------------------------ Align <<
   //
   // --------------------------------- AC >>
   TaskBoxBody.appendChild(TaskDescription);
@@ -689,7 +725,12 @@ function TaskBox(response) {
   // -------------------------------- CB <<
   //
   // --------------------------------- L >>
-  function TaskChatsBTNListener() {}
+  function TaskChatsBTNListener() {
+    //
+    // -------------------------- CB >
+    ChatRome(response.chat_room_id);
+    // -------------------------- CB <
+  }
   // --------------------------------- L <<
   //
   // -------------------------------- AC >>
@@ -725,7 +766,11 @@ function TaskBox(response) {
   // --------------------------------- L <<
   //
   // -------------------------------- AC >>
-  if (response.status !== "finished") {
+  if (
+    response.status !== "finished" &&
+    response.status !== "expired" &&
+    response.owner_access == true
+  ) {
     TaskButtonsFlex.appendChild(TaskCheckBTN.widget);
   }
   // -------------------------------- AC <<
@@ -759,7 +804,9 @@ function TaskBox(response) {
   // --------------------------------- L <<
   //
   // -------------------------------- AC >>
-  TaskButtonsFlex.appendChild(TaskDeleteBTN.widget);
+  if (response.owner_access == true) {
+    TaskButtonsFlex.appendChild(TaskDeleteBTN.widget);
+  }
   // -------------------------------- AC <<
   //
   // -------------------------------------- > Delete <
@@ -905,8 +952,25 @@ function CraateTask() {
   CreateTaskTitle.labelIcon.id = "CreateTaskTitleFieldLabelIcon";
   CreateTaskTitle.labelText.id = "CreateTaskTitleFieldLabelText";
   CreateTaskTitle.field.id = "CreateTaskTitleField";
+  CreateTaskTitle.fieldIcon.style.display = "none";
   CreateTaskTitle.Input.id = "CreateTaskTitleFieldInput";
   // ------------------------------------------ > id <
+  //
+  // ------------------------------------------- > L <
+  CreateTaskTitle.Input.addEventListener("input", function () {
+    //
+    // -------------------------------- Align >>
+    if (/[\u0600-\u06FF\uFB50-\uFDFF]/.test(CreateTaskTitle.Input.value)) {
+      CreateTaskTitle.Input.style.textAlign = "end";
+      CreateTaskTitle.Input.placeholder = " ... تیتر خود را وارد کنید";
+    } else if (/^[A-Za-z\s]+$/.test(CreateTaskTitle.Input.value)) {
+      CreateTaskTitle.Input.style.textAlign = "start";
+      CreateTaskTitle.Input.placeholder = "enter your title ...";
+    }
+    // -------------------------------- Align <<
+    //
+  });
+  // ------------------------------------------- > L <
   //
   // ------------------------------------------ > AC <
   CreateTaskBody.appendChild(CreateTaskTitle.widget);
@@ -950,6 +1014,24 @@ function CraateTask() {
     100
   );
   // ------------------------------------------ > CB <
+  //
+  // ------------------------------------------- > L <
+  CreateTaskDescription.Input.addEventListener("input", function () {
+    //
+    // -------------------------------- Align >>
+    if (
+      /[\u0600-\u06FF\uFB50-\uFDFF]/.test(CreateTaskDescription.Input.value)
+    ) {
+      CreateTaskDescription.Input.style.textAlign = "end";
+      CreateTaskDescription.Input.placeholder = " ... توضیحات خود را وارد کنید";
+    } else if (/^[A-Za-z\s]+$/.test(CreateTaskDescription.Input.value)) {
+      CreateTaskDescription.Input.style.textAlign = "start";
+      CreateTaskDescription.Input.placeholder = "enter your description ...";
+    }
+    // -------------------------------- Align <<
+    //
+  });
+  // ------------------------------------------- > L <
   //
   // ------------------------------------------ > id <
   CreateTaskDescription.labelIcon.id = "CreateTaskDescriptionFieldLabelIcon";
@@ -1807,7 +1889,7 @@ function FilterPopup() {
     //
     "Task status",
     //
-    ["All", "Open", "Closed", "Finished"],
+    ["all", "pending", "expired", "finished"],
     //
     (value) => {
       SelectedStatus = value;
@@ -1887,7 +1969,7 @@ function FilterPopup() {
     if (SearchInput.value) params.append("search", SearchInput.value);
     if (SelectedStartDate) params.append("timestamp_from", SelectedStartDate);
     if (SelectedEndDate) params.append("timestamp_to", SelectedEndDate);
-    if (SelectedStatus && SelectedStatus !== "All")
+    if (SelectedStatus && SelectedStatus !== "all")
       params.append("status", SelectedStatus);
 
     Query = params.toString();

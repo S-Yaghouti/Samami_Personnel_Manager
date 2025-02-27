@@ -15,16 +15,7 @@ async function GET(url) {
       },
     });
 
-    // >> Check if the response status is Not OK <<
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    // >> Check if the response status is Not OK <<
-
     // >> response data <<
-    // const data = await response.json();
-    // return data;
-
     const responseData = await response.json();
     const result = {
       status: response.status,

@@ -464,7 +464,7 @@ function RM(response, Father, List) {
     // ------------------ > V <
     //
     // ------------------ > Widget <
-    const Widget = RequestResult(SVG_URL, "Faild request 👎");
+    const Widget = RequestResult(SVG_URL, "Request failed👎");
     // ------------------ > Widget <
     //
     // ------------------ > AC <
@@ -1122,6 +1122,8 @@ function CraateTask() {
   });
   // ----------------------------- CB <<
   //
+  StartDate.body.style.paddingBottom = "1rem";
+  //
   // ------------------------------ L >>
   function StartDateListener(SelectedDate) {
     SelectedStartDate = SelectedDate;
@@ -1158,6 +1160,8 @@ function CraateTask() {
   EndDate.widget.id = "EndDate";
   // ----------------------------- CB <<
   //
+  EndDate.body.style.paddingBottom = "1rem";
+  // 
   // ------------------------------ L >>
   function EndDateListener(SelectedDate) {
     SelectedEndDate = SelectedDate;
@@ -1611,7 +1615,7 @@ function PostTask(
         LoadingcallBack(BG_6, 2, Layer6);
         //
         NotificationCallBack(
-          "Request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,
@@ -1632,7 +1636,7 @@ function PostTask(
       // ---------------------------------- CB >>
       LoadingcallBack(BG_6, 2, Layer6);
       //
-      NotificationCallBack("Request faild 👎", "fa:close", "red", BG_7, Layer7);
+      NotificationCallBack("Request failed 👎", "fa:close", "red", BG_7, Layer7);
       // ---------------------------------- CB <<
       //
     });
@@ -2269,7 +2273,7 @@ function CheckTaskPopup(TaskTitle, Taskid) {
           //
           // ------------------------- >> Notif <<
           NotificationCallBack(
-            "request faild 👎",
+            "Request failed 👎",
             "fa:close",
             "red",
             BG_7,
@@ -2290,7 +2294,7 @@ function CheckTaskPopup(TaskTitle, Taskid) {
         //
         // --------------------------- >> Notif <<
         NotificationCallBack(
-          "request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,
@@ -2517,7 +2521,7 @@ function DeleteTaskPopup(TaskTitle, Taskid) {
           //
           // ------------------------- >> Notif <<
           NotificationCallBack(
-            "request faild 👎",
+            "Request failed 👎",
             "fa:close",
             "red",
             BG_7,
@@ -2538,7 +2542,7 @@ function DeleteTaskPopup(TaskTitle, Taskid) {
         //
         // --------------------------- >> Notif <<
         NotificationCallBack(
-          "request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,

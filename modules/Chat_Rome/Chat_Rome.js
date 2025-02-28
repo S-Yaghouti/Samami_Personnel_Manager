@@ -327,7 +327,7 @@ function RM(data, father) {
     // --------------------------------------------- > V <
     //
     // -------------------------------------------- > CB <
-    const Widget = RequestResult(SVG_URL, "Faild request 👎");
+    const Widget = RequestResult(SVG_URL, "Request failed 👎");
     // -------------------------------------------- > CB <
     //
     // -------------------------------------------- > AC <

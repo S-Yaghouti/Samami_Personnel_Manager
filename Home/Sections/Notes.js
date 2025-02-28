@@ -400,7 +400,7 @@ function RM(response, Father, List) {
     // ------------------ > V <
     //
     // ------------------ > Widget <
-    const Widget = RequestResult(SVG_URL, "Faild request 👎");
+    const Widget = RequestResult(SVG_URL, "Request failed 👎");
     // ------------------ > Widget <
     //
     // ------------------ > AC <
@@ -1092,7 +1092,7 @@ function PostTask(labelValue, titleValue, descriptionValue) {
         LoadingcallBack(BG_6, 2, Layer6);
         //
         NotificationCallBack(
-          "Request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,
@@ -1113,7 +1113,7 @@ function PostTask(labelValue, titleValue, descriptionValue) {
       // ---------------------------------- CB >>
       LoadingcallBack(BG_6, 2, Layer6);
       //
-      NotificationCallBack("Request faild 👎", "fa:close", "red", BG_7, Layer7);
+      NotificationCallBack("Request failed 👎", "fa:close", "red", BG_7, Layer7);
       // ---------------------------------- CB <<
       //
     });
@@ -1325,7 +1325,7 @@ function DeleteNotePopup(NoteTitle, Noteid) {
           //
           // ------------------------- >> Notif <<
           NotificationCallBack(
-            "request faild 👎",
+            "Request failed 👎",
             "fa:close",
             "red",
             BG_7,
@@ -1346,7 +1346,7 @@ function DeleteNotePopup(NoteTitle, Noteid) {
         //
         // --------------------------- >> Notif <<
         NotificationCallBack(
-          "request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,

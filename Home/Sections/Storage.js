@@ -857,7 +857,7 @@ function SearchPopup() {
       // ------------------------------ > V <
       //
       // ----------------------------- > CB <
-      const Widget = RequestResult(SVG_URL, "Faild request");
+      const Widget = RequestResult(SVG_URL, "Request failed");
       // ----------------------------- > CB <
       //
       // ------------------------------ > AC <
@@ -1150,7 +1150,7 @@ function GetChildren(path) {
       // --------------------------------------- V <<
       //
       // -------------------------------------- CB >>
-      const Widget = RequestResult(SVG_URL, "Faild request 👎");
+      const Widget = RequestResult(SVG_URL, "Request failed 👎");
       // -------------------------------------- CB <<
       //
       // -------------------------------------- AC >>
@@ -1291,7 +1291,7 @@ function ResponseManager(response) {
     // ------------------------------------------------ > V <
     //
     // ----------------------------------------------- > CB <
-    const Widget = RequestResult(SVG_URL, "Faild request 👎");
+    const Widget = RequestResult(SVG_URL, "Request failed 👎");
     // ----------------------------------------------- > CB <
     //
     // ------------------------------------------------ > AC <

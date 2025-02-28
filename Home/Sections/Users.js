@@ -356,7 +356,7 @@ function RM(response, Father, List) {
     // ------------------ > V <
     //
     // ------------------ > Widget <
-    const Widget = RequestResult(SVG_URL, "Faild request 👎");
+    const Widget = RequestResult(SVG_URL, "Request failed 👎");
     // ------------------ > Widget <
     //
     // ------------------ > AC <
@@ -999,7 +999,7 @@ function PostAvatar(image, id, widget, IsAdmin) {
         //
         // ------------------------------- > CB <
         NotificationCallBack(
-          "Request Sucssess 👍",
+          "Avatar updated successfully 👍",
           "ph:check-fat-fill",
           "green",
           BG_7,
@@ -1042,7 +1042,7 @@ function PostAvatar(image, id, widget, IsAdmin) {
         //
         // ------------------------------- > CB <
         NotificationCallBack(
-          "Request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,
@@ -1061,7 +1061,7 @@ function PostAvatar(image, id, widget, IsAdmin) {
       // ------------------------------ CB <
       //
       // ------------------------------ CB >
-      NotificationCallBack("Request faild 👎", "fa:close", "red", BG_7, Layer7);
+      NotificationCallBack("Request failed 👎", "fa:close", "red", BG_7, Layer7);
       // ------------------------------ CB <
       //
     });
@@ -1179,7 +1179,7 @@ function PutData(nameinput, numberinput, type, id, IsAdmin) {
           //
           // ------------------------- >> Notif <<
           NotificationCallBack(
-            "Request faild 👎",
+            "Request failed 👎",
             "fa:close",
             "red",
             BG_7,
@@ -1201,7 +1201,7 @@ function PutData(nameinput, numberinput, type, id, IsAdmin) {
         //
         // --------------------------- >> Notif <<
         NotificationCallBack(
-          "Request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,
@@ -1445,7 +1445,7 @@ function DeleteUser(layer, father, username, id) {
           //
           // ------------------------- >> Notif <<
           NotificationCallBack(
-            "request faild 👎",
+            "request failed 👎",
             "fa:close",
             "red",
             BG_7,
@@ -1466,7 +1466,7 @@ function DeleteUser(layer, father, username, id) {
         //
         // --------------------------- >> Notif <<
         NotificationCallBack(
-          "request faild 👎",
+          "Request failed 👎",
           "fa:close",
           "red",
           BG_7,

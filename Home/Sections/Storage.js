@@ -894,32 +894,34 @@ function SearchPopup() {
     const PathInput = document.querySelector("#PathInput");
     // --------------------------------- V <<
     //
-    // -------------------------------- SM >>
-    LoadingcallBack(BG_6, 1, Layer6);
-    // -------------------------------- SM <<
-    //
     // -------------------------------- CB >>
-    IdToPath(selectedwidget.id, (path) => {
+    if (selectedwidget !== undefined) {
       //
-      // ----------------------- SM >>
+      LoadingcallBack(BG_6, 1, Layer6);
       //
-      List.classList.remove("show");
-      Layer5.classList.remove("show");
-      setTimeout(() => {
-        PathInput.value = path.data;
-        CurrentPath = path.data;
-        List.innerHTML = "";
-        BG_5.innerHTML = "";
-      }, 500);
-      // ----------------------- SM <<
-      //
-      // ----------------------- GC >>
-      setTimeout(() => {
-        GetChildren(path.data);
-      }, 500);
-      // ----------------------- GC <<
-      //
-    });
+      IdToPath(selectedwidget.id, (path) => {
+        //
+        // ----------------------- SM >>
+        //
+        List.classList.remove("show");
+        Layer5.classList.remove("show");
+        setTimeout(() => {
+          PathInput.value = path.data;
+          CurrentPath = path.data;
+          List.innerHTML = "";
+          BG_5.innerHTML = "";
+        }, 500);
+        // ----------------------- SM <<
+        //
+        // ----------------------- GC >>
+        setTimeout(() => {
+          GetChildren(path.data);
+        }, 500);
+        // ----------------------- GC <<
+        //
+      });
+      // 
+    }
     // -------------------------------- CB <<
     //
   }
@@ -1262,7 +1264,7 @@ function ResponseManager(response) {
     // ----------------------------------------------- > SM <
     //
     // ------------------------------------------------ > V <
-    const SVG_URL = "./../../assets/svg/Error_Response.svg";
+    const SVG_URL = "./../assets/svg/Error_Response.svg";
     // ------------------------------------------------ > V <
     //
     // ----------------------------------------------- > CB <
@@ -1317,6 +1319,7 @@ function ItemBox(response, listener) {
   //
   // ---------------------------------- V >>
   let touchTimer = null;
+  let isLongPress = false;
   // ---------------------------------- V <<
   //
   // ------------------------- Tuch Start >>
@@ -1341,7 +1344,9 @@ function ItemBox(response, listener) {
       }, 250);
       //
     } else {
+      isLongPress = false;
       touchTimer = setTimeout(() => {
+        isLongPress = true;
         ItemOptions(X, Y, StorageItem);
       }, 500);
     }
@@ -1354,7 +1359,7 @@ function ItemBox(response, listener) {
     if (touchTimer) {
       clearTimeout(touchTimer);
       touchTimer = null;
-      if (response.is_file == false) {
+      if (!isLongPress && response.is_file === false) {
         listener(StorageItem);
       }
     }

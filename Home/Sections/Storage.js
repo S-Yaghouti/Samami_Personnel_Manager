@@ -920,7 +920,7 @@ function SearchPopup() {
         // ----------------------- GC <<
         //
       });
-      // 
+      //
     }
     // -------------------------------- CB <<
     //
@@ -2311,10 +2311,6 @@ function GetProperties(value) {
       // --------------------------- > 200 <
       if (response.status == 200) {
         //
-        // --------------------------------- >> remove loading <<
-        LoadingcallBack(BG_6, 2, Layer6);
-        // --------------------------------- >> remove loading <<
-        //
         // --------------------------------- >> CB <<
         setTimeout(() => {
           PropertiesPopup(response.data);
@@ -2377,13 +2373,33 @@ function GetProperties(value) {
 // ===================================================== >> Properties Popup <<
 function PropertiesPopup(response) {
   //
+  // ------------------------------------------- >> V <<
+  const PropertiesResponse = response;
+  // ------------------------------------------- >> V <<
+  //
   // ------------------------------------------ >> SM <<
-  Layer5.classList.add("show");
+  if (response.is_admin == false) {
+    //
+    // -------------------------- > Add Layer <
+    Layer5.classList.add("show");
+    // -------------------------- > Add Layer <
+    //
+    // --------------------- > remove loading <
+    LoadingcallBack(BG_6, 2, Layer6);
+    // --------------------- > remove loading <
+    //
+  }
   // ------------------------------------------ >> SM <<
   //
   // ----------------------------------------- >> div <<
   const PropertiesPopup = document.createElement("div");
   PropertiesPopup.classList.add("Column", "show");
+  //
+  // ---------------------------------- > SM <
+  if (response.is_admin == true) {
+    PropertiesPopup.classList.add("scrollable");
+  }
+  // ---------------------------------- > SM <
   //
   // ---------------------------------- > id <
   PropertiesPopup.id = "PropertiesPopup";
@@ -2464,6 +2480,12 @@ function PropertiesPopup(response) {
   // ---------------------------------------- >> Body <<
   const PropertiesBody = document.createElement("div");
   PropertiesBody.classList.add("Column");
+  //
+  // ---------------------------------- > SM <
+  if (response.is_admin == true) {
+    PropertiesBody.classList.add("scrollable");
+  }
+  // ---------------------------------- > SM <
   //
   // --------------------------------- > id <
   PropertiesBody.id = "PropertiesBody";
@@ -2649,10 +2671,423 @@ function PropertiesPopup(response) {
   //
   // -------------------------------- > span <
   //
+  // ----------------------------- > Divider <
+  const PropertiesDeivider2 = document.createElement("div");
+  PropertiesDeivider2.classList.add("PropertiesDeivider");
+  //
+  // ----------------------- AC >>
+  if (response.is_admin == true) {
+    PropertiesBody.appendChild(PropertiesDeivider2);
+  }
+  // ----------------------- AC <<
+  //
+  // ----------------------------- > Divider <
+  //
+  // -------------------------------- > Flex <
+  const PropertiesUsersLabel = document.createElement("div");
+  PropertiesUsersLabel.classList.add("Flex");
+  //
+  // -------------------------- id >>
+  PropertiesUsersLabel.id = "PropertiesLabel";
+  // -------------------------- id <<
+  //
+  // -------------------------- AC >>
+  if (response.is_admin == true) {
+    PropertiesBody.appendChild(PropertiesUsersLabel);
+  }
+  // -------------------------- AC <<
+  //
+  // ------------------------ icon >>
+  const PropertiesUsersLabelIcon = document.createElement("iconify-icon");
+  PropertiesUsersLabelIcon.classList.add("PropertiesLabelIcon");
+  //
+  // ---------------- value >
+  PropertiesUsersLabelIcon.setAttribute("icon", "mdi:users-check");
+  // ---------------- value <
+  //
+  // ------------------- AC >
+  if (response.is_admin == true) {
+    PropertiesUsersLabel.appendChild(PropertiesUsersLabelIcon);
+  }
+  // ------------------- AC <
+  //
+  // ------------------------ icon <<
+  //
+  // ------------------------ span >>
+  const PropertiesUsersLabelText = document.createElement("span");
+  PropertiesUsersLabelText.classList.add("PropertiesLabelText");
+  //
+  // ---------------- value >
+  PropertiesUsersLabelText.textContent = "Selected Users";
+  // ---------------- value <
+  //
+  // ------------------- AC >
+  if (response.is_admin == true) {
+    PropertiesUsersLabel.appendChild(PropertiesUsersLabelText);
+  }
+  // ------------------- AC <
+  //
+  // ------------------------ span <<
+  //
+  // -------------------------------- > Flex <
+  //
+  // -------------------------------- > Flex <
+  const PropertiesUsersList = document.createElement("div");
+  PropertiesUsersList.classList.add("Flex");
+  //
+  // -------------------------- id >>
+  PropertiesUsersList.id = "PropertiesUsersList";
+  // -------------------------- id <<
+  //
+  // -------------------------- AC >>
+  if (response.is_admin == true) {
+    PropertiesBody.appendChild(PropertiesUsersList);
+  }
+  // -------------------------- AC <<
+  //
+  // -------------------------------- > Flex <
+  //
+  // -------------------------------- > List <
+  const PropertiesAllUsersList = document.createElement("div");
+  PropertiesAllUsersList.classList.add("PropertiesAllUsersList");
+  //
+  // -------------------------- AC >>
+  if (response.is_admin == true) {
+    PropertiesBody.appendChild(PropertiesAllUsersList);
+  }
+  // -------------------------- AC <<
+  //
+  // ------------------------- API >>
+  let Api = `https://personnel.samami.co/user/get?limit=${100000000000000}`;
+  // ------------------------- API <<
+  //
+  // ------------------------- GET >>
+  if (response.is_admin == true) {
+    //
+    GET(Api)
+      //
+      // ------------------------------- > then <
+      .then((response) => {
+        //
+        // ---------------------------- > 200 <
+        if (response.status == 200) {
+          //
+          // --------- remove loading >
+          LoadingcallBack(BG_6, 2, Layer6);
+          // --------- remove loading <
+          //
+          // ---------------- forEach >
+          response.data.data.forEach((data) => {
+
+            //
+            // ------------------------ > CB <
+            const MiniUserWidget = MiniUser(data, WidgetListener);
+            // ------------------------ > CB <
+            //
+            // ------------------------ > L <
+            function WidgetListener() {
+              //
+              // -------------------- V >>
+              let list = PropertiesUsersList.childNodes;
+              // -------------------- V <<
+              //
+              // ------------------- SM >>
+              if (list.length == 0) {
+                PropertiesUsersList.appendChild(MiniUserWidget);
+                MiniUserWidget.classList.add("active");
+              }
+              //
+              else {
+                //
+                list.forEach((element) => {
+                  //
+                  if (MiniUserWidget.id == element.id) {
+                    //
+                    PropertiesUsersList.removeChild(element);
+                    //
+                    PropertiesAllUsersList.appendChild(element);
+                    //
+                    element.classList.remove("active");
+                    //
+                  }
+                  //
+                  else {
+                    //
+                    const clonedWidget = MiniUserWidget;
+                    //
+                    PropertiesUsersList.appendChild(clonedWidget);
+                    //
+                    clonedWidget.classList.add("active");
+                    //
+                  }
+                  //
+                });
+                //
+              }
+              // ------------------- SM <<
+              //
+            }
+            // ------------------------ > L <
+            //
+            // ------------------------ > AC <
+            if (PropertiesResponse.access_users_ids.some(id => id == MiniUserWidget.id)) {
+              MiniUserWidget.classList.add("active");
+              PropertiesUsersList.appendChild(MiniUserWidget);
+            }
+            // 
+            else {
+              PropertiesAllUsersList.appendChild(MiniUserWidget);
+            }
+            // ------------------------ > AC <
+            //
+            // ------------------------ > SM <
+            setTimeout(() => {
+              Layer5.classList.add("show");
+            }, 500);
+            // ------------------------ > SM <
+            //
+          });
+          // ---------------- forEach <
+          //
+        }
+        // ---------------------------- > 200 <
+        //
+        // ---------------------------- > else <
+        else {
+          //
+          LoadingcallBack(BG_6, 2, Layer6);
+          //
+          Layer5.classList.remove("show");
+          //
+          setTimeout(() => {
+            BG_5.innerHTML = "";
+          }, 500);
+          //
+        }
+        // ---------------------------- > else <
+        //
+      })
+      // ------------------------------- > then <
+      //
+      // ------------------------------ > catch <
+      .catch((error) => {
+        //
+        LoadingcallBack(BG_6, 2, Layer6);
+        //
+        console.log(error);
+        //
+        Layer5.classList.remove("show");
+        setTimeout(() => {
+          BG_5.innerHTML = "";
+        }, 500);
+        //
+      });
+    // -------------------------------- > catch <
+    //
+  }
+  //
+  // ------------------------ GET <<
+  //
+  // ------------------------------- > List <
+  //
   // ---------------------------------------- >> Body <<
+  //
+  // ----------------------------------------- >> BTN <<
+  //
+  // ---------------------------------- > CB <
+  const SubmitBTN = BTN(
+    "GreenPopupBTN",
+    true,
+    "Submit",
+    true,
+    "line-md:check-all",
+    true,
+    SubmitBTNListener
+  );
+  SubmitBTN.widget.style.margin = "0px auto";
+  // ---------------------------------- > CB <
+  //
+  // ----------------------------------- > L <
+  function SubmitBTNListener() {
+    //
+    // ---------------------------- V >>
+    const List = document.querySelector(".StorageContent");
+    // ---------------------------- V <<
+    //
+    // -------------------------- API >>
+    let Api = `https://personnel.samami.co/storage/set-access`;
+    // -------------------------- API <<
+    //
+    // -------------------- Gather ID >>
+    let UsersIDs = [];
+    PropertiesUsersList.childNodes.forEach((element) => {
+      if (!UsersIDs.includes(element.id)) {
+        UsersIDs.push(element.id);
+      }
+    });
+    // -------------------- Gather ID <<
+    //
+    // ------------------------- Data >>
+    const Data = {
+      user_ids: UsersIDs,
+      data_id: response.id,
+    };
+    // ------------------------- Data <<
+    //
+    // ------------------ Add Loading >>
+    LoadingcallBack(BG_6, 1, Layer6);
+    // ------------------ Add Loading <<
+    //
+    // ------------------------- POST >>
+    POST(Api, Data)
+      .then((response) => {
+        //
+        // --------------- 200 >
+        if (response.status == 200) {
+          //
+          // ------------------- > Notif <
+          NotificationCallBack(
+            "Access successfully updated 👍",
+            "ph:check-fat-fill",
+            "green",
+            BG_7,
+            Layer7
+          );
+          // ------------------- > Notif <
+          //
+          // ------------------- > SM <
+          List.classList.remove("show");
+          Layer5.classList.remove("show");
+          setTimeout(() => {
+            List.innerHTML = "";
+            BG_5.innerHTML = "";
+          }, 500);
+          // ------------------- > SM <
+          //
+          // ------------------- > CB <
+          setTimeout(() => {
+            GetChildren(CurrentPath);
+          }, 500);
+          // ------------------- > CB <
+          //
+        }
+        // --------------- 200 <
+        //
+        // ------------- error >
+        else {
+          //
+          // ------------------- > remove loading <
+          LoadingcallBack(BG_6, 2, Layer6);
+          // ------------------- > remove loading <
+          //
+          // ------------------- > Notif <
+          NotificationCallBack(
+            "request failed 👎",
+            "fa:close",
+            "red",
+            BG_7,
+            Layer7
+          );
+          // ------------------- > Notif <
+          //
+        }
+        // ------------- error <
+        //
+      })
+      // --------------- catch >
+      .catch((error) => {
+        //
+        // --------------------- > remove loading <
+        LoadingcallBack(BG_6, 2, Layer6);
+        // --------------------- > remove loading <
+        //
+        // --------------------- > Notif <
+        NotificationCallBack(
+          "Request failed 👎",
+          "fa:close",
+          "red",
+          BG_7,
+          Layer7
+        );
+        // --------------------- > Notif <
+        //
+      });
+    // ----------------- catch <
+    //
+    // ------------------------- POST <<
+    //
+  }
+  // ----------------------------------- > L <
+  //
+  // ---------------------------------- > AC <
+  if (response.is_admin == true) {
+    PropertiesPopup.appendChild(SubmitBTN.widget);
+  }
+  // ---------------------------------- > AC <
+  //
+  // ----------------------------------------- >> BTN <<
   //
 }
 // ===================================================== >> Properties Popup <<
+//
+// ============================================================= >> MiniUser <<
+function MiniUser(response, listener) {
+  //
+  // ------------------------------------------------- >> div <<
+  const MiniUser = document.createElement("div");
+  MiniUser.classList.add("MiniUser");
+  //
+  // ------------------------------------------ > id <
+  MiniUser.id = response.id;
+  // ------------------------------------------ > id <
+  //
+  // ------------------------------------------------- >> div <<
+  //
+  // --------------------------------------------------- >> L <<
+  MiniUser.addEventListener("click", () => {
+    listener();
+  });
+  // --------------------------------------------------- >> L <<
+  //
+  // ---------------------------------------------- >> Avatar <<
+  const MiniUserAvatar = document.createElement("img");
+  MiniUserAvatar.classList.add("MiniUserAvatar");
+  MiniUserAvatar.setAttribute("loading", "lazy");
+  //
+  // -------------------------------------- > src <
+  if (response.avatar_image == "") {
+    MiniUserAvatar.src = "./../assets/svg/person icon.svg";
+  } else {
+    MiniUserAvatar.src = response.avatar_image;
+  }
+  // -------------------------------------- > src <
+  //
+  // --------------------------------------- > AC <
+  MiniUser.appendChild(MiniUserAvatar);
+  // --------------------------------------- > AC <
+  //
+  // ---------------------------------------------- >> Avatar <<
+  //
+  // ------------------------------------------------ >> Name <<
+  const MiniUserName = document.createElement("span");
+  MiniUserName.classList.add("MiniUserName");
+  //
+  // ---------------------------------------- > src <
+  MiniUserName.textContent = response.username;
+  // ---------------------------------------- > src <
+  //
+  // ----------------------------------------- > AC <
+  MiniUser.appendChild(MiniUserName);
+  // ----------------------------------------- > AC <
+  //
+  // ------------------------------------------------ >> Name <<
+  //
+  // ---------------------------------------------- >> return <<
+  return MiniUser;
+  // ---------------------------------------------- >> return <<
+  //
+}
+// ============================================================= >> MiniUser <<
 //
 // ============================================================= >> Download <<
 function DownloadWebService(id) {
@@ -2723,6 +3158,46 @@ function DownloadWebService(id) {
         //
       }
       // ----------------------------- > 200 <
+      //
+      // ----------------------------- > 201 <
+      else if (response.status == 201) {
+        //
+        // ----------------------------------- >> remove loading <<
+        LoadingcallBack(BG_6, 2, Layer6);
+        // ----------------------------------- >> remove loading <<
+        //
+        // ----------------------------------- >> Notif <<
+        NotificationCallBack(
+          "Try again in a few more minutes.",
+          "fa:close",
+          "red",
+          BG_7,
+          Layer7
+        );
+        // ----------------------------------- >> Notif <<
+        //
+      }
+      // ----------------------------- > 201 <
+      //
+      // ----------------------------- > 202 <
+      else if (response.status == 202) {
+        //
+        // ----------------------------------- >> remove loading <<
+        LoadingcallBack(BG_6, 2, Layer6);
+        // ----------------------------------- >> remove loading <<
+        //
+        // ----------------------------------- >> Notif <<
+        NotificationCallBack(
+          "The file is still being prepared.",
+          "fa:close",
+          "red",
+          BG_7,
+          Layer7
+        );
+        // ----------------------------------- >> Notif <<
+        //
+      }
+      // ----------------------------- > 202 <
       //
       // ----------------------------- > error <
       else {

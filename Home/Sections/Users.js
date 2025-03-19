@@ -988,7 +988,6 @@ function PostAvatar(image, id, widget, IsAdmin) {
   // --------------------------------------- POST >>
   PostImage(Api, formData)
     .then((response) => {
-      console.log(response);
       //
       // ----------------------------- 200 >
       if (response.status == 200) {
@@ -1072,7 +1071,7 @@ function PostAvatar(image, id, widget, IsAdmin) {
 }
 // ========================================================== >> Post Avatar <<
 //
-// ============================================================ >> Post Data <<
+// ============================================================= >> PUT Data <<
 function PutData(nameinput, numberinput, type, id, IsAdmin) {
   //
   // ----------------------------------------- >> Validation <<
@@ -1118,12 +1117,13 @@ function PutData(nameinput, numberinput, type, id, IsAdmin) {
       user_type: type,
       phone_number: Number,
     };
+
+    console.log(Data);
     // ------------------- V <<
     //
     // ----------------- PUT >>
     PUT(URL, Data)
       .then((response) => {
-        console.log(response);
         //
         // -------------------- > 200 <
         if (response.status == 200) {
@@ -1219,7 +1219,7 @@ function PutData(nameinput, numberinput, type, id, IsAdmin) {
   // ----------------------------------------- >> Validation <<
   //
 }
-// ============================================================ >> Post Data <<
+// ============================================================= >> PUT Data <<
 //
 // ============================================================ >> Validator <<
 function Validator(name, number, type) {

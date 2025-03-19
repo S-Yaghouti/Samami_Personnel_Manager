@@ -165,8 +165,8 @@ function Auth() {
           // ------------------------ >> Content Manager
           setTimeout(() => {
             const SidebarOptions = document.querySelectorAll(".SidebarOption");
-            SidebarOptions[0].classList.add("active");
-            ContentManager(SidebarOptions[0].children[0].textContent);
+            SidebarOptions[1].classList.add("active");
+            ContentManager(SidebarOptions[1].children[0].textContent);
           }, 500);
           // ------------------------ << Content Manager
           //
